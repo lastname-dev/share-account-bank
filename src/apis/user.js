@@ -2,11 +2,19 @@ import { axiosInstance } from "./index";
 
 const userAPI = {
   signup: (id, account, phone, name, password, passwordCheck) =>
-    axiosInstance.post("/users", { id, account, phone, name, password, passwordCheck }),
+    axiosInstance.post("/signup", { id, account, phone, name, password, passwordCheck }),
+
+  signout: () => axiosInstance.delete("/signout"),
 
   getMyInformation: () => axiosInstance.get("/users"),
 
-  editMyInformation: (myInfoData) => axiosInstance.put("/users", myInfoData),
+  editMyInformation: (phone, currentPassword, newPassword, newPasswordCheck) =>
+    axiosInstance.put("/users", {
+      phone,
+      currentPassword,
+      newPassword,
+      newPasswordCheck,
+    }),
 
   login: (id, password) => axiosInstance.post("/login", { id, password }),
 
