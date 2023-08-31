@@ -26,7 +26,7 @@ export const ButtonWrapper = styled(Flex)`
 
 export const LoginButton = styled(Button)`
   width: 60%;
-  background-color: ${({ theme }) => theme.color.blue};
+  background-color: ${({ theme }) => theme.color.primary};
   color: ${({ theme }) => theme.color.white};
   font-size: ${({ theme }) => theme.fontSize.l};
 `;
