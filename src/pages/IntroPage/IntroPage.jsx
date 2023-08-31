@@ -1,23 +1,16 @@
-import {
-  ButtonWrapper,
-  IntroPageWrapper,
-  LoginButton,
-  LogoContainer,
-  LogoImage,
-  SigninButton,
-} from "./IntroPage.style";
+import * as S from "./IntroPage.style";
 
 const IntroPage = () => {
   return (
-    <IntroPageWrapper>
-      <LogoContainer>
-        <LogoImage src={process.env.PUBLIC_URL + "/image/logo.png"} alt="logo" />
-      </LogoContainer>
-      <ButtonWrapper>
-        <LoginButton>로그인</LoginButton>
-        <SigninButton>회원가입</SigninButton>
-      </ButtonWrapper>
-    </IntroPageWrapper>
+    <S.IntroPageWrapper>
+      <S.LogoContainer>
+        <S.LogoImage src={process.env.PUBLIC_URL + "/image/logo.png"} alt="logo" />
+      </S.LogoContainer>
+      <S.ButtonWrapper>
+        <S.LoginButton>로그인</S.LoginButton>
+        <S.SigninButton>회원가입</S.SigninButton>
+      </S.ButtonWrapper>
+    </S.IntroPageWrapper>
   );
 };
 export default IntroPage;

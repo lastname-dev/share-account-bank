@@ -5,7 +5,6 @@ import { styled } from "styled-components";
 export const IntroPageWrapper = styled(Flex)`
   flex-direction: column;
   justify-content: space-around;
-  width: 100%;
   height: 100vh;
   padding: 9rem 0;
 `;
