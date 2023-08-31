@@ -1,14 +1,15 @@
+import Body from "components/Layout/Body";
 import React from "react";
 import { Outlet } from "react-router-dom";
 
 function App() {
   return (
-    <React.Fragment>
+    <Body>
       Hi
       <main>
         <Outlet />
       </main>
-    </React.Fragment>
+    </Body>
   );
 }
 
