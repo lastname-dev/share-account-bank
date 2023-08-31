@@ -1,7 +1,15 @@
 import React from "react";
+import { Outlet } from "react-router-dom";
 
 function App() {
-  return <div className="App">Hi</div>;
+  return (
+    <React.Fragment>
+      Hi
+      <main>
+        <Outlet />
+      </main>
+    </React.Fragment>
+  );
 }
 
 export default App;
