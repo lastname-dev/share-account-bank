@@ -1,9 +1,9 @@
 import App from "App";
-import AccountPage from "pages/AccountPage";
-import IntroPage from "pages/IntroPage";
-import MainPage from "pages/MainPage";
-import NotFoundPage from "pages/NotFoundPage";
-import SignUpPage from "pages/SignUpPage";
+import AccountPage from "pages/AccountPage/AccountPage";
+import IntroPage from "pages/IntroPage/IntroPage";
+import MainPage from "pages/MainPage/MainPage";
+import NotFoundPage from "pages/NotFoundPage/NotFoundPage";
+import SignUpPage from "pages/SignUpPage/SignUpPage";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 const AppRouter = () => {
