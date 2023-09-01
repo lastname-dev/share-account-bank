@@ -1,4 +1,6 @@
 import App from "App";
+import Body from "components/Layout/Body/Body";
+import HeaderLessLayout from "components/Layout/HeaderLessLayout/HeaderLessLayout";
 import AccountPage from "pages/AccountPage/AccountPage";
 import IntroPage from "pages/IntroPage/IntroPage";
 import LoginPage from "pages/LoginPage/LoginPage";
@@ -11,7 +13,7 @@ const AppRouter = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <App />,
+      element: <HeaderLessLayout />,
       errorElement: <NotFoundPage />,
       children: [
         {
@@ -26,6 +28,13 @@ const AppRouter = () => {
           path: "/login",
           element: <LoginPage />,
         },
+      ],
+    },
+    {
+      path: "/",
+      element: <App />,
+      errorElement: <NotFoundPage />,
+      children: [
         {
           path: "/main",
           element: <MainPage />,

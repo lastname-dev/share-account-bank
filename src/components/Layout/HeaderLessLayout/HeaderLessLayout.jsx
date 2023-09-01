@@ -2,10 +2,9 @@ import Body from "components/Layout/Body/Body";
 import React from "react";
 import { Outlet } from "react-router-dom";
 
-function App() {
+function HeaderLessLayout() {
   return (
     <Body>
-      <h1>HEADER</h1>
       <main>
         <Outlet />
       </main>
@@ -13,4 +12,4 @@ function App() {
   );
 }
 
-export default App;
+export default HeaderLessLayout;
