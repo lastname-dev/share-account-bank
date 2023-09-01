@@ -2,14 +2,14 @@ import Button from "components/common/Button/Button";
 import Flex from "components/common/Flex/Flex";
 import { styled } from "styled-components";
 
-export const SignUpPageWrapper = styled(Flex)`
+export const LoginPageWrapper = styled(Flex)`
   flex-direction: column;
   justify-content: space-between;
   height: 100vh;
   padding: 7rem 0;
 `;
 
-export const SignUpText = styled.span`
+export const LoginText = styled.span`
   font-size: ${({ theme }) => theme.fontSize.l};
   color: ${({ theme }) => theme.color.darkgray};
   font-weight: bold;
