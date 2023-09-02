@@ -1,11 +1,13 @@
-package com.bank.shareaccount.global.config.security;
+package com.bank.shareaccount.global.filter;
 
-import com.bank.shareaccount.global.config.jwt.JwtService;
+import com.bank.shareaccount.global.jwt.JwtService;
 import com.bank.shareaccount.global.util.CustomHttpServletRequestWrapper;
+import com.bank.shareaccount.user.entity.User;
 import com.bank.shareaccount.user.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.util.StreamUtils;
@@ -21,14 +23,13 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @Slf4j
-//@Component
 public class LoginFilter extends OncePerRequestFilter {
 
     private static final String CONTENT_TYPE = "application/json";
-
     private final ObjectMapper objectMapper;
     private final UserRepository userRepository;
     private final JwtService jwtService;
+    private final RedisTemplate redisTemplate;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -48,9 +49,10 @@ public class LoginFilter extends OncePerRequestFilter {
         Map<String, String> usernamePasswordMap = objectMapper.readValue(messageBody, Map.class);
 
         String id = usernamePasswordMap.get("id");
-
         String password = usernamePasswordMap.get("password");
-        String dbPassword = userRepository.findById(id).orElseThrow(IllegalArgumentException::new).getPassword();
+
+        User user = userRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+        String dbPassword = user.getPassword();
 
         if (PasswordEncoderFactories.createDelegatingPasswordEncoder().matches(password, dbPassword)) {
             log.info("패스워드 일치 ");
@@ -58,6 +60,9 @@ public class LoginFilter extends OncePerRequestFilter {
             String newRefreshToken = jwtService.createRefreshToken();
             jwtService.sendBothToken(response, newAccessToken, newRefreshToken);
 
+//            user.updateRefreshToken(newRefreshToken);
+            redisTemplate.opsForValue().set(id,newRefreshToken);
+//            userRepository.saveAndFlush(user);
             HttpServletRequest requestWrapper = new CustomHttpServletRequestWrapper(request, messageBody);
             filterChain.doFilter(requestWrapper, response);
         }

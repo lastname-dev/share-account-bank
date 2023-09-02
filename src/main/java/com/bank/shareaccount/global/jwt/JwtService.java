@@ -1,10 +1,12 @@
-package com.bank.shareaccount.global.config.jwt;
+package com.bank.shareaccount.global.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.bank.shareaccount.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +16,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class JwtService {
 
     @Value("${jwt.access.header}")
@@ -35,8 +38,10 @@ public class JwtService {
     private static final String PREFIX = "Bearer ";
     private static final String ACCESS_TOKEN_SUBJECT = "AccessToken";
     private static final String REFRESH_TOKEN_SUBJECT = "RefreshToken";
+    private static final String EXPIRED_TOKEN_SUBJECT = "ExpiredToken";
 
-    UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final RedisTemplate redisTemplate;
 
 
     public String createAccessToken(String id) {
@@ -49,10 +54,16 @@ public class JwtService {
 
 
     public String createRefreshToken() {
-        Date now = new Date();
         return JWT.create()
                 .withSubject(REFRESH_TOKEN_SUBJECT)
-                .withExpiresAt(new Date(now.getTime() + REFRESH_EXPIRATION_TIME))
+                .withExpiresAt(new Date(System.currentTimeMillis() + REFRESH_EXPIRATION_TIME))
+                .sign(algorithm());
+    }
+
+    public String createExpiredToken() {
+        return JWT.create()
+                .withSubject(EXPIRED_TOKEN_SUBJECT)
+                .withExpiresAt(new Date(System.currentTimeMillis()))
                 .sign(algorithm());
     }
 
@@ -94,16 +105,16 @@ public class JwtService {
     public void sendRefreshToken(HttpServletResponse response, String refreshToken) {
         response.addHeader(REFRESH_HEADER, PREFIX + refreshToken);
     }
-    public void checkRefreshToken(HttpServletResponse response, String refreshToken) {
-        // todo jwt service로 이동할것
-        userRepository.findByRefreshToken(refreshToken)
-                .ifPresent(user -> {
-                    String newAccessToken = createAccessToken(user.getId());
-                    String newRefreshToken = createRefreshToken();
 
-                    user.updateRefreshToken(newRefreshToken);
+    public void checkRefreshToken(HttpServletResponse response,String refreshToken,String id) throws Exception {
+        String newAccessToken = createAccessToken(id);
+        String newRefreshToken = createRefreshToken();
+        if(!redisTemplate.opsForValue().get(id).equals(refreshToken)){
+            throw new Exception();
+        }
 
-                    sendBothToken(response, newAccessToken, newRefreshToken);
-                });
+            redisTemplate.opsForValue().set(id, newRefreshToken);
+            sendBothToken(response, newAccessToken, newRefreshToken);
+
     }
 }

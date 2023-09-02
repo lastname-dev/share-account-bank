@@ -15,6 +15,5 @@ public interface UserService {
     void updateUserInfo(UserUpdateDto userUpdateDto);
     UserInfoResponseDto getUserInfo(String userId);
     void changePassword(UserChangePasswordDto userChangePasswordDto);
-    void checkRefreshToken(HttpServletResponse response, String refreshToken);
     User getUserById(String id);
 }

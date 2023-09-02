@@ -1,6 +1,6 @@
 package com.bank.shareaccount.user.service;
 
-import com.bank.shareaccount.global.config.jwt.JwtService;
+import com.bank.shareaccount.global.jwt.JwtService;
 import com.bank.shareaccount.user.dto.request.UserChangePasswordDto;
 import com.bank.shareaccount.user.dto.request.UserSignUpDto;
 import com.bank.shareaccount.user.dto.request.UserUpdateDto;
@@ -45,19 +45,6 @@ public class UserServiceImpl implements UserService{
     @Override
     public void changePassword(UserChangePasswordDto userChangePasswordDto) {
 
-    }
-    @Override
-    public void checkRefreshToken(HttpServletResponse response, String refreshToken) {
-        // todo jwt service로 이동할것
-        userRepository.findByRefreshToken(refreshToken)
-                .ifPresent(user -> {
-                    String newAccessToken = jwtService.createAccessToken(user.getId());
-                    String newRefreshToken = jwtService.createRefreshToken();
-
-                    user.updateRefreshToken(newRefreshToken);
-
-                    jwtService.sendBothToken(response, newAccessToken, newRefreshToken);
-                });
     }
 
     @Override

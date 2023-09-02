@@ -25,17 +25,10 @@ public class User {
 
     @Column(name = "user_account")
     private String account;
-//    @Enumerated(EnumType.STRING)
-//    private Role role;
 
 
     @Column(name = "refresh_token")
     private String refreshToken; // 리프레시 토큰
-
-//
-//    public void authorizeUser() {
-//        this.role = Role.USER;
-//    }
 
     // 비밀번호 암호화 메소드
     public void passwordEncode(PasswordEncoder passwordEncoder) {
