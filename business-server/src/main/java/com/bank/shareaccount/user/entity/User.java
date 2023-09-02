@@ -35,7 +35,7 @@ public class User {
     private String refreshToken; // 리프레시 토큰
 
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Group_User> groups = new ArrayList<>();
 
     // 비밀번호 암호화 메소드
@@ -45,5 +45,14 @@ public class User {
 
     public void updateRefreshToken(String updateRefreshToken) {
         this.refreshToken = updateRefreshToken;
+    }
+
+    public void joinGroup(Group_User group_user) {
+        group_user.setUser(this);
+        groups.add(group_user);
+    }
+
+    public void exitGroup(Group_User group_user){
+        groups.remove(group_user);
     }
 }
