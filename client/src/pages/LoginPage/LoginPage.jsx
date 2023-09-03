@@ -1,16 +1,26 @@
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import useInput from "hooks/useInput";
 import * as S from "./LoginPage.style";
+import userAPI from "apis/user";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [idInput, setIdInput, idHandler] = useInput("");
   const [passwordInput, setPasswordInput, passwordHandler] = useInput("");
+  const loginMutation = useMutation({
+    mutationFn: userAPI.login,
+    onSuccess: () => {
+      navigate("/main");
+    },
+  });
 
   const submitSignUp = () => {
     const submitform = {
       idInput,
       passwordInput,
     };
-    console.log(submitform);
+    loginMutation.mutate(submitform);
   };
 
   return (

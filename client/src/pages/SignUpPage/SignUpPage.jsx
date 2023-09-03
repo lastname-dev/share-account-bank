@@ -1,17 +1,24 @@
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 import useInput from "hooks/useInput";
 import * as S from "./SignUpPage.style";
 import { useCallback } from "react";
-import { useMutation } from "@tanstack/react-query";
 import userAPI from "apis/user";
 
 const SignUpPage = () => {
-  const signUpMutation = useMutation(userAPI.signup);
+  const navigate = useNavigate();
   const [nameInput, setNameInput, nameHandler] = useInput("");
   const [idInput, setIdInput, idHandler] = useInput("");
   const [phoneInput, setPhoneInput, phoneHandler] = useInput("");
   const [accountInput, setAccountInput, accountHandler] = useInput("");
   const [passwordInput, setPasswordInput, passwordHandler] = useInput("");
   const [passwordCheckInput, setPasswordCheckInput, passwordCheckHandler] = useInput("");
+  const signUpMutation = useMutation({
+    mutationFn: userAPI.signup,
+    onSuccess: () => {
+      navigate("/main");
+    },
+  });
 
   const submitSignUp = () => {
     const submitform = {
