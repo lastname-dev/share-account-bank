@@ -15,7 +15,7 @@ public class Account {
     private Long id;
 
     @Column(name = "user_id")
-    private long userId;
+    private Long userId;
 
     @Column(name = "group_id")
     private long groupId;
@@ -23,16 +23,16 @@ public class Account {
     @Column(name = "account_id")
     private String accountId;
 
-    private int money;
+    private int balance;
 
     private boolean isGroup;
 
     @Builder
-    public Account(long userId, long groupId, String accountId, int money, boolean isGroup) {
+    public Account(Long userId, long groupId, String accountId, int balance, boolean isGroup) {
         this.userId = userId;
         this.groupId = groupId;
         this.accountId = accountId;
-        this.money = money;
+        this.balance = balance;
         this.isGroup = isGroup;
     }
 }
