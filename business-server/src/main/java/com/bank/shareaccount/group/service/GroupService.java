@@ -3,6 +3,7 @@ package com.bank.shareaccount.group.service;
 import com.bank.shareaccount.group.dto.request.GroupMakeDto;
 import com.bank.shareaccount.group.dto.request.GroupUpdateDto;
 import com.bank.shareaccount.group.dto.response.GroupInfoDto;
+import com.bank.shareaccount.group.dto.response.GroupJoinLinkDto;
 import com.bank.shareaccount.group.entity.Group;
 
 public interface GroupService {
@@ -22,4 +23,7 @@ public interface GroupService {
     void joinGroup(String userId, String groupId);
     void admitJoin(String groupId, String id);
     void addGroup(String groupId, String userId);
+    String createJoinLink(String groupId);
+    GroupJoinLinkDto link(String linkId);
+    Boolean isLinkValid(String url, String groupId);
 }

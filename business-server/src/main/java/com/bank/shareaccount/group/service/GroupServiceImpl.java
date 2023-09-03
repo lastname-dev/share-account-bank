@@ -3,12 +3,15 @@ package com.bank.shareaccount.group.service;
 import com.bank.shareaccount.group.dto.request.GroupMakeDto;
 import com.bank.shareaccount.group.dto.request.GroupUpdateDto;
 import com.bank.shareaccount.group.dto.response.GroupInfoDto;
+import com.bank.shareaccount.group.dto.response.GroupJoinLinkDto;
 import com.bank.shareaccount.group.entity.Access;
 import com.bank.shareaccount.group.entity.Group;
 import com.bank.shareaccount.group.entity.Group_User;
+import com.bank.shareaccount.group.entity.Link;
 import com.bank.shareaccount.group.repository.AccessRepository;
 import com.bank.shareaccount.group.repository.GroupRepository;
 import com.bank.shareaccount.group.repository.Group_UserRepository;
+import com.bank.shareaccount.group.repository.LinkRepository;
 import com.bank.shareaccount.notification.Type;
 import com.bank.shareaccount.notification.entity.Notification;
 import com.bank.shareaccount.notification.repository.NotificationRepository;
@@ -19,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Transactional
 @Service
@@ -29,6 +33,7 @@ public class GroupServiceImpl implements GroupService {
     private final NotificationRepository notificationRepository;
     private final AccessRepository accessRepository;
     private final Group_UserRepository group_userRepository;
+    private final LinkRepository linkRepository;
 
     @Override
     public void make(GroupMakeDto groupMakeDto) {
@@ -141,5 +146,30 @@ public class GroupServiceImpl implements GroupService {
         group_userRepository.save(group_user);
     }
 
+    public String createJoinLink(String groupId){
+        Group group= groupRepository.findByName(groupId).orElseThrow(IllegalAccessError::new);
+        String url = UUID.randomUUID().toString();
+        Link link = Link.builder()
+                        .group(group)
+                                .url(url)
+                .build();
+        linkRepository.save(link);
+        return url;
+    }
 
+    @Override
+    public GroupJoinLinkDto link(String linkId) {
+        Link link = linkRepository.findByUrl(linkId).orElseThrow(IllegalAccessError::new);
+        GroupJoinLinkDto groupJoinLinkDto = new GroupJoinLinkDto(link.getGroup().getName(),link.isUsed());
+        return groupJoinLinkDto;
+    }
+
+    @Override
+    public Boolean isLinkValid(String url, String groupId) {
+        Link link = linkRepository.findByUrl(url).orElseThrow(IllegalAccessError::new);
+        if(link.getGroup().getName().equals(groupId) && !link.isUsed()){
+            return true;
+        }
+        return false;
+    }
 }
