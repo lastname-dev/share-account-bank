@@ -1,16 +1,16 @@
-import Body from "components/Layout/Body/Body";
-import Header from "components/Layout/Header/Header";
 import React from "react";
-import { Outlet } from "react-router-dom";
+import AppRouter from "router/AppRouter";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 function App() {
+  const queryClient = new QueryClient();
+
   return (
-    <Body>
-      <Header />
-      <main>
-        <Outlet />
-      </main>
-    </Body>
+    <React.Fragment>
+      <QueryClientProvider client={queryClient}>
+        <AppRouter />
+      </QueryClientProvider>
+    </React.Fragment>
   );
 }
 
