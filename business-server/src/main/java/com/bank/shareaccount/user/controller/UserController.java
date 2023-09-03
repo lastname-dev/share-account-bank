@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,14 +43,9 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserLoginDto userLoginDto) {
         log.info("아이디 : {}    비밀번호: {}", userLoginDto.getId(), userLoginDto.getPassword());
+        return null;
+    }
 
-        return null;
-    }
-    @GetMapping("/test")
-    public ResponseEntity<?> test(){
-        log.info("test");
-        return null;
-    }
     @GetMapping
     public ResponseEntity<?> getUserInfo() {
         return null;
