@@ -3,10 +3,15 @@ package com.bank.shareaccount.group.service;
 import com.bank.shareaccount.group.dto.request.GroupMakeDto;
 import com.bank.shareaccount.group.dto.request.GroupUpdateDto;
 import com.bank.shareaccount.group.dto.response.GroupInfoDto;
+import com.bank.shareaccount.group.entity.Access;
 import com.bank.shareaccount.group.entity.Group;
 import com.bank.shareaccount.group.entity.Group_User;
+import com.bank.shareaccount.group.repository.AccessRepository;
 import com.bank.shareaccount.group.repository.GroupRepository;
 import com.bank.shareaccount.group.repository.Group_UserRepository;
+import com.bank.shareaccount.notification.Type;
+import com.bank.shareaccount.notification.entity.Notification;
+import com.bank.shareaccount.notification.repository.NotificationRepository;
 import com.bank.shareaccount.user.entity.User;
 import com.bank.shareaccount.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +26,8 @@ import java.util.List;
 public class GroupServiceImpl implements GroupService {
     private final UserRepository userRepository;
     private final GroupRepository groupRepository;
+    private final NotificationRepository notificationRepository;
+    private final AccessRepository accessRepository;
     private final Group_UserRepository group_userRepository;
 
     @Override
@@ -97,4 +104,42 @@ public class GroupServiceImpl implements GroupService {
     public Group getGroupById(Long groupId) {
         return groupRepository.findById(groupId).orElseThrow(IllegalArgumentException::new);
     }
+
+    @Override
+    public void joinGroup(String userId, String groupId) {
+        // 그룹장에게 알림 보내기, access에 넣기.
+        Group group = groupRepository.findByName(groupId).orElseThrow(IllegalAccessError::new);
+        User sender = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
+        Notification notification = Notification.builder()
+                .receiver(group.getLeader())
+                .sender(sender)
+                .type(Type.JOIN)
+                .group(group)
+                .build();
+        Access access = Access.builder()
+                .group(group)
+                .user(sender)
+                .build();
+        notificationRepository.save(notification);
+        accessRepository.save(access);
+    }
+
+    @Override
+    public void admitJoin(String groupId, String id) {
+        // 그룹에 넣기
+        addGroup(groupId,id);
+    }
+
+    @Override
+    public void addGroup(String groupId, String userId) {
+        User user = userRepository.findById(userId).orElseThrow(IllegalAccessError::new);
+        Group group = groupRepository.findByName(groupId).orElseThrow(IllegalAccessError::new);
+        Group_User group_user = Group_User.builder()
+                .group(group)
+                .user(user)
+                .build();
+        group_userRepository.save(group_user);
+    }
+
+
 }

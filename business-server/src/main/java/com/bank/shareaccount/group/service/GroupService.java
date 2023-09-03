@@ -19,4 +19,7 @@ public interface GroupService {
     void update(GroupUpdateDto groupUpdateDto, Long groupId);
 
     Group getGroupById(Long groupId);
+    void joinGroup(String userId, String groupId);
+    void admitJoin(String groupId, String id);
+    void addGroup(String groupId, String userId);
 }

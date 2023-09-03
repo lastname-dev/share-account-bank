@@ -1,22 +1,21 @@
 package com.bank.shareaccount.group.controller;
 
+import com.bank.shareaccount.global.jwt.JwtService;
 import com.bank.shareaccount.group.dto.request.GroupMakeDto;
 import com.bank.shareaccount.group.dto.request.GroupUpdateDto;
 import com.bank.shareaccount.group.service.GroupServiceImpl;
-import com.bank.shareaccount.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
-import java.nio.file.attribute.UserPrincipal;
 
 @RestController
 @CrossOrigin
 @RequiredArgsConstructor
 public class GroupController {
     private final GroupServiceImpl groupService;
-
+    private final JwtService jwtService;
     @PostMapping("/groups")
     public ResponseEntity<?> make(@RequestBody GroupMakeDto groupMakeDto) {
         groupService.make(groupMakeDto);
@@ -52,6 +51,16 @@ public class GroupController {
     @PutMapping("/groups/{groupId}")
     public ResponseEntity<?> update(@RequestBody GroupUpdateDto groupUpdateDto, @PathVariable Long groupId) {
         groupService.update(groupUpdateDto, groupId);
+        return null;
+    }
+    @PostMapping("/groups/{groupId}")
+    public ResponseEntity<?> joinGroup(@PathVariable String groupId, @AuthenticationPrincipal UserDetails userDetails){
+          groupService.joinGroup(userDetails.getUsername(),groupId);
+          return null;
+    }
+    @PostMapping("/groups/{groupId}/approval/join")
+    public ResponseEntity<?> admitJoin(@PathVariable String groupId,@RequestBody String id){
+        groupService.admitJoin(groupId,id);
         return null;
     }
 }
