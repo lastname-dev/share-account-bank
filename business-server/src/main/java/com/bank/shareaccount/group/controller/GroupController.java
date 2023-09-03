@@ -3,8 +3,10 @@ package com.bank.shareaccount.group.controller;
 import com.bank.shareaccount.global.jwt.JwtService;
 import com.bank.shareaccount.group.dto.request.GroupMakeDto;
 import com.bank.shareaccount.group.dto.request.GroupUpdateDto;
+import com.bank.shareaccount.group.dto.response.GroupJoinLinkDto;
 import com.bank.shareaccount.group.service.GroupServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -54,13 +56,26 @@ public class GroupController {
         return null;
     }
     @PostMapping("/groups/{groupId}")
-    public ResponseEntity<?> joinGroup(@PathVariable String groupId, @AuthenticationPrincipal UserDetails userDetails){
-          groupService.joinGroup(userDetails.getUsername(),groupId);
-          return null;
+    public ResponseEntity<?> joinGroup(@PathVariable String groupId,@RequestBody String url, @AuthenticationPrincipal UserDetails userDetails){
+        if(!groupService.isLinkValid(url,groupId)){
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+        groupService.joinGroup(userDetails.getUsername(),groupId);
+          return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
     @PostMapping("/groups/{groupId}/approval/join")
     public ResponseEntity<?> admitJoin(@PathVariable String groupId,@RequestBody String id){
         groupService.admitJoin(groupId,id);
         return null;
+    }
+    @PostMapping("/groups/{groupId}/link")
+    public ResponseEntity<String> createJoinLink(@PathVariable String groupId){
+        return new ResponseEntity<>(groupService.createJoinLink(groupId), HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/link/{linkId}")
+    public ResponseEntity<GroupJoinLinkDto> link(@PathVariable String linkId){
+        GroupJoinLinkDto link = groupService.link(linkId);
+        return new ResponseEntity<>(link,HttpStatus.ACCEPTED);
     }
 }
