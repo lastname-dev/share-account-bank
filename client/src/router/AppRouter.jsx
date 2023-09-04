@@ -1,12 +1,14 @@
-import App from "App";
-import Body from "components/Layout/Body/Body";
 import HeaderLessLayout from "components/Layout/HeaderLessLayout/HeaderLessLayout";
+import Layout from "components/Layout/Layout";
 import AccountPage from "pages/AccountPage/AccountPage";
+import DepositPage from "pages/DepositPage/DepositPage";
 import IntroPage from "pages/IntroPage/IntroPage";
 import LoginPage from "pages/LoginPage/LoginPage";
 import MainPage from "pages/MainPage/MainPage";
 import NotFoundPage from "pages/NotFoundPage/NotFoundPage";
+import RegistAccountPage from "pages/RegistAccountPage/RegistAccountPage";
 import SignUpPage from "pages/SignUpPage/SignUpPage";
+import TravelInfoPage from "pages/TravelInfoPage/TravelInfoPage";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 const AppRouter = () => {
@@ -32,7 +34,7 @@ const AppRouter = () => {
     },
     {
       path: "/",
-      element: <App />,
+      element: <Layout />,
       errorElement: <NotFoundPage />,
       children: [
         {
@@ -42,6 +44,18 @@ const AppRouter = () => {
         {
           path: "/account/:groupId",
           element: <AccountPage />,
+        },
+        {
+          path: "/regist-account",
+          element: <RegistAccountPage />,
+        },
+        {
+          path: "/deposit/:groupId",
+          element: <DepositPage />,
+        },
+        {
+          path: "/travelInfo/:groupId",
+          element: <TravelInfoPage />,
         },
       ],
     },
