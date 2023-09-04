@@ -1,5 +1,6 @@
 package com.bank.shareaccount.group.entity;
 
+import com.bank.shareaccount.user.entity.User;
 import lombok.*;
 
 import javax.persistence.*;
@@ -9,20 +10,18 @@ import javax.persistence.*;
 @Entity
 @Builder
 @AllArgsConstructor
-public class Link {
+public class Access {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "link_id")
-    private long linkId;
-    private String url;
-    private boolean isUsed;
-    private String user_id;
+    @Column(name = "access_id")
+    private long accessId;
 
     @ManyToOne
-    @JoinColumn(name = "group_id")
+    @JoinColumn(name="group_id")
     private Group group;
-
-    public void setUsed(){
-        this.isUsed=true;
-    }
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
+    boolean isAccessed;
 }
