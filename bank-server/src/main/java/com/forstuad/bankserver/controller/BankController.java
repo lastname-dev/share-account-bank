@@ -1,9 +1,12 @@
 package com.forstuad.bankserver.controller;
 
 import com.forstuad.bankserver.domain.Account;
-import com.forstuad.bankserver.dto.CreateAccountRequestDto;
-import com.forstuad.bankserver.dto.DepositAccountRequestDto;
-import com.forstuad.bankserver.dto.TransferAccountRequestDto;
+import com.forstuad.bankserver.dto.CashFlowHistory;
+import com.forstuad.bankserver.dto.request.AllAccountRequestDto;
+import com.forstuad.bankserver.dto.request.CreateAccountRequestDto;
+import com.forstuad.bankserver.dto.request.DepositAccountRequestDto;
+import com.forstuad.bankserver.dto.request.TransferAccountRequestDto;
+import com.forstuad.bankserver.dto.response.AccountResponseDto;
 import com.forstuad.bankserver.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -51,7 +56,7 @@ public class BankController {
         Map<String, Object> response = new HashMap<>();
         try {
             accountService.deposit(
-                    depositAccountRequestDto.getUserId(),
+                    depositAccountRequestDto.getAccountId(),
                     depositAccountRequestDto.getAmount()
             );
             response.put("status", "success");
@@ -95,13 +100,80 @@ public class BankController {
 
     //전체 계좌 조회
     @GetMapping
-    public ResponseEntity<Map<String,Object>> accountList(){
+    public ResponseEntity<Map<String,Object>> accountList(
+            @RequestBody AllAccountRequestDto allAccountRequestDto
+            )
+    {
         Map<String,Object> response = new HashMap<>();
 
-        return new ResponseEntity<>(response,HttpStatus.ACCEPTED);
+        try {
+            Long userId = allAccountRequestDto.getUserId();
+            List<Account> userAccounts = accountService.findAllByUserId(userId);
+            List<AccountResponseDto> accountResponseDtos = new ArrayList<>();
+
+            for(Account account : userAccounts){
+                AccountResponseDto accountResponseDto = new AccountResponseDto();
+                accountResponseDto.setGroup(account.isGroup());
+                accountResponseDto.setGroupId(account.getGroupId());
+                accountResponseDto.setBalance(account.getBalance());
+                accountResponseDto.setAccountId(account.getAccountId());
+                accountResponseDtos.add(accountResponseDto);
+            }
+            response.put("accountList",accountResponseDtos);
+            return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            response.put("status", "failed");
+            response.put("message", "Reading All Account failed: " + e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     //계좌 상세 조회
+    @GetMapping("/{accountId}")
+    public ResponseEntity<Map<String,Object>> account(
+            @PathVariable String accountId
+    ){
+        Map<String,Object> response = new HashMap<>();
+
+        try {
+            Account account = accountService.findByAccountId(accountId);
+            AccountResponseDto accountResponseDto = new AccountResponseDto();
+
+            accountResponseDto.setAccountId(account.getAccountId());
+            accountResponseDto.setBalance(account.getBalance());
+            accountResponseDto.setGroupId(accountResponseDto.getGroupId());
+            accountResponseDto.setGroup(accountResponseDto.isGroup());
+
+            //계좌 입출금 내역
+            List<CashFlowHistory> cashFlowList = accountService.getCashFlowList(accountId);
+
+            response.put("accountId",accountId);
+            response.put("balance",account.getBalance());
+            response.put("historyList",cashFlowList);
+
+            return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            response.put("status", "failed");
+            response.put("message", "Account Reading failed: " + e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     //그룸계좌 해제
+    @PostMapping("/{accountId}")
+    public ResponseEntity<Map<String,Object>> disableGroup(
+            @PathVariable String accountId
+    ){
+        Map<String,Object> response = new HashMap<>();
+
+        try {
+            accountService.disableGroupAccount(accountId);
+            response.put("message","group disabled success");
+            return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+        }catch (Exception e){
+            response.put("status", "failed");
+            response.put("message", "Disabling Group failed: " + e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

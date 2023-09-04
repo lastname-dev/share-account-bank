@@ -1,4 +1,4 @@
-package com.forstuad.bankserver.dto;
+package com.forstuad.bankserver.dto.request;
 
 import lombok.Data;
 

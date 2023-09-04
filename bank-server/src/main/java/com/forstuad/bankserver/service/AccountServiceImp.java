@@ -3,6 +3,7 @@ package com.forstuad.bankserver.service;
 
 import com.forstuad.bankserver.domain.Account;
 import com.forstuad.bankserver.domain.CashFlow;
+import com.forstuad.bankserver.dto.CashFlowHistory;
 import com.forstuad.bankserver.repository.AccountRepository;
 import com.forstuad.bankserver.repository.CashFlowRepository;
 import com.forstuad.bankserver.util.AccountUtilService;
@@ -10,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,14 +26,15 @@ public class AccountServiceImp implements AccountService{
         accountRepository.save(account);
     }
 
+
     @Override
-    public Account findByUserId(Long userId) {
-        return accountRepository.findByUserId(userId);
+    public Account findByAccountId(String accountId) {
+        return accountRepository.findByAccountId(accountId);
     }
 
     @Override
-    public void deposit(Long userId, int balance) {
-        Account userAccount = accountRepository.findByUserId(userId);
+    public void deposit(String accountId, int balance) {
+        Account userAccount = accountRepository.findByAccountId(accountId);
         userAccount.setBalance(userAccount.getBalance() + balance);
         accountRepository.save(userAccount);
     }
@@ -78,6 +82,44 @@ public class AccountServiceImp implements AccountService{
         //계좌 이체내역 저장
         cashFlowRepository.save(cashFlow);
 
+    }
+
+    @Override
+    public List<CashFlowHistory> getCashFlowList(String accountId) {
+        List<CashFlow> cashFlows = cashFlowRepository.findCashFlowsByAccountId(accountId);
+        List<CashFlowHistory> cashFlowHistories = new ArrayList<>();
+
+        for(CashFlow cashFlow : cashFlows){
+
+            CashFlowHistory cashFlowHistory = new CashFlowHistory();
+            cashFlowHistory.setTime(cashFlow.getDateTime());
+            cashFlowHistory.setAmount(cashFlow.getAmount());
+            cashFlowHistory.setSender(cashFlow.getSender());
+            cashFlowHistory.setReceiver(cashFlowHistory.getReceiver());
+
+
+            if(accountId.equals(cashFlow.getSender())){
+                cashFlowHistory.setType("send");
+            }else{
+                cashFlowHistory.setType("received");
+            }
+
+            cashFlowHistories.add(cashFlowHistory);
+        }
+        return cashFlowHistories;
+    }
+
+    @Override
+    public List<Account> findAllByUserId(Long userId) {
+        return accountRepository.findAllByUserId(userId);
+    }
+
+    @Override
+    public void disableGroupAccount(String accountId) {
+        Account account = accountRepository.findByAccountId(accountId);
+        account.setGroupId(0);
+        account.setGroup(false);
+        accountRepository.save(account);
     }
 
 }
