@@ -31,4 +31,6 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
     - name: Build with Gradle
-      run : ./gradlew clean build
+      run: |
+        ll
+        ./gradlew clean build
