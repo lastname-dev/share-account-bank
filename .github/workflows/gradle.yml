@@ -33,4 +33,5 @@ jobs:
     - name: Build with Gradle
       run: |
         pwd
+        cd ./business-server
         ./gradlew clean build
