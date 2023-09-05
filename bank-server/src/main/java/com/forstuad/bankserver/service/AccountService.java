@@ -14,4 +14,5 @@ public interface AccountService {
     public List<CashFlowHistory> getCashFlowList(String accountId);
     public List<Account> findAllByUserName(String userName);
     public void disableGroupAccount(String accountId);
+    public void assignGroupAccount(String accountId,Long groupId);
 }

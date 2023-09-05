@@ -122,4 +122,12 @@ public class AccountServiceImp implements AccountService{
         accountRepository.save(account);
     }
 
+    @Override
+    public void assignGroupAccount(String accountId,Long groupId) {
+        Account account = accountRepository.findByAccountId(accountId);
+        account.setGroup(true);
+        account.setGroupId(groupId);
+        accountRepository.save(account);
+    }
+
 }

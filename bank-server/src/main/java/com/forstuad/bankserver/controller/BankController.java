@@ -154,8 +154,12 @@ public class BankController {
         }
     }
     //그룹계좌 지정
-    // @PostMapping("/{accountId}/group")
+    @PostMapping("/{accountId}/group")
+    public ResponseEntity<?> assignGroupAccount(@PathVariable String accountId,@RequestBody long groupId){
+        accountService.assignGroupAccount(accountId,groupId);
 
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
     //그룹계좌 해제
     @PostMapping("/{accountId}")
     public ResponseEntity<Map<String,Object>> disableGroup(
