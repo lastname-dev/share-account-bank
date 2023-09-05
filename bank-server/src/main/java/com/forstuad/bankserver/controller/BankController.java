@@ -161,7 +161,7 @@ public class BankController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
     //그룹계좌 해제
-    @PostMapping("/{accountId}")
+    @DeleteMapping("/{accountId}/group")
     public ResponseEntity<Map<String,Object>> disableGroup(
             @PathVariable String accountId
     ){
