@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import * as S from "./MainPage.style";
 import GroupList from "components/group/GroupList/GroupList";
 import { PATH } from "constants/path";
-import { useGroupListQuery } from "hooks/apiHook/useGroupListQuery";
+// import { useGroupListQuery } from "hooks/apiHook/useGroupListQuery";
 
 const MainPage = () => {
   // const groupListData = useGroupListQuery();

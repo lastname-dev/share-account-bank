@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 import Flex from "components/@common/Flex/Flex";
 import Button from "components/@common/Button/Button";
+import { NativeSelect } from "@mui/material";
 
 export const RegistGroupPageWrapper = styled(Flex)`
   flex-direction: column;
@@ -22,28 +23,17 @@ export const InputWrapper = styled(Flex)`
   width: 70%;
 `;
 
-export const InputBox = styled.input`
-  padding: 0.5rem 1rem;
-  border-bottom: solid 1px ${({ theme }) => theme.color.darkgray};
-  width: 60%;
-  text-align: end;
-`;
-
-export const LabelContainer = styled(Flex)`
-  justify-content: space-between;
-  gap: 1rem;
-`;
-
-export const InputLabel = styled.label`
-  /* width: 7rem; */
-  font-size: ${({ theme }) => theme.fontSize.s};
-  color: ${({ theme }) => theme.color.darkgray};
-  white-space: nowrap;
-`;
-
 export const NextButton = styled(Button)`
   width: 60%;
   background-color: ${({ theme }) => theme.color.primary};
   color: ${({ theme }) => theme.color.white};
   font-size: ${({ theme }) => theme.fontSize.m};
+`;
+
+export const CustomSelect = styled(NativeSelect)`
+  border-bottom: solid 1px ${({ theme }) => theme.color.darkgray};
+  width: 100%;
+  font-size: ${({ theme }) => theme.fontSize.l};
+  background-color: transparent;
+  color: ${({ theme }) => theme.color.darkgray};
 `;
