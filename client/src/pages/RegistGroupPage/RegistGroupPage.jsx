@@ -2,7 +2,8 @@ import useForm from "hooks/useForm";
 import * as S from "./RegistGroupPage.style";
 import { useSetGroupMutation } from "hooks/apiHook/useSetGroupMutation";
 import { Form } from "components/@common/Form/Form";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import LabelInput from "components/@common/LabelInput/LabelInput";
 
 const RegistGroupPage = () => {
   const intitialValue = {
@@ -29,51 +30,26 @@ const RegistGroupPage = () => {
       <S.RegistGroupText>모임통장 만들기</S.RegistGroupText>
       <S.InputWrapper>
         <Form onSubmit={handleSubmit}>
-          <S.LabelContainer>
-            <S.InputLabel>모임 이름</S.InputLabel>
-            <S.InputBox type="text" name="groupName" onChange={handleregistForm} required />
-          </S.LabelContainer>
-          <S.LabelContainer>
-            <S.InputLabel>계좌</S.InputLabel>
-            <S.InputBox type="email" name="account" onChange={handleregistForm} />
-          </S.LabelContainer>
-          <S.LabelContainer>
-            <S.InputLabel>목표금액</S.InputLabel>
-            <S.InputBox type="text" name="goal" onChange={handleregistForm} />
-          </S.LabelContainer>
-          <S.LabelContainer>
-            <S.InputLabel>회비</S.InputLabel>
-            <S.InputBox type="text" name="dues" onChange={handleregistForm} />
-          </S.LabelContainer>
-          <S.LabelContainer>
-            <S.InputLabel>자동이체일</S.InputLabel>
-            <S.InputBox
-              placeholder="자동이체일"
-              type="date"
-              value={currentDate}
-              name="duesDate"
-              onChange={handleregistForm}
-            />
-          </S.LabelContainer>
-          <S.LabelContainer>
-            <S.InputLabel>여행예정일</S.InputLabel>
-            <S.InputBox
-              placeholder="여행예정일"
-              type="date"
-              value={currentDate}
-              min={currentDate}
-              name="startDate"
-              onChange={handleregistForm}
-            />
-          </S.LabelContainer>
-          <S.LabelContainer>
-            <S.InputLabel>참여인원</S.InputLabel>
-            <S.InputBox type="number" min="1" name="limitMember" onChange={handleregistForm} />
-          </S.LabelContainer>
-          <S.LabelContainer>
-            <S.InputLabel>외화</S.InputLabel>
-            <S.InputBox type="text" name="money" onChange={handleregistForm} />
-          </S.LabelContainer>
+          <LabelInput labelTitle="모임 이름" inputType="text" inputName="groupName" handler={handleregistForm} />
+          <LabelInput labelTitle="계좌" inputType="text" inputName="account" handler={handleregistForm} />
+          <LabelInput labelTitle="목표금액" inputType="text" inputName="goal" handler={handleregistForm} />
+          <LabelInput labelTitle="회비" inputType="text" inputName="dues" handler={handleregistForm} />
+          <LabelInput
+            labelTitle="자동이체일"
+            inputType="date"
+            inputName="duesDate"
+            handler={handleregistForm}
+            option={{ value: currentDate }}
+          />
+          <LabelInput
+            labelTitle="여행예정일"
+            inputType="date"
+            inputName="startDate"
+            handler={handleregistForm}
+            option={{ value: currentDate, min: currentDate }}
+          />
+          <LabelInput labelTitle="참여인원" inputType="number" inputName="limitMember" handler={handleregistForm} />
+          <LabelInput labelTitle="외화" inputType="text" inputName="money" handler={handleregistForm} />
           <S.NextButton type="submit" onClick={handleSubmit}>
             다음
           </S.NextButton>

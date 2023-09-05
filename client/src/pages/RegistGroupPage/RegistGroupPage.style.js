@@ -22,25 +22,6 @@ export const InputWrapper = styled(Flex)`
   width: 70%;
 `;
 
-export const InputBox = styled.input`
-  padding: 0.5rem 1rem;
-  border-bottom: solid 1px ${({ theme }) => theme.color.darkgray};
-  width: 60%;
-  text-align: end;
-`;
-
-export const LabelContainer = styled(Flex)`
-  justify-content: space-between;
-  gap: 1rem;
-`;
-
-export const InputLabel = styled.label`
-  /* width: 7rem; */
-  font-size: ${({ theme }) => theme.fontSize.s};
-  color: ${({ theme }) => theme.color.darkgray};
-  white-space: nowrap;
-`;
-
 export const NextButton = styled(Button)`
   width: 60%;
   background-color: ${({ theme }) => theme.color.primary};
