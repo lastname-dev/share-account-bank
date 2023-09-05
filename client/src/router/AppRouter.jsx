@@ -3,6 +3,7 @@ import Layout from "components/Layout/Layout";
 import AccountPage from "pages/AccountPage/AccountPage";
 import DepositPage from "pages/DepositPage/DepositPage";
 import IntroPage from "pages/IntroPage/IntroPage";
+import InvitationPage from "pages/InvitationPage/InvitationPage";
 import LoginPage from "pages/LoginPage/LoginPage";
 import MainPage from "pages/MainPage/MainPage";
 import NotFoundPage from "pages/NotFoundPage/NotFoundPage";
@@ -37,6 +38,10 @@ const AppRouter = () => {
         {
           path: "/travelInfo/:groupId",
           element: <TravelInfoPage />,
+        },
+        {
+          path: "/invite/:groupId",
+          element: <InvitationPage />,
         },
       ],
     },
