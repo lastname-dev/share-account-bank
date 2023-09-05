@@ -15,30 +15,11 @@ const AppRouter = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <HeaderLessLayout />,
-      errorElement: <NotFoundPage />,
-      children: [
-        {
-          path: "/intro",
-          element: <IntroPage />,
-        },
-        {
-          path: "/signup",
-          element: <SignUpPage />,
-        },
-        {
-          path: "/login",
-          element: <LoginPage />,
-        },
-      ],
-    },
-    {
-      path: "/",
       element: <Layout />,
       errorElement: <NotFoundPage />,
       children: [
         {
-          path: "/main",
+          path: "/",
           element: <MainPage />,
         },
         {
@@ -56,6 +37,25 @@ const AppRouter = () => {
         {
           path: "/travelInfo/:groupId",
           element: <TravelInfoPage />,
+        },
+      ],
+    },
+    {
+      path: "/",
+      element: <HeaderLessLayout />,
+      errorElement: <NotFoundPage />,
+      children: [
+        {
+          path: "/intro",
+          element: <IntroPage />,
+        },
+        {
+          path: "/signup",
+          element: <SignUpPage />,
+        },
+        {
+          path: "/login",
+          element: <LoginPage />,
         },
       ],
     },
