@@ -29,7 +29,7 @@ public class QAccount extends EntityPathBase<Account> {
 
     public final BooleanPath isGroup = createBoolean("isGroup");
 
-    public final NumberPath<Long> userId = createNumber("userId", Long.class);
+    public final StringPath userName = createString("userName");
 
     public QAccount(String variable) {
         super(Account.class, forVariable(variable));

@@ -8,5 +8,5 @@ import java.util.List;
 @Repository
 public interface AccountRepository extends JpaRepository<Account,Long> {
     Account findByAccountId(String accountId);
-    List<Account> findAllByUserId(Long userId);
+    List<Account> findAllByUserName(String userName);
 }

@@ -35,13 +35,11 @@ public class BankController {
     {
         Map<String, Object> response = new HashMap<>();
         try {
-            Long userId = createAccountRequestDto.getUserId();
-            Account newAccount = accountService.createAccount(userId);
-            response.put("status", "success");
+            String userName = createAccountRequestDto.getUserName();
+            Account newAccount = accountService.createAccount(userName);
             response.put("account", newAccount);
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (Exception e) {
-            response.put("status", "error");
             response.put("message", e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -88,11 +86,9 @@ public class BankController {
                     transferAccountRequestDto.getReceiver(),
                     transferAccountRequestDto.getAmount()
             );
-            response.put("status", "success");
             response.put("message", "Transfer successful");
             return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
         } catch (Exception e) {
-            response.put("status", "failed");
             response.put("message", "Transfer failed: " + e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
@@ -107,8 +103,8 @@ public class BankController {
         Map<String,Object> response = new HashMap<>();
 
         try {
-            Long userId = allAccountRequestDto.getUserId();
-            List<Account> userAccounts = accountService.findAllByUserId(userId);
+            String userName = allAccountRequestDto.getUserName();
+            List<Account> userAccounts = accountService.findAllByUserName(userName);
             List<AccountResponseDto> accountResponseDtos = new ArrayList<>();
 
             for(Account account : userAccounts){
@@ -137,12 +133,11 @@ public class BankController {
 
         try {
             Account account = accountService.findByAccountId(accountId);
-            AccountResponseDto accountResponseDto = new AccountResponseDto();
-
-            accountResponseDto.setAccountId(account.getAccountId());
-            accountResponseDto.setBalance(account.getBalance());
-            accountResponseDto.setGroupId(accountResponseDto.getGroupId());
-            accountResponseDto.setGroup(accountResponseDto.isGroup());
+            // AccountResponseDto accountResponseDto = new AccountResponseDto();
+            // accountResponseDto.setAccountId(account.getAccountId());
+            // accountResponseDto.setBalance(account.getBalance());
+            // accountResponseDto.setGroupId(accountResponseDto.getGroupId());
+            // accountResponseDto.setGroup(accountResponseDto.isGroup());
 
             //계좌 입출금 내역
             List<CashFlowHistory> cashFlowList = accountService.getCashFlowList(accountId);
@@ -158,8 +153,10 @@ public class BankController {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    //그룹계좌 지정
+    // @PostMapping("/{accountId}/group")
 
-    //그룸계좌 해제
+    //그룹계좌 해제
     @PostMapping("/{accountId}")
     public ResponseEntity<Map<String,Object>> disableGroup(
             @PathVariable String accountId

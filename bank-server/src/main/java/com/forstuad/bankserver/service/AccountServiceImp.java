@@ -40,11 +40,11 @@ public class AccountServiceImp implements AccountService{
     }
 
     @Override
-    public Account createAccount(Long userId) {
+    public Account createAccount(String userName) {
         Account account = Account
                 .builder()
                 .accountId(accountUtilService.createAccountId())
-                .userId(userId)
+                .userName(userName)
                 .build();
 
         accountRepository.save(account);
@@ -95,7 +95,7 @@ public class AccountServiceImp implements AccountService{
             cashFlowHistory.setTime(cashFlow.getDateTime());
             cashFlowHistory.setAmount(cashFlow.getAmount());
             cashFlowHistory.setSender(cashFlow.getSender());
-            cashFlowHistory.setReceiver(cashFlowHistory.getReceiver());
+            cashFlowHistory.setReceiver(cashFlow.getReceiver());
 
 
             if(accountId.equals(cashFlow.getSender())){
@@ -110,8 +110,8 @@ public class AccountServiceImp implements AccountService{
     }
 
     @Override
-    public List<Account> findAllByUserId(Long userId) {
-        return accountRepository.findAllByUserId(userId);
+    public List<Account> findAllByUserName(String userName) {
+        return accountRepository.findAllByUserName(userName);
     }
 
     @Override

@@ -9,9 +9,9 @@ public interface AccountService {
     public void saveAccount(Account account);
     public Account findByAccountId(String accountId);
     public void deposit(String accountId,int balance);
-    public Account createAccount(Long userId);
+    public Account createAccount(String userName);
     public void transferAccount(String sender,String receiver,int amount);
     public List<CashFlowHistory> getCashFlowList(String accountId);
-    public List<Account> findAllByUserId(Long userId);
+    public List<Account> findAllByUserName(String userName);
     public void disableGroupAccount(String accountId);
 }

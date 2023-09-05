@@ -14,8 +14,8 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @Column(name = "user_name")
+    private String userName;
 
     @Column(name = "group_id")
     private long groupId;
@@ -28,8 +28,8 @@ public class Account {
     private boolean isGroup;
 
     @Builder
-    public Account(Long userId, long groupId, String accountId, int balance, boolean isGroup) {
-        this.userId = userId;
+    public Account(String userName, long groupId, String accountId, int balance, boolean isGroup) {
+        this.userName = userName;
         this.groupId = groupId;
         this.accountId = accountId;
         this.balance = balance;

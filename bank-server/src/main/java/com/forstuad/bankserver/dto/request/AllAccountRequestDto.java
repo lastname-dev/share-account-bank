@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class AllAccountRequestDto {
-    private Long userId;
+    private String userName;
 }
