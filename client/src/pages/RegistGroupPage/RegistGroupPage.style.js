@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 import Flex from "components/@common/Flex/Flex";
 import Button from "components/@common/Button/Button";
+import { NativeSelect } from "@mui/material";
 
 export const RegistGroupPageWrapper = styled(Flex)`
   flex-direction: column;
@@ -27,4 +28,12 @@ export const NextButton = styled(Button)`
   background-color: ${({ theme }) => theme.color.primary};
   color: ${({ theme }) => theme.color.white};
   font-size: ${({ theme }) => theme.fontSize.m};
+`;
+
+export const CustomSelect = styled(NativeSelect)`
+  border-bottom: solid 1px ${({ theme }) => theme.color.darkgray};
+  width: 100%;
+  font-size: ${({ theme }) => theme.fontSize.l};
+  background-color: transparent;
+  color: ${({ theme }) => theme.color.darkgray};
 `;
