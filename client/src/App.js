@@ -1,15 +1,25 @@
-import Body from "components/Layout/Body/Body";
 import React from "react";
-import { Outlet } from "react-router-dom";
+import AppRouter from "router/AppRouter";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { RecoilRoot } from "recoil";
 
 function App() {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: 1,
+      },
+    },
+  });
+
   return (
-    <Body>
-      <h1>HEADER</h1>
-      <main>
-        <Outlet />
-      </main>
-    </Body>
+    <React.Fragment>
+      <QueryClientProvider client={queryClient}>
+        <RecoilRoot>
+          <AppRouter />
+        </RecoilRoot>
+      </QueryClientProvider>
+    </React.Fragment>
   );
 }
 

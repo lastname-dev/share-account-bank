@@ -1,3 +1,4 @@
+import Button from "components/@common/Button/Button";
 import Flex from "components/@common/Flex/Flex";
 import { styled } from "styled-components";
 
@@ -14,7 +15,11 @@ export const LabelWrapper = styled(Flex)`
   font-weight: bold;
 `;
 
-export const GroupListContainer = styled(Flex)`
-  flex-direction: column;
-  gap: 2.5rem;
+export const CreateGroupButton = styled(Button)`
+  width: 100%;
+  padding: 1rem 2rem;
+  font-size: ${({ theme }) => theme.fontSize.l};
+  font-weight: bold;
+  color: ${({ theme }) => theme.color.primary};
+  background-color: ${({ theme }) => theme.color.lightgray};
 `;

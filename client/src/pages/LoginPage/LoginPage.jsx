@@ -1,16 +1,18 @@
 import useInput from "hooks/useInput";
 import * as S from "./LoginPage.style";
+import { useLogInMutation } from "hooks/apiHook/useLogInMutation";
 
 const LoginPage = () => {
-  const [idInput, setIdInput, idHandler] = useInput("");
-  const [passwordInput, setPasswordInput, passwordHandler] = useInput("");
+  const [id, setId, idHandler] = useInput("");
+  const [password, setPassword, passwordHandler] = useInput("");
+  const loginMutation = useLogInMutation();
 
   const submitSignUp = () => {
     const submitform = {
-      idInput,
-      passwordInput,
+      id,
+      password,
     };
-    console.log(submitform);
+    loginMutation.mutate(submitform);
   };
 
   return (
@@ -18,7 +20,11 @@ const LoginPage = () => {
       <S.LoginText> </S.LoginText>
       <S.InputWrapper>
         <S.InputBox placeholder="이메일" type="email" onChange={idHandler} />
-        <S.InputBox placeholder="비밀번호" type="password" onChange={passwordHandler} />
+        <S.InputBox
+          placeholder="비밀번호"
+          type="password"
+          onChange={passwordHandler}
+        />
       </S.InputWrapper>
       <S.NextButton onClick={submitSignUp}>로그인</S.NextButton>
     </S.LoginPageWrapper>

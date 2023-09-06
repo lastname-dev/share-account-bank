@@ -51,3 +51,4 @@ public class Account {
         this.isGroup = isGroup;
     }
 }
+

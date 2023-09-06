@@ -28,6 +28,7 @@ public class CashFlow {
 
     @Builder
     public CashFlow(String sender, String receiver, int amount, LocalDateTime dateTime) {
+
         this.sender = sender;
         this.receiver = receiver;
         this.amount = amount;

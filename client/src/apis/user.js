@@ -1,8 +1,9 @@
-import { axiosInstance } from "./index";
+import { axiosInstance, accountTokenAxiosInstance } from "./index";
 
 const userAPI = {
-  signup: (id, account, phone, name, password, passwordCheck) =>
-    axiosInstance.post("/signup", { id, account, phone, name, password, passwordCheck }),
+  signup: (signupForm) => accountTokenAxiosInstance.post("/signup", signupForm),
+
+  login: (loginForm) => axiosInstance.post("/login", loginForm),
 
   signout: () => axiosInstance.delete("/signout"),
 
@@ -16,12 +17,19 @@ const userAPI = {
       newPasswordCheck,
     }),
 
-  login: (id, password) => axiosInstance.post("/login", { id, password }),
-
   logout: () => axiosInstance.post("/logout"),
 
   editPassword: (id, name, password, passwordCheck) =>
-    axiosInstance.put("/password", { id, name, password, passwordCheck }),
+    accountTokenAxiosInstance.put("/password", {
+      id,
+      name,
+      password,
+      passwordCheck,
+    }),
+
+  sendEmail: (id) => axiosInstance.post("/email", id),
+
+  verifyCode: (code) => axiosInstance.post("/email/verification", code),
 };
 
 export default userAPI;
