@@ -1,60 +1,60 @@
 import { axiosInstance } from "./index";
 
 const businessAPI = {
-    getGroup: (groupId) => axiosInstance.get(`/groups/${groupId}`),
+  getGroup: (groupId) => axiosInstance.get(`/groups/${groupId}`),
 
-    getGroupList: () => axiosInstance.get("/groups"),
+  getGroupList: () => axiosInstance.get("/groups"),
 
-    editGroupInformation: (groupId, groupName, goal, startDate) =>
-        axiosInstance.put(`/groups/${groupId}`, {
-            groupName,
-            goal,
-            startDate,
-        }),
+  editGroupInformation: (groupId, groupName, goal, startDate) =>
+    axiosInstance.put(`/groups/${groupId}`, {
+      groupName,
+      goal,
+      startDate,
+    }),
 
-    joinGroup: (groupId, url) =>
-        axiosInstance.post(`/groups/${groupId}`, { url }),
+  joinGroup: (groupId, url) =>
+    axiosInstance.post(`/groups/${groupId}`, { url }),
 
-    approveJoinGroup: (groupId, id) =>
-        axiosInstance.post(`/groups/${groupId}/approval/join`, { id }),
+  approveJoinGroup: (groupId, id) =>
+    axiosInstance.post(`/groups/${groupId}/approval/join`, { id }),
 
-    setGroup: (
-        groupName,
-        account,
-        goal,
-        dues,
-        duesDate,
-        startDate,
-        limitMember,
-        money
-    ) =>
-        axiosInstance.post("/groups", {
-            groupName,
-            account,
-            goal,
-            dues,
-            duesDate,
-            startDate,
-            limitMember,
-            money,
-        }),
+  setGroup: (
+    groupName,
+    account,
+    goal,
+    dues,
+    duesDate,
+    startDate,
+    limitMember,
+    money
+  ) =>
+    axiosInstance.post("/groups", {
+      groupName,
+      account,
+      goal,
+      dues,
+      duesDate,
+      startDate,
+      limitMember,
+      money,
+    }),
 
-    makeJoinLink: (groupId) => axiosInstance.post(`/groups/${groupId}/link`),
+  makeJoinLink: (groupId) => axiosInstance.post(`/groups/${groupId}/link`),
 
-    enterJoinLink: (linkId) => axiosInstance.get(`/link/${linkId}`),
+  enterJoinLink: (linkId) => axiosInstance.get(`/link/${linkId}`),
 
-    exitJoinLink: (groupId) => axiosInstance.post(`/groups/${groupId}/exit`),
+  exitJoinLink: (groupId) => axiosInstance.post(`/groups/${groupId}/exit`),
 
-    approveExitGroup: (groupId, id) =>
-        axiosInstance.post(`/groups/${groupId}/approval/exit`, { id }),
+  approveExitGroup: (groupId, id) =>
+    axiosInstance.post(`/groups/${groupId}/approval/exit`, { id }),
 
-    deleteGroup: (groupId) => axiosInstance.delete(`/groups/${groupId}`),
+  deleteGroup: (groupId) => axiosInstance.delete(`/groups/${groupId}`),
 
-    getNotificationList: () => axiosInstance.get("/notifications"),
+  getNotificationList: () => axiosInstance.get("/notifications"),
 
-    postNotificationList: (groupId) =>
-        axiosInstance.post(`/groups/${groupId}/notification`),
+  postNotificationList: (groupId) =>
+    axiosInstance.post(`/groups/${groupId}/notification`),
 
-    startTravel: (groupId) => axiosInstance.post(`/groups/${groupId}/travel`),
+  startTravel: (groupId) => axiosInstance.post(`/groups/${groupId}/travel`),
 };
 export default businessAPI;

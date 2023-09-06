@@ -10,6 +10,7 @@ import NotFoundPage from "pages/NotFoundPage/NotFoundPage";
 import RegistGroupPage from "pages/RegistGroupPage/RegistGroupPage";
 import SignUpPage from "pages/SignUpPage/SignUpPage";
 import TravelInfoPage from "pages/TravelInfoPage/TravelInfoPage";
+import GroupJoinPage from "pages/GroupJoinPage/GroupJoinPage";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 const AppRouter = () => {
@@ -42,6 +43,10 @@ const AppRouter = () => {
         {
           path: "/invite/:groupId",
           element: <InvitationPage />,
+        },
+        {
+          path: "/joinGroup/:link",
+          element: <GroupJoinPage />,
         },
       ],
     },

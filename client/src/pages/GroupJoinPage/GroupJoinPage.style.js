@@ -2,36 +2,36 @@ import Button from "components/@common/Button/Button";
 import Flex from "components/@common/Flex/Flex";
 import { styled } from "styled-components";
 
-export const InvitationPageWrapper = styled(Flex)`
+export const GroupJoinPageWrapper = styled(Flex)`
   flex-direction: column;
   justify-content: space-around;
   height: 100vh;
   padding: 9rem 0;
 `;
 
-export const InvitationMessage = styled.span`
+export const GroupJoinMessage = styled.span`
   color: ${({ theme }) => theme.color.darkgray};
   font-size: ${({ theme }) => theme.fontSize.m};
   font-weight: bold;
 `;
 
-export const InvitationImageContainer = styled(Flex)`
+export const GroupJoinImageContainer = styled(Flex)`
   margin: 0 auto;
   width: 60%;
 `;
 
-export const InvitationImage = styled.img`
+export const GroupJoinImage = styled.img`
   width: 100%;
 `;
 
-export const InvitationInfoText = styled.span`
+export const GroupJoinInfoText = styled.span`
   color: ${({ theme }) => theme.color.lightgray};
   font-size: ${({ theme }) => theme.fontSize.s};
   position: relative;
   bottom: 4rem;
 `;
 
-export const InvitationButton = styled(Button)`
+export const GroupJoinButton = styled(Button)`
   width: 60%;
   background-color: ${({ theme }) => theme.color.primary};
   color: ${({ theme }) => theme.color.white};
