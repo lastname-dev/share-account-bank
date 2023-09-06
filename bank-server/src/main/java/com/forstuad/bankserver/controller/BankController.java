@@ -177,7 +177,7 @@ public class BankController {
     }
 
     //사용자의 그룹계좌 목록 조회
-    @GetMapping("/group/{userName}")
+    @GetMapping("/group")
     public ResponseEntity<Map<String,Object>> MyGroupAccounts(
             @RequestBody GroupIdsRequestDto groupIdsRequestDto
             ){
