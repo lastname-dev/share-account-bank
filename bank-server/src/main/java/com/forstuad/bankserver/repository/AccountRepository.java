@@ -9,4 +9,5 @@ import java.util.List;
 public interface AccountRepository extends JpaRepository<Account,Long> {
     Account findByAccountId(String accountId);
     List<Account> findAllByUserName(String userName);
+    List<Account> findByGroupIdIn(List<Long> groupIds);
 }

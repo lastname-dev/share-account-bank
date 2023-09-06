@@ -3,6 +3,8 @@ package com.forstuad.bankserver.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -27,6 +29,19 @@ public class Account {
 
     private boolean isGroup;
 
+    private int goal;
+
+    private String groupName;
+
+    private int dues;
+
+    private int duesDate;
+
+    private LocalDateTime startDate;
+
+    private int member;
+
+    private String money;
     @Builder
     public Account(String userName, long groupId, String accountId, int balance, boolean isGroup) {
         this.userName = userName;

@@ -23,11 +23,25 @@ public class QAccount extends EntityPathBase<Account> {
 
     public final NumberPath<Integer> balance = createNumber("balance", Integer.class);
 
+    public final NumberPath<Integer> dues = createNumber("dues", Integer.class);
+
+    public final NumberPath<Integer> duesDate = createNumber("duesDate", Integer.class);
+
+    public final NumberPath<Integer> goal = createNumber("goal", Integer.class);
+
     public final NumberPath<Long> groupId = createNumber("groupId", Long.class);
+
+    public final StringPath groupName = createString("groupName");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final BooleanPath isGroup = createBoolean("isGroup");
+
+    public final NumberPath<Integer> member = createNumber("member", Integer.class);
+
+    public final StringPath money = createString("money");
+
+    public final DateTimePath<java.time.LocalDateTime> startDate = createDateTime("startDate", java.time.LocalDateTime.class);
 
     public final StringPath userName = createString("userName");
 

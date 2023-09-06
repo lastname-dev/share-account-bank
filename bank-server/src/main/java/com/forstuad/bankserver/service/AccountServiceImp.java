@@ -130,4 +130,10 @@ public class AccountServiceImp implements AccountService{
         accountRepository.save(account);
     }
 
+    @Override
+    public List<Account> findGroupAccountByGroupIds(List<Long> groupIds) {
+        return accountRepository.findByGroupIdIn(groupIds);
+    }
+
+
 }

@@ -2,11 +2,9 @@ package com.forstuad.bankserver.controller;
 
 import com.forstuad.bankserver.domain.Account;
 import com.forstuad.bankserver.dto.CashFlowHistory;
-import com.forstuad.bankserver.dto.request.AllAccountRequestDto;
-import com.forstuad.bankserver.dto.request.CreateAccountRequestDto;
-import com.forstuad.bankserver.dto.request.DepositAccountRequestDto;
-import com.forstuad.bankserver.dto.request.TransferAccountRequestDto;
+import com.forstuad.bankserver.dto.request.*;
 import com.forstuad.bankserver.dto.response.AccountResponseDto;
+import com.forstuad.bankserver.dto.response.GroupAccountResponseDto;
 import com.forstuad.bankserver.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -174,6 +172,40 @@ public class BankController {
         }catch (Exception e){
             response.put("status", "failed");
             response.put("message", "Disabling Group failed: " + e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //사용자의 그룹계좌 목록 조회
+    @GetMapping("/group/{userName}")
+    public ResponseEntity<Map<String,Object>> MyGroupAccounts(
+            @RequestBody GroupIdsRequestDto groupIdsRequestDto
+            ){
+        Map<String,Object> response = new HashMap<>();
+
+        try {
+            List<Long> groupIds = groupIdsRequestDto.getGroupIds();
+            List<Account> groupAccountList = accountService.findGroupAccountByGroupIds(groupIds);
+            List<GroupAccountResponseDto> groupAccountResponseDtoList = new ArrayList<>();
+            for(Account account : groupAccountList){
+                GroupAccountResponseDto groupAccountResponseDto = GroupAccountResponseDto.builder()
+                        .groupName(account.getGroupName())
+                        .account(account.getAccountId())
+                        .goal(account.getGoal())
+                        .balance(account.getBalance())
+                        .dues(account.getDues())
+                        .duesDate(account.getDuesDate())
+                        .startDate(account.getStartDate())
+                        .member(groupAccountList.size())
+                        .money(account.getMoney())
+                        .build();
+
+                groupAccountResponseDtoList.add(groupAccountResponseDto);
+            }
+            response.put("groupAccounts",groupAccountResponseDtoList);
+            return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+        }catch (Exception e){
+            response.put("status", "failed");
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
