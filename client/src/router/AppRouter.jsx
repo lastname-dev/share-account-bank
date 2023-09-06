@@ -1,6 +1,7 @@
 import HeaderLessLayout from "components/Layout/HeaderLessLayout/HeaderLessLayout";
 import Layout from "components/Layout/Layout";
 import AccountPage from "pages/AccountPage/AccountPage";
+import CalculationPage from "pages/CalculationPage/CalculationPage";
 import DepositPage from "pages/DepositPage/DepositPage";
 import IntroPage from "pages/IntroPage/IntroPage";
 import InvitationPage from "pages/InvitationPage/InvitationPage";
@@ -61,6 +62,10 @@ const AppRouter = () => {
         {
           path: "/login",
           element: <LoginPage />,
+        },
+        {
+          path: "/calculation/:groudId",
+          element: <CalculationPage />,
         },
       ],
     },
