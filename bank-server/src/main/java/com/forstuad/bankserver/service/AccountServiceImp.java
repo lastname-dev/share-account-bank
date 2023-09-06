@@ -61,7 +61,9 @@ public class AccountServiceImp implements AccountService{
         if (senderAccount == null || receiverAccount == null) {
             throw new IllegalArgumentException("sender or receiver 가 없습니다.");
         }
-
+        if(sender.equals(receiver)){
+            throw new IllegalArgumentException("자기 자신한테 보낼 수 없습니다.");
+        }
         if (senderAccount.getBalance() < amount) {
             throw new IllegalArgumentException("잔액이 부족합니다.");
         }
