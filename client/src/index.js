@@ -4,14 +4,14 @@ import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import { ThemeProvider } from "styled-components";
 import GlobalStyle from "styles/globalStyle";
 import { theme } from "styles/theme";
-import AppRouter from "router/AppRouter";
+import App from "App";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <ThemeProvider theme={theme}>
     <GlobalStyle />
-    <AppRouter />
-  </ThemeProvider>
+    <App />
+  </ThemeProvider>,
 );
 
 // If you want your app to work offline and load faster, you can change

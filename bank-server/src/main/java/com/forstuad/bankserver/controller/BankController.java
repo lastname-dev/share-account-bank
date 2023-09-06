@@ -186,6 +186,7 @@ public class BankController {
         try {
             List<Long> groupIds = groupIdsRequestDto.getGroupIds();
             List<Account> groupAccountList = accountService.findGroupAccountByGroupIds(groupIds);
+            log.info(String.valueOf(groupAccountList.get(0)));
             List<GroupAccountResponseDto> groupAccountResponseDtoList = new ArrayList<>();
             for(Account account : groupAccountList){
                 GroupAccountResponseDto groupAccountResponseDto = GroupAccountResponseDto.builder()
@@ -208,5 +209,12 @@ public class BankController {
             response.put("status", "failed");
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+    @GetMapping("/my/{userName}")
+    public ResponseEntity<?> getAccounts(@PathVariable String userName){
+
+
+        List<Account> allByUserName = accountService.findAllByUserName(userName);
+        return new ResponseEntity<>(allByUserName,HttpStatus.OK);
     }
 }

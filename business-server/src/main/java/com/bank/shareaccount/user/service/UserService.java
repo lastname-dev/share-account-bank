@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface UserService {
 
-    UserTokenResponseDto signUp(UserSignUpDto userSignUpDto);
+    void signUp(UserSignUpDto userSignUpDto);
     void updateUserInfo(UserUpdateDto userUpdateDto);
     UserInfoResponseDto getUserInfo(String userId);
     void changePassword(UserChangePasswordDto userChangePasswordDto);

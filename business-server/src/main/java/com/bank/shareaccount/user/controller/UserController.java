@@ -12,10 +12,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @CrossOrigin
@@ -26,10 +28,10 @@ public class UserController {
     private final UserServiceImpl userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<UserTokenResponseDto> signUp(@RequestBody UserSignUpDto userSignUpDto) {
+    public ResponseEntity<?> signUp(@RequestBody UserSignUpDto userSignUpDto) {
         log.info("회원가입 진입 : {}", userSignUpDto.getId());
-        UserTokenResponseDto userTokenResponseDto = userService.signUp(userSignUpDto);
-        return new ResponseEntity<>(userTokenResponseDto, HttpStatus.ACCEPTED);
+        userService.signUp(userSignUpDto);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 //    @PostMapping("/signout")
 //    public ResponseEntity<?> signOut(){
@@ -42,16 +44,14 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserLoginDto userLoginDto) {
-        log.info("아이디 : {}    비밀번호: {}", userLoginDto.getId(), userLoginDto.getPassword());
+    public ResponseEntity<UserTokenResponseDto> login(@RequestBody UserLoginDto userLoginDto, HttpServletResponse response) {
+        String access = response.getHeader("Authorization");
+        String refresh = response.getHeader("Authorization-refresh");
+        UserTokenResponseDto userTokenResponseDto = new UserTokenResponseDto(access, refresh);
+        return new ResponseEntity<>(userTokenResponseDto,HttpStatus.ACCEPTED);
 
-        return null;
     }
-    @GetMapping("/test")
-    public ResponseEntity<?> test(){
-        log.info("test");
-        return null;
-    }
+
     @GetMapping
     public ResponseEntity<?> getUserInfo() {
         return null;
