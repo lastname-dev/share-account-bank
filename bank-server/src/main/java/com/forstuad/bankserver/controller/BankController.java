@@ -95,15 +95,13 @@ public class BankController {
     }
 
     //전체 계좌 조회
-    @GetMapping
+    @GetMapping("/{userName}")
     public ResponseEntity<Map<String,Object>> accountList(
-            @RequestBody AllAccountRequestDto allAccountRequestDto
-            )
+            @PathVariable String userName)
     {
         Map<String,Object> response = new HashMap<>();
 
         try {
-            String userName = allAccountRequestDto.getUserName();
             List<Account> userAccounts = accountService.findAllByUserName(userName);
             List<AccountResponseDto> accountResponseDtos = new ArrayList<>();
 
