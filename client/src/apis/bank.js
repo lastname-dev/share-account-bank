@@ -1,11 +1,9 @@
 import { axiosInstance } from "./index";
 
 const bankAPI = {
-  verifyAccount: (name, account) =>
-    axiosInstance.post("/accounts/verification", { name, account }),
+  verifyAccount: (name, account) => axiosInstance.post("/accounts/verification", { name, account }),
 
-  transactAccount: (sender, receiver, amount) =>
-    axiosInstance.post("/accounts/transactions", { sender, receiver, amount }),
+  transactAccount: (transactionData) => axiosInstance.post("/accounts/transactions", transactionData),
 
   depositAccount: (userId, amount) => axiosInstance.post("/accounts/deposit", { userId, amount }),
 
@@ -19,11 +17,9 @@ const bankAPI = {
 
   getExchangeRate: () => axiosInstance.get("/exchangeRate"),
 
-  postExchangeRate: (groupId) =>
-    axiosInstance.post(`/groups/${groupId}/exchange`),
+  postExchangeRate: (groupId) => axiosInstance.post(`/groups/${groupId}/exchange`),
 
-  postCalculation: (groupId) =>
-    axiosInstance.post(`/groups/${groupId}/calculation`),
+  postCalculation: (groupId) => axiosInstance.post(`/groups/${groupId}/calculation`),
 };
 
 export default bankAPI;
