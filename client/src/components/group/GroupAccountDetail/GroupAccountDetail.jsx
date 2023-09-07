@@ -1,9 +1,9 @@
 import ProgressBar from "components/@common/ProgressBar/ProgressBar";
-import * as S from "./AccountDetail.style";
+import * as S from "./GroupAccountDetail.style";
 
-const AccountDetail = ({ groupName, account, goal, balance, money }) => {
+const GroupAccountDetail = ({ groupName, account, goal, balance, money }) => {
   return (
-    <S.AccountDetailWrapper>
+    <S.GroupAccountDetailWrapper>
       <S.InfoContainer>
         <S.Name>{groupName}</S.Name>
         <S.Number>{account}</S.Number>
@@ -17,12 +17,12 @@ const AccountDetail = ({ groupName, account, goal, balance, money }) => {
         </select>
       </S.MoneyContainer>
       <ProgressBar goalMoney={goal} currentMoney={balance} />
-      <S.AccountButtonContainer>
-        <S.AccountButton>여행가기</S.AccountButton>
-        <S.AccountButton>환전 우대율 조회</S.AccountButton>
-      </S.AccountButtonContainer>
-    </S.AccountDetailWrapper>
+      <S.GroupAccountButtonContainer>
+        <S.GroupAccountButton>여행가기</S.GroupAccountButton>
+        <S.GroupAccountButton>환전 우대율 조회</S.GroupAccountButton>
+      </S.GroupAccountButtonContainer>
+    </S.GroupAccountDetailWrapper>
   );
 };
 
-export default AccountDetail;
+export default GroupAccountDetail;

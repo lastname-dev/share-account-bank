@@ -1,6 +1,15 @@
+import Flex from "components/@common/Flex/Flex";
 import { styled } from "styled-components";
 
-export const ModalBackground = styled.div`
+export const ModalWrapper = styled(Flex)`
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+`;
+
+export const ModalBackground = styled(Flex)`
   height: 100%;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.4);
@@ -8,10 +17,7 @@ export const ModalBackground = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   z-index: 99;
 `;
 

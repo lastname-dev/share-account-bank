@@ -8,10 +8,10 @@ function Modal({ children, id }) {
   return (
     <>
       {modalToggleState && (
-        <>
+        <S.ModalWrapper>
           <S.ModalBackground onClick={closeModal} />
           <S.ModalBody>{children}</S.ModalBody>
-        </>
+        </S.ModalWrapper>
       )}
     </>
   );

@@ -2,44 +2,35 @@ import { useNavigate } from "react-router-dom";
 import * as S from "./MainPage.style";
 import GroupList from "components/group/GroupList/GroupList";
 import { PATH } from "constants/path";
-// import { useGroupListQuery } from "hooks/apiHook/useGroupListQuery";
+import { useGroupListQuery } from "hooks/apiHook/useGroupListQuery";
+import { useAccountListQuery } from "hooks/apiHook/useAccountListQuery";
+import AccountList from "components/account/AccountList/AccountList";
+import Modal from "components/@common/Modal/Modal";
+import useModal from "hooks/useModal";
+import { useRecoilValue } from "recoil";
+import { selectedMyAccountState } from "recoil/atoms";
+import DepositModal from "components/account/DepositModal/DepositModal";
 
 const MainPage = () => {
-  // const groupListData = useGroupListQuery();
   const navigate = useNavigate();
-  const dummyGroupList = [
-    {
-      groupName: "여행가장", // 그룹 이름
-      account: "110-432-123456", // 계좌 번호
-      goal: 10000, // 목표 금액
-      balance: 3000, // 잔고
-      dues: 30000, // 월 회비
-      duesDate: "duesDate", // 자동 이체를 할 날짜
-      startDate: "startDate", // 여행을 출발할 날짜
-      member: 3, // 현재 참여 인원
-      money: "money", // yen, yuan, dollar, euro, en ...
-      isPaid: true, // 내가 회비 냈는지 여부
-    },
-    {
-      groupName: "제주도가장", // 그룹 이름
-      account: "110-532-123456", // 계좌 번호
-      goal: 10000, // 목표 금액
-      balance: 7820, // 잔고
-      dues: 30000, // 월 회비
-      duesDate: "duesDate", // 자동 이체를 할 날짜
-      startDate: "startDate", // 여행을 출발할 날짜
-      member: 4, // 현재 참여 인원
-      money: "money", // yen, yuan, dollar, euro, en ...
-      isPaid: true, // 내가 회비 냈는지 여부
-    },
-  ];
+  const { groupListData } = useGroupListQuery();
+  const { accountListData } = useAccountListQuery();
+  const { openModal } = useModal("accountId");
+  const selectedMyAccount = useRecoilValue(selectedMyAccountState);
 
   return (
-    <S.MainPageWrapper>
-      <S.LabelWrapper>나의 모임 통장</S.LabelWrapper>
-      <GroupList groupList={dummyGroupList} />
-      <S.CreateGroupButton onClick={() => navigate(PATH.REGIST_GROUP_PAGE)}>+</S.CreateGroupButton>
-    </S.MainPageWrapper>
+    <>
+      <S.MainPageWrapper>
+        <S.LabelWrapper>내 계좌</S.LabelWrapper>
+        <AccountList accountList={accountListData?.data} openModal={openModal} />
+        <S.LabelWrapper>내 모임 계좌</S.LabelWrapper>
+        <GroupList groupList={groupListData?.data} />
+        <S.CreateGroupButton onClick={() => navigate(PATH.REGIST_GROUP_PAGE)}>+</S.CreateGroupButton>
+        <Modal id="accountId">
+          <DepositModal selectedMyAccount={selectedMyAccount} />
+        </Modal>
+      </S.MainPageWrapper>
+    </>
   );
 };
 export default MainPage;

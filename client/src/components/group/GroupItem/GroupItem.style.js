@@ -20,7 +20,7 @@ export const GroupItemNameContainer = styled(Flex)`
 export const GroupItemName = styled.span`
   font-size: ${({ theme }) => theme.fontSize.m};
   font-weight: bold;
-  color: ${({ theme }) => theme.color.black};
+  color: ${({ theme }) => theme.color.darkgray};
 `;
 
 export const DepositContainer = styled(Flex)`

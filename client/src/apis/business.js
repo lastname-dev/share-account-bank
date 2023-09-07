@@ -7,25 +7,28 @@ const businessAPI = {
 
   editGroupInformation: (groupId, editGroupData) => axiosInstance.put(`/groups/${groupId}`, { ...editGroupData }),
 
+
   joinGroup: (groupId, url) => axiosInstance.post(`/groups/${groupId}`, { url }),
 
   approveJoinGroup: (groupId, id) => axiosInstance.post(`/groups/${groupId}/approval/join`, { id }),
 
   setGroup: (setGroupData) => axiosInstance.post("/groups", { ...setGroupData }),
 
-  makeJoinLink: (groupId) => axiosInstance.get(`/groups/${groupId}/link`),
+  makeJoinLink: (groupId) => axiosInstance.post(`/groups/${groupId}/link`),
 
   enterJoinLink: (linkId) => axiosInstance.get(`/link/${linkId}`),
 
   exitJoinLink: (groupId) => axiosInstance.post(`/groups/${groupId}/exit`),
 
-  approveExitGroup: (groupId, id) => axiosInstance.post(`/groups/${groupId}/approval/exit`, { id }),
+  approveExitGroup: (groupId, id) =>
+    axiosInstance.post(`/groups/${groupId}/approval/exit`, { id }),
 
   deleteGroup: (groupId) => axiosInstance.delete(`/groups/${groupId}`),
 
   getNotificationList: () => axiosInstance.get("/notifications"),
 
-  postNotificationList: (groupId) => axiosInstance.post(`/groups/${groupId}/notification`),
+  postNotificationList: (groupId) =>
+    axiosInstance.post(`/groups/${groupId}/notification`),
 
   startTravel: (groupId) => axiosInstance.post(`/groups/${groupId}/travel`),
 };

@@ -12,7 +12,11 @@ export const LabelWrapper = styled(Flex)`
   justify-content: start;
   font-size: ${({ theme }) => theme.fontSize.m};
   color: ${({ theme }) => theme.color.darkgray};
+  background-color: ${({ theme }) => theme.color.white};
   font-weight: bold;
+  position: sticky;
+  top: 6rem;
+  padding: 1rem 0;
 `;
 
 export const CreateGroupButton = styled(Button)`
