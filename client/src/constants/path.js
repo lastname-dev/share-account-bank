@@ -11,4 +11,5 @@ export const PATH = {
   INVITATION_PAGE: (groupId) => `/invite/${groupId}`,
   EXCHANGE_PAGE: (groupId) => `/exchange/${groupId}`,
   CALCULATION_PAGE: (groupId) => `/calculation/${groupId}`,
+  JOINGROUP_PAGE: (link) => `/joinGroup/${link}`,
 };
