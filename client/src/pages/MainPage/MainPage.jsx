@@ -7,12 +7,16 @@ import { useAccountListQuery } from "hooks/apiHook/useAccountListQuery";
 import AccountList from "components/account/AccountList/AccountList";
 import Modal from "components/@common/Modal/Modal";
 import useModal from "hooks/useModal";
+import { useRecoilValue } from "recoil";
+import { selectedMyAccountState } from "recoil/atoms";
+import DepositModal from "components/account/DepositModal/DepositModal";
 
 const MainPage = () => {
+  const navigate = useNavigate();
   const { groupListData } = useGroupListQuery();
   const { accountListData } = useAccountListQuery();
-  const navigate = useNavigate();
   const { openModal } = useModal("accountId");
+  const selectedMyAccount = useRecoilValue(selectedMyAccountState);
 
   return (
     <>
@@ -22,8 +26,8 @@ const MainPage = () => {
         <S.LabelWrapper>내 모임 계좌</S.LabelWrapper>
         <GroupList groupList={groupListData?.data} />
         <S.CreateGroupButton onClick={() => navigate(PATH.REGIST_GROUP_PAGE)}>+</S.CreateGroupButton>
-        <Modal id={"accountId"}>
-          <h1>"accountId"</h1>
+        <Modal id="accountId">
+          <DepositModal selectedMyAccount={selectedMyAccount} />
         </Modal>
       </S.MainPageWrapper>
     </>

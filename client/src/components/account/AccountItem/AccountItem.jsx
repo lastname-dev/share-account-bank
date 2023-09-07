@@ -1,9 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import * as S from "./AccountItem.style";
 import { PATH } from "constants/path";
+import { useSetRecoilState } from "recoil";
+import { selectedMyAccountState } from "recoil/atoms";
 
 const AccountItem = ({ accountId, balance, openModal }) => {
   const navigate = useNavigate();
+  const setSelectedMyAccountState = useSetRecoilState(selectedMyAccountState);
+
+  const handleSelectAccount = () => {
+    openModal();
+    setSelectedMyAccountState(accountId);
+  };
 
   return (
     <>
@@ -13,7 +21,7 @@ const AccountItem = ({ accountId, balance, openModal }) => {
           <S.Deposit>{balance}원</S.Deposit>
         </S.DepositContainer>
         <S.AccountButtonContainer>
-          <S.DetailButton onClick={openModal}>이체</S.DetailButton>
+          <S.DetailButton onClick={handleSelectAccount}>이체</S.DetailButton>
           <S.DetailButton onClick={() => navigate(PATH.ACCOUNT_PAGE(accountId))}>조회</S.DetailButton>
         </S.AccountButtonContainer>
       </S.AccountItemWrapper>

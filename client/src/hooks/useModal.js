@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useRecoilState } from "recoil";
-import { modalState } from "recoil/modalState";
+import { modalState } from "recoil/atoms";
 
 const useModal = (id) => {
   const [modalToggleState, setModalToggleState] = useRecoilState(modalState(id));
