@@ -10,7 +10,6 @@ const GroupPage = () => {
 
   return (
     <>
-      (
       <S.GroupPageWrapper>
         <AccountDetail
           groupName={groupData.data.groupName}
@@ -27,7 +26,6 @@ const GroupPage = () => {
           participants={groupData.data.limitMember}
         />
       </S.GroupPageWrapper>
-      )
     </>
   );
 };

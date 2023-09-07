@@ -8,14 +8,14 @@ const GroupItem = ({ group }) => {
 
   const handleNavigation = (isPaid, account) => {
     if (isPaid) {
-      navigate(PATH.TRAVEL_INFO_PAGE(account), { state: { account } });
+      navigate(PATH.TRAVEL_INFO_PAGE(group.groupId), { state: { account } });
       return;
     }
-    navigate(PATH.DEPOSIT_PAGE(account), { state: { account: group.account, dues: group.dues } });
+    navigate(PATH.DEPOSIT_PAGE(group.groupId), { state: { account: group.account, dues: group.dues } });
   };
 
   return (
-    <S.GroupItemWrapper onClick={() => navigate(PATH.GROUP_PAGE(group.account))}>
+    <S.GroupItemWrapper onClick={() => handleNavigation(false, group.account)}>
       <S.GroupItemNameContainer>
         <S.GroupItemName>{group.groupName}</S.GroupItemName>
       </S.GroupItemNameContainer>
