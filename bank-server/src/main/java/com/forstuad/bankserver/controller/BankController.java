@@ -153,7 +153,7 @@ public class BankController {
     }
     //그룹계좌 지정
     @PostMapping("/{accountId}/group")
-    public ResponseEntity<?> assignGroupAccount(@PathVariable String accountId,@RequestBody long groupId){
+    public ResponseEntity<?> assignGroupAccount(@PathVariable String accountId,@RequestBody Long groupId){
         accountService.assignGroupAccount(accountId,groupId);
 
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
