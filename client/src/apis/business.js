@@ -5,39 +5,14 @@ const businessAPI = {
 
   getGroupList: () => axiosInstance.get("/groups"),
 
-  editGroupInformation: (groupId, groupName, goal, startDate) =>
-    axiosInstance.put(`/groups/${groupId}`, {
-      groupName,
-      goal,
-      startDate,
-    }),
+  editGroupInformation: (groupId, editGroupData) => axiosInstance.put(`/groups/${groupId}`, { ...editGroupData }),
 
-  joinGroup: (groupId, url) =>
-    axiosInstance.post(`/groups/${groupId}`, { url }),
 
-  approveJoinGroup: (groupId, id) =>
-    axiosInstance.post(`/groups/${groupId}/approval/join`, { id }),
+  joinGroup: (groupId, url) => axiosInstance.post(`/groups/${groupId}`, { url }),
 
-  setGroup: (
-    groupName,
-    account,
-    goal,
-    dues,
-    duesDate,
-    startDate,
-    limitMember,
-    money
-  ) =>
-    axiosInstance.post("/groups", {
-      groupName,
-      account,
-      goal,
-      dues,
-      duesDate,
-      startDate,
-      limitMember,
-      money,
-    }),
+  approveJoinGroup: (groupId, id) => axiosInstance.post(`/groups/${groupId}/approval/join`, { id }),
+
+  setGroup: (setGroupData) => axiosInstance.post("/groups", { ...setGroupData }),
 
   makeJoinLink: (groupId) => axiosInstance.post(`/groups/${groupId}/link`),
 

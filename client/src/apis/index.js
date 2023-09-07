@@ -5,14 +5,8 @@ export const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
   headers: {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${getSession("Authorization")}`,
+    Authorization: `${getSession("Authorization")}`,
   },
 });
 
-export const accountTokenAxiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_SERVER_URL,
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: "Bearer ",
-  },
-});
+

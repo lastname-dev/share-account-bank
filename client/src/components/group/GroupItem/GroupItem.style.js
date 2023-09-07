@@ -9,6 +9,7 @@ export const GroupItemWrapper = styled(Flex)`
   border-radius: 10px;
   background-color: ${({ theme }) => theme.color.offwhite};
   justify-content: space-around;
+  cursor: pointer;
 `;
 
 export const GroupItemNameContainer = styled(Flex)`
@@ -30,7 +31,7 @@ export const DepositContainer = styled(Flex)`
 
 export const GroupItemNumber = styled.span`
   font-size: ${({ theme }) => theme.fontSize.s};
-  color: ${({ theme }) => theme.color.lightgray};
+  color: ${({ theme }) => theme.color.gray};
 `;
 export const Deposit = styled.span`
   font-size: ${({ theme }) => theme.fontSize.s};
