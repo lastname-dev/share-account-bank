@@ -23,8 +23,7 @@ const GroupCreateForm = ({ accountList, setGroupMutation, openModal }) => {
   const [registForm, handleregistForm] = useForm(intitialValue);
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(registForm);
-    // setGroupMutation.mutate(registForm);
+    setGroupMutation.mutate(registForm);
   };
   const handleFlag = (event) => {
     handleregistForm(event);
