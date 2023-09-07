@@ -15,7 +15,7 @@ const MainPage = () => {
     <S.MainPageWrapper>
       <S.LabelWrapper>내 계좌</S.LabelWrapper>
       <AccountList accountList={accountListData?.data} />
-      <S.LabelWrapper>나의 모임 통장</S.LabelWrapper>
+      <S.LabelWrapper>내 모임 계좌</S.LabelWrapper>
       <GroupList groupList={groupListData?.data} />
       <S.CreateGroupButton onClick={() => navigate(PATH.REGIST_GROUP_PAGE)}>+</S.CreateGroupButton>
     </S.MainPageWrapper>
