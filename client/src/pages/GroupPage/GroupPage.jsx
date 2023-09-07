@@ -10,24 +10,24 @@ const GroupPage = () => {
 
   return (
     <>
-      {groupData && (
-        <S.GroupPageWrapper>
-          <AccountDetail
-            groupName={groupData.data.groupName}
-            account={groupData.data.account}
-            goal={groupData.data.goal}
-            balance={groupData.data.balance}
-            money={groupData.data.money}
-          />
-          <GroupDetail
-            dues={groupData.data.dues}
-            duesDate={groupData.data.duesDate}
-            startDate={groupData.data.startDate}
-            limitMember={groupData.data.limitMember}
-            participants={groupData.data.limitMember}
-          />
-        </S.GroupPageWrapper>
-      )}
+      (
+      <S.GroupPageWrapper>
+        <AccountDetail
+          groupName={groupData.data.groupName}
+          account={groupData.data.account}
+          goal={groupData.data.goal}
+          balance={groupData.data.balance}
+          money={groupData.data.money}
+        />
+        <GroupDetail
+          dues={groupData.data.dues}
+          duesDate={groupData.data.duesDate}
+          startDate={groupData.data.startDate}
+          limitMember={groupData.data.limitMember}
+          participants={groupData.data.limitMember}
+        />
+      </S.GroupPageWrapper>
+      )
     </>
   );
 };
