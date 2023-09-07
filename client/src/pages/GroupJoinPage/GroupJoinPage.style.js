@@ -7,6 +7,11 @@ export const GroupJoinPageWrapper = styled(Flex)`
   justify-content: space-around;
   height: 100vh;
   padding: 9rem 0;
+  align-items: center;
+  background-image: url(/image/airplane_window.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 `;
 
 export const GroupJoinMessage = styled.span`
@@ -32,7 +37,7 @@ export const GroupJoinInfoText = styled.span`
 `;
 
 export const GroupJoinButton = styled(Button)`
-  width: 60%;
+  width: 20%;
   background-color: ${({ theme }) => theme.color.primary};
   color: ${({ theme }) => theme.color.white};
   font-size: ${({ theme }) => theme.fontSize.m};
