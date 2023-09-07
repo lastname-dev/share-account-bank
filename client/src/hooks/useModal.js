@@ -3,10 +3,7 @@ import { useRecoilState } from "recoil";
 import { modalState } from "recoil/modalState";
 
 const useModal = (id) => {
-  const [modalToggleState, setModalToggleState] = useRecoilState(
-    modalState(id)
-  );
-
+  const [modalToggleState, setModalToggleState] = useRecoilState(modalState(id));
   const openModal = useCallback(() => {
     setModalToggleState(true);
     document.body.style.overflow = "hidden";
