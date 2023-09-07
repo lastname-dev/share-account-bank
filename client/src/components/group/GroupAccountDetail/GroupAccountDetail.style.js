@@ -2,7 +2,7 @@ import Button from "components/@common/Button/Button";
 import Flex from "components/@common/Flex/Flex";
 import { styled } from "styled-components";
 
-export const AccountDetailWrapper = styled(Flex)`
+export const GroupAccountDetailWrapper = styled(Flex)`
   flex-direction: column;
   width: 100%;
   min-height: 20rem;
@@ -36,11 +36,11 @@ export const Money = styled.span`
   font-size: ${({ theme }) => theme.fontSize.s};
   color: ${({ theme }) => theme.color.darkgray};
 `;
-export const AccountButtonContainer = styled(Flex)`
+export const GroupAccountButtonContainer = styled(Flex)`
   justify-content: space-around;
 `;
 
-export const AccountButton = styled(Button)`
+export const GroupAccountButton = styled(Button)`
   color: ${({ theme }) => theme.color.darkgray};
   background-color: ${({ theme }) => theme.color.lightgray};
   font-size: ${({ theme }) => theme.fontSize.s};
