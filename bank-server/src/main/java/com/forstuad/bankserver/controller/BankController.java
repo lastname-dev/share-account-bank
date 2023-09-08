@@ -12,10 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -123,14 +120,14 @@ public class BankController {
     }
 
     //계좌 상세 조회
-    @GetMapping("/{accountId}")
+    @GetMapping("/{accountNumber}")
     public ResponseEntity<Map<String,Object>> account(
-            @PathVariable String accountId
+            @PathVariable String accountNumber
     ){
         Map<String,Object> response = new HashMap<>();
 
         try {
-            Account account = accountService.findByAccountId(accountId);
+            Account account = accountService.findByAccountId(accountNumber);
             // AccountResponseDto accountResponseDto = new AccountResponseDto();
             // accountResponseDto.setAccountId(account.getAccountId());
             // accountResponseDto.setBalance(account.getBalance());
@@ -138,9 +135,9 @@ public class BankController {
             // accountResponseDto.setGroup(accountResponseDto.isGroup());
 
             //계좌 입출금 내역
-            List<CashFlowHistory> cashFlowList = accountService.getCashFlowList(accountId);
+            List<CashFlowHistory> cashFlowList = accountService.getCashFlowList(accountNumber);
 
-            response.put("accountId",accountId);
+            response.put("accountNumber",accountNumber);
             response.put("balance",account.getBalance());
             response.put("historyList",cashFlowList);
 
@@ -152,21 +149,21 @@ public class BankController {
         }
     }
     //그룹계좌 지정
-    @PostMapping("/{accountId}/group")
-    public ResponseEntity<?> assignGroupAccount(@PathVariable String accountId,@RequestBody Long groupId){
-        accountService.assignGroupAccount(accountId,groupId);
+    @PostMapping("/group/{accountNumber}")
+    public ResponseEntity<?> assignGroupAccount(@PathVariable String accountNumber,@RequestBody Long groupId){
+        accountService.assignGroupAccount(accountNumber,groupId);
 
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
     //그룹계좌 해제
-    @DeleteMapping("/{accountId}/group")
+    @DeleteMapping("/group/{accountNumber}")
     public ResponseEntity<Map<String,Object>> disableGroup(
-            @PathVariable String accountId
+            @PathVariable String accountNumber
     ){
         Map<String,Object> response = new HashMap<>();
 
         try {
-            accountService.disableGroupAccount(accountId);
+            accountService.disableGroupAccount(accountNumber);
             response.put("message","group disabled success");
             return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
         }catch (Exception e){
@@ -216,5 +213,50 @@ public class BankController {
 
         List<Account> allByUserName = accountService.findAllByUserName(userName);
         return new ResponseEntity<>(allByUserName,HttpStatus.OK);
+    }
+
+    @PostMapping("/caculation/{groupId}")
+    public ResponseEntity<Map<String,Object>> caculation(
+            @RequestBody GroupIdRequestDto groupIdRequestDto
+    ){
+        Map<String,Object> response = new HashMap<>();
+        try {
+            long groupId = groupIdRequestDto.getGroupId();
+            Account representAccount = accountService.findRepresentAccount(groupId); //그룹 대표 계좌
+            int balance = representAccount.getBalance();
+
+            //그룹 계좌 가져오기
+            //그룹 계좌 이름 가져오기
+            //이름을 토대로 각각의 대표 계좌 가져오기
+            //대표 Account들 N빵하기
+
+            List<Account> groupAccounts = accountService.findAccountByGroupId(groupId);
+            List<String> groupAccountsNames = accountService.getAccountsNames(groupAccounts);
+            List<Account> representationAccountsByGroupNames = accountService.findRepresentationAccountsByGroupNames(groupAccountsNames);
+
+            accountService.caculateAccountByN(representAccount,representationAccountsByGroupNames,balance);
+
+            return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+        }catch (Exception e){
+            response.put("status", "failed");
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/main")
+    public ResponseEntity<Map<String,Object>> registerRepresentationAccount(
+            @RequestBody ReprensativeRequestDto reprensativeRequestDto
+    ){
+        Map<String,Object> response = new HashMap<>();
+        try {
+            String userName = reprensativeRequestDto.getUserName();
+            String accountId = reprensativeRequestDto.getAccount();
+
+            accountService.registerRepresationAccount(accountId);
+            return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+        }catch (Exception e){
+            response.put("status", "failed");
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

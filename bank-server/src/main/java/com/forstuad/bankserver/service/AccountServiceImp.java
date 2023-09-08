@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -135,6 +136,57 @@ public class AccountServiceImp implements AccountService{
     @Override
     public List<Account> findGroupAccountByGroupIds(List<Long> groupIds) {
         return accountRepository.findByGroupIdIn(groupIds);
+    }
+
+    @Override
+    public List<Account> findAccountByGroupId(Long groupId) {
+        return accountRepository.findAllByGroupId(groupId);
+    }
+
+    @Override
+    public List<String> getAccountsNames(List<Account> accountList) {
+        List<String> accountNames = new ArrayList<>();
+        for(Account account : accountList){
+            accountNames.add(account.getUserName());
+        }
+        return accountNames;
+    }
+
+    @Override
+    public Account findRepresentAccount(Long groupId) {
+        List<Account> accounts = accountRepository.findByGroupIdAndIsRepresentedAccountTrue(groupId);
+        if (accounts.isEmpty()) {
+            // 여기에 원하는 예외를 던집니다.
+            throw new NoSuchElementException("Representative account not found for groupId: " + groupId);
+        }
+        return accounts.get(0);
+    }
+
+    @Override
+    public void caculateAccountByN(Account representationAccount,List<Account> accountList,int balance) {
+        int n = accountList.size();
+        int settlementCash = balance / n;
+
+        for(Account account : accountList){
+            if(account.getAccountId().equals(representationAccount.getAccountId())){
+                account.setBalance(settlementCash);
+            }else{
+                account.setBalance(account.getBalance() + settlementCash);
+            }
+            accountRepository.save(account);
+        }
+    }
+
+    @Override
+    public void registerRepresationAccount(String accountId) {
+        Account account = accountRepository.findByAccountId(accountId);
+        account.setRepresentedAccount(true);
+        accountRepository.save(account);
+    }
+
+    @Override
+    public List<Account> findRepresentationAccountsByGroupNames(List<String> groupNames) {
+        return accountRepository.findAllByIsRepresentedAccountTrueAndUserNameIn(groupNames);
     }
 
 
