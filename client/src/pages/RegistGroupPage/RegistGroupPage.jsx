@@ -10,14 +10,14 @@ const RegistGroupPage = () => {
   const setGroupMutation = useSetGroupMutation();
   const { accountListData } = useAccountListQuery();
 
-  const { openModal, closeModal } = useModal();
+  const { openModal, closeModal } = useModal("createAccount");
 
   return (
     accountListData && (
       <S.RegistGroupPageWrapper>
         <S.RegistGroupText>모임통장 만들기</S.RegistGroupText>
         <GroupCreateForm accountList={accountListData.data} setGroupMutation={setGroupMutation} openModal={openModal} />
-        <Modal>
+        <Modal id="createAccount">
           <CreateAccountModal closeModal={closeModal} />
         </Modal>
       </S.RegistGroupPageWrapper>

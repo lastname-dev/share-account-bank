@@ -1,6 +1,6 @@
 import GroupDetail from "components/group/GroupDetail/GroupDetail";
 import * as S from "./GroupPage.style";
-import AccountDetail from "components/account/AccountDetail/AccountDetail";
+import GroupAccountDetail from "components/group/GroupAccountDetail/GroupAccountDetail";
 import { useParams } from "react-router-dom";
 import { useGroupQuery } from "hooks/apiHook/useGroupQuery";
 
@@ -11,7 +11,7 @@ const GroupPage = () => {
   return (
     <>
       <S.GroupPageWrapper>
-        <AccountDetail
+        <GroupAccountDetail
           groupName={groupData.data.groupName}
           account={groupData.data.account}
           goal={groupData.data.goal}
