@@ -14,6 +14,8 @@ import RegistGroupPage from "pages/RegistGroupPage/RegistGroupPage";
 import SignUpPage from "pages/SignUpPage/SignUpPage";
 import TravelInfoPage from "pages/TravelInfoPage/TravelInfoPage";
 import GroupJoinPage from "pages/GroupJoinPage/GroupJoinPage";
+import ExchangeMoneyPage from "pages/ExchangeMoneyPage/ExchangeMoneyPage";
+import ExchangeMoneyStorePage from "pages/ExchangeMoneyStorePage/ExchangeMoneyStorePage";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 const AppRouter = () => {
@@ -52,8 +54,16 @@ const AppRouter = () => {
           element: <InvitationPage />,
         },
         {
-          path: "/joinGroup/:link",
+          path: PATH.JOINGROUP_PAGE(":link"),
           element: <GroupJoinPage />,
+        },
+        {
+          path: PATH.EXCHANGE_PAGE(":groupId"),
+          element: <ExchangeMoneyPage />,
+        },
+        {
+          path: PATH.EXCHANGE_STORE_PAGE(":groupId"),
+          element: <ExchangeMoneyStorePage />,
         },
       ],
     },
