@@ -11,3 +11,9 @@ export const HeaderWrapper = styled(Flex)`
   /* border-bottom: 1px solid rgba(0, 27, 55, 0.1); */
   z-index: 10;
 `;
+
+export const BackButtonContainer = styled(Flex)`
+  height: 100%;
+  width: 3rem;
+  cursor: pointer;
+`;
