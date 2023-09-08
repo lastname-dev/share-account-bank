@@ -55,17 +55,15 @@ const ExchangeMoneyPage = () => {
         dataBody: {
           serviceCode: "T0505",
           환전통화: bill,
-          환전금액: exchangeAmount,
+          환전금액: exchangeAmount.toString(),
           거래자성명: "홍길동",
           생년월일: "19930222",
           휴대폰번호: "0101111111",
         },
       };
-      console.log(bill + "----flag-----");
       const response = await shinhanAPI.getExpectedMoney(request);
-      console.log(response);
-      console.log(response.data.dataBody.원화예상금액);
-      setResultAmount(response.data.dataBody.원화예상금액);
+      console.log(exchangeAmount / Number(response.data.dataBody.원화예상금액) / exchangeAmount);
+      setResultAmount(Math.floor(exchangeAmount / (Number(response.data.dataBody.원화예상금액) / exchangeAmount)));
     } catch {}
   };
 
