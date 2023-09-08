@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { LeftButton, RightButton, ModalButtonWrapper } from "./StoreMap.style";
+import { colors } from "@mui/material";
 
 const StoreMap = ({ x, y, text, onClose }) => {
   useEffect(() => {
@@ -25,7 +27,10 @@ const StoreMap = ({ x, y, text, onClose }) => {
     <div className="modal">
       <div className="modal-content">
         <div id="modalMap" style={{ width: "100%", height: "300px" }}></div>
-        <button onClick={onClose}>닫기</button>
+        <ModalButtonWrapper>
+          <LeftButton onClick={onClose}>닫기</LeftButton>
+          <RightButton onClick={onClose}>신청</RightButton>
+        </ModalButtonWrapper>
       </div>
     </div>
   );

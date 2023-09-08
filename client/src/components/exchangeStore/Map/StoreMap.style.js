@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import Button from "components/@common/Button/Button";
 export const ModalContainer = styled.div`
   display: none;
   position: fixed;
@@ -26,4 +26,24 @@ export const ModalContent = styled.div`
 
 export const VisibleModal = styled(ModalContainer)`
   display: flex;
+`;
+export const LeftButton = styled.button`
+  padding: 10px 40px;
+  margin-right: 10px;
+  background-color: #007bff;
+  background-color: #ccc;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+`;
+export const RightButton = styled(LeftButton)`
+  margin-right: 0;
+  background-color: #007bff;
+`;
+
+export const ModalButtonWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
 `;

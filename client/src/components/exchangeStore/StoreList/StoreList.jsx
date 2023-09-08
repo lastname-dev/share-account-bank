@@ -16,7 +16,7 @@ const StoreList = ({ stores, onListItemClick }) => {
   return (
     <ul>
       {stores.map((store, index) => (
-        <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+        <Box key={index} sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
           <List key={index} onClick={() => onListItemClick(store)} component="nav" aria-label="main mailbox folders">
             <ListItemButton
               selected={selectedIndex === { index }}
