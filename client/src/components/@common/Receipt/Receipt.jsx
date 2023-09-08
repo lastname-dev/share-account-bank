@@ -1,3 +1,4 @@
+import Barcode from "components/@common/Barcode/Barcode";
 import * as S from "components/@common/Receipt/Receipt.style";
 
 const Receipt = ({}) => {
@@ -33,7 +34,7 @@ const Receipt = ({}) => {
       <S.ReceiptTitle>Receipt</S.ReceiptTitle>
       <S.ReceiptHeader>
         <h2>{accountData.accountId}</h2>
-        {accountData.balance}
+        잔액 {accountData.balance}원
       </S.ReceiptHeader>
       <S.ReceiptContentContainer>
         <S.ReceiptContent>
@@ -52,6 +53,7 @@ const Receipt = ({}) => {
       <S.ImageContainer>
         <S.PaidIcon src={process.env.PUBLIC_URL + "/image/paid.png"} />
       </S.ImageContainer>
+      <Barcode />
     </S.ReceiptWrapper>
   );
 };
