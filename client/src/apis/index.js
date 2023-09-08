@@ -9,4 +9,10 @@ export const axiosInstance = axios.create({
   },
 });
 
-
+export const axiosShinhanInstance = axios.create({
+  baseURL: process.env.REACT_APP_SHINHAN_URL,
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `${getSession("Authorization")}`,
+  },
+});
