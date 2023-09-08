@@ -5,10 +5,15 @@ export const ReceiptWrapper = styled(Flex)`
   flex-direction: column;
   width: 100%;
   padding: 3rem;
-  background-color: ${({ theme }) => theme.color.white};
-  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
   color: ${({ theme }) => theme.color.darkgray};
-  background: #fffef0;
+  --mask: radial-gradient(5.02px at 50% 5.5px, #000 99%, #0000 101%) calc(50% - 10px) 0/20px 51% repeat-x,
+    radial-gradient(5.02px at 50% -0.5px, #0000 99%, #000 101%) 50% 5px/20px calc(51% - 5px) repeat-x,
+    radial-gradient(5.02px at 50% calc(100% - 5.5px), #000 99%, #0000 101%) 50% 100%/20px 51% repeat-x,
+    radial-gradient(5.02px at 50% calc(100% + 0.5px), #0000 99%, #000 101%) calc(50% - 10px) calc(100% - 5px) / 20px
+      calc(51% - 5px) repeat-x;
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+  background-color: #f1f1f1;
 `;
 
 export const ReceiptCol = styled(Flex)`
