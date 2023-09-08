@@ -10,6 +10,7 @@ export const PATH = {
   TRAVEL_INFO_PAGE: (groupId) => `/travelInfo/${groupId}`,
   INVITATION_PAGE: (groupId) => `/invite/${groupId}`,
   EXCHANGE_PAGE: (groupId) => `/exchange/${groupId}`,
+  EXCHANGE_STORE_PAGE: (groupId) => `/exchange/store/${groupId}`,
   CALCULATION_PAGE: (groupId) => `/calculation/${groupId}`,
   JOINGROUP_PAGE: (link) => `/joinGroup/${link}`,
 };
