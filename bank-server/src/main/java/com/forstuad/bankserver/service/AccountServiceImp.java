@@ -154,7 +154,7 @@ public class AccountServiceImp implements AccountService{
 
     @Override
     public Account findRepresentAccount(Long groupId) {
-        List<Account> accounts = accountRepository.findByGroupIdAndIsRepresentedAccountTrue(groupId);
+        List<Account> accounts = accountRepository.findAllByGroupId(groupId);
         if (accounts.isEmpty()) {
             // 여기에 원하는 예외를 던집니다.
             throw new NoSuchElementException("Representative account not found for groupId: " + groupId);
@@ -185,8 +185,8 @@ public class AccountServiceImp implements AccountService{
     }
 
     @Override
-    public List<Account> findRepresentationAccountsByGroupNames(List<String> groupNames) {
-        return accountRepository.findAllByIsRepresentedAccountTrueAndUserNameIn(groupNames);
+    public List<Account> findRepresentationAccountsByUserNames(List<String> userName) {
+        return accountRepository.findAllByIsRepresentedAccountTrueAndUserNameIn(userName);
     }
 
 

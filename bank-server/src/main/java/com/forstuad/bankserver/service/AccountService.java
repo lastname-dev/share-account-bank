@@ -26,6 +26,6 @@ public interface AccountService {
     public void caculateAccountByN(Account representationAccount,List<Account> accountList,int balance);//정산하기
     public void registerRepresationAccount(String accountId);//대표계좌 지정하기
 
-    public List<Account> findRepresentationAccountsByGroupNames(List<String> groupNames);//이름을 토대로 대표계좌들 찾기
+    public List<Account> findRepresentationAccountsByUserNames(List<String> userName);//이름을 토대로 대표계좌들 찾기
 
 }

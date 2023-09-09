@@ -5,6 +5,7 @@ import com.forstuad.bankserver.dto.CashFlowHistory;
 import com.forstuad.bankserver.dto.request.*;
 import com.forstuad.bankserver.dto.response.AccountResponseDto;
 import com.forstuad.bankserver.dto.response.GroupAccountResponseDto;
+import com.forstuad.bankserver.dto.response.MyAccountDto;
 import com.forstuad.bankserver.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -201,42 +202,54 @@ public class BankController {
                 groupAccountResponseDtoList.add(groupAccountResponseDto);
             }
             response.put("groupAccounts",groupAccountResponseDtoList);
-            return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }catch (Exception e){
             response.put("status", "failed");
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @GetMapping("/my/{userName}")
-    public ResponseEntity<?> getAccounts(@PathVariable String userName){
+    public ResponseEntity<Map<String,Object>> getAccounts(@PathVariable String userName){
+        Map<String,Object> response = new HashMap<>();
 
+        try {
+            List<Account> allByUserName = accountService.findAllByUserName(userName);
+            List<MyAccountDto> myAccountDtoList = new ArrayList<>();
 
-        List<Account> allByUserName = accountService.findAllByUserName(userName);
-        return new ResponseEntity<>(allByUserName,HttpStatus.OK);
+            for (Account account : allByUserName) {
+                MyAccountDto myAccountDto = new MyAccountDto();
+                myAccountDto.setAccountId(account.getAccountId());
+                myAccountDto.setGroupId(account.getGroupId());
+                myAccountDto.setGroup(account.isGroup());
+                myAccountDto.setBalance(account.getBalance());
+                myAccountDto.setRepresented(account.isRepresentedAccount());
+                myAccountDtoList.add(myAccountDto);
+            }
+            response.put("accountList",myAccountDtoList);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (Exception e){
+            response.put("status", "failed");
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping("/caculation/{groupId}")
     public ResponseEntity<Map<String,Object>> caculation(
+            @PathVariable long groupId,
             @RequestBody GroupIdRequestDto groupIdRequestDto
     ){
         Map<String,Object> response = new HashMap<>();
         try {
-            long groupId = groupIdRequestDto.getGroupId();
-            Account representAccount = accountService.findRepresentAccount(groupId); //그룹 대표 계좌
-            int balance = representAccount.getBalance();
-
-            //그룹 계좌 가져오기
-            //그룹 계좌 이름 가져오기
             //이름을 토대로 각각의 대표 계좌 가져오기
             //대표 Account들 N빵하기
+            List<String> accountNames = groupIdRequestDto.getUserName();
+            List<Account> representationAccounts = accountService.findRepresentationAccountsByUserNames(accountNames);
+            //그룹 계좌의 대표 계좌
+            Account representAccount = accountService.findRepresentAccount(groupId);
+            int balance = representAccount.getBalance();
+            accountService.caculateAccountByN(representAccount,representationAccounts,balance);
 
-            List<Account> groupAccounts = accountService.findAccountByGroupId(groupId);
-            List<String> groupAccountsNames = accountService.getAccountsNames(groupAccounts);
-            List<Account> representationAccountsByGroupNames = accountService.findRepresentationAccountsByGroupNames(groupAccountsNames);
-
-            accountService.caculateAccountByN(representAccount,representationAccountsByGroupNames,balance);
-
-            return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }catch (Exception e){
             response.put("status", "failed");
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
