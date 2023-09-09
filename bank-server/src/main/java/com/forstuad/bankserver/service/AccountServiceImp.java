@@ -163,16 +163,15 @@ public class AccountServiceImp implements AccountService{
     }
 
     @Override
-    public void caculateAccountByN(Account representationAccount,List<Account> accountList,int balance) {
-        int n = accountList.size();
+    public void caculateAccountByN(Account representationAccount,List<Account> representedAccounts,int balance) {
+        int n = representedAccounts.size();
         int settlementCash = balance / n;
-
-        for(Account account : accountList){
-            if(account.getAccountId().equals(representationAccount.getAccountId())){
-                account.setBalance(settlementCash);
-            }else{
-                account.setBalance(account.getBalance() + settlementCash);
-            }
+        //대표계좌 0원 설정
+        representationAccount.setBalance(0);
+        accountRepository.save(representationAccount);
+        //정산하기
+        for(Account account : representedAccounts){
+            account.setBalance(account.getBalance() + settlementCash);
             accountRepository.save(account);
         }
     }
