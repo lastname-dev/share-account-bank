@@ -58,3 +58,7 @@ export const ImageContainer = styled(Flex)`
 export const PaidIcon = styled.img`
   width: 35%;
 `;
+
+export const NumberList = styled.span`
+  font-size: 2rem;
+`;

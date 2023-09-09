@@ -12,5 +12,6 @@ export const PATH = {
   EXCHANGE_PAGE: (groupId) => `/exchange/${groupId}`,
   EXCHANGE_STORE_PAGE: (groupId) => `/exchange/store/${groupId}`,
   CALCULATION_PAGE: (groupId) => `/calculation/${groupId}`,
+  TRIPRESULT_PAGE: (groupId) => `/trip/${groupId}`,
   JOINGROUP_PAGE: (link) => `/joinGroup/${link}`,
 };
