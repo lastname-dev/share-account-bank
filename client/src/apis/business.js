@@ -28,5 +28,7 @@ const businessAPI = {
   postNotificationList: (groupId) => axiosInstance.post(`/groups/${groupId}/notification`),
 
   startTravel: (groupId) => axiosInstance.post(`/groups/${groupId}/travel`),
+
+  finishTravel: (groupId) => axiosInstance.get(`/groups/${groupId}/travel`),
 };
 export default businessAPI;
