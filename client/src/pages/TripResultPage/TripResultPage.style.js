@@ -15,3 +15,8 @@ export const TripCalculationButton = styled(Button)`
   background-color: ${({ theme }) => theme.color.primary};
   color: ${({ theme }) => theme.color.white};
 `;
+
+export const groupInfoContainer = styled(Flex)`
+  width: 100%;
+  justify-content: space-between;
+`;

@@ -22,11 +22,7 @@ export const BarL = styled(BarS)`
   width: 0.6rem;
 `;
 
-export const NumberList = styled.span`
-  font-size: 2rem;
-`;
-
-const Barcode = () => {
+const Barcode = ({ startDate, endDate }) => {
   return (
     <BarcodeWrapper>
       <BarcodeContainer>
@@ -69,7 +65,6 @@ const Barcode = () => {
         <BarL />
         <BarS />
       </BarcodeContainer>
-      <NumberList>2023-09-08-2023-09-15</NumberList>
     </BarcodeWrapper>
   );
 };
