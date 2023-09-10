@@ -24,6 +24,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -42,7 +44,7 @@ public class GroupServiceImpl implements GroupService {
     private final LinkRepository linkRepository;
 
     @Override
-    public void make(GroupMakeDto groupMakeDto, UserDetails userDetails) {
+    public Long make(GroupMakeDto groupMakeDto, UserDetails userDetails) {
         User user = userService.getUserById(userDetails.getUsername());
         Group group = groupMakeDto.toEntity();
 
@@ -53,8 +55,10 @@ public class GroupServiceImpl implements GroupService {
         group.addMember(group_user);
         group.setLeader(user);
 
-        groupRepository.save(group);
+        Group save = groupRepository.save(group);
         group_userRepository.save(group_user);
+
+        return save.getGroupId();
     }
 
     @Override
@@ -121,6 +125,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public void joinGroup(String userId, String groupName) {
         // 그룹장에게 알림 보내기, access에 넣기.
+        log.info("{}가 {}에 가입중 ",userId,groupName);
         Group group = getGroupByName(groupName);
         User sender = userService.getUserById(userId);
         Notification notification = Notification.builder()
@@ -129,12 +134,13 @@ public class GroupServiceImpl implements GroupService {
                 .type(Type.JOIN)
                 .group(group)
                 .build();
-        Access access = Access.builder()
-                .group(group)
-                .user(sender)
-                .build();
+        // Access access = Access.builder()
+        //         .group(group)
+        //         .user(sender)
+        //         .build();
         notificationRepository.save(notification);
-        accessRepository.save(access);
+        addGroup(groupName,userId);
+        // accessRepository.save(access);
     }
 
     @Override
@@ -170,7 +176,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public GroupJoinLinkDto link(String linkUri) {
         Link link = linkRepository.findByUrl(linkUri).orElseThrow(IllegalAccessError::new);
-        GroupJoinLinkDto groupJoinLinkDto = new GroupJoinLinkDto(link.getGroup().getName(), link.isUsed());
+        GroupJoinLinkDto groupJoinLinkDto = new GroupJoinLinkDto(link.getGroup().getName(),link.getGroup().getGroupId(), link.isUsed());
     
         return groupJoinLinkDto;
     }
@@ -188,5 +194,23 @@ public class GroupServiceImpl implements GroupService {
         }
         return false;
 
+    }
+
+    @Override
+    public List<User> getMembers(Long groupId) {
+        Group group = groupRepository.findById(groupId).get();
+        List<Group_User> byGroup = group_userRepository.findByGroup(group);
+        List<User> users = new ArrayList<>();
+        for(Group_User gu : byGroup){
+            if(gu.getGroup().equals(group))
+                users.add(gu.getUser());
+        }
+        return users;
+    }
+    @Override
+    public void startTravel(Long groupId){
+        Group group= groupRepository.findById(groupId).get();
+        group.setStartDate(LocalDate.now());
+        groupRepository.save(group);
     }
 }

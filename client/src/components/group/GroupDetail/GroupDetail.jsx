@@ -1,27 +1,32 @@
+import { useCallback } from "react";
 import * as S from "./GroupDetail.style";
+import { setMoneyRegex } from "utils/regex";
 
-const GroupDetail = () => {
-  const groupDummy = {
-    groupName: "그루비룸", // 그룹 이름
-    account: "계죄번호", // 계좌 번호
-    goal: "목표액", // 목표 금액
-    dues: "월 회비", // 월 회비
-    duesDate: "이체일", // 자동 이체를 할 날짜
-    startDate: "여행 예정일", // 여행을 출발할 날짜
-    limitMember: "인원", // 제한 인원
-    money: "화폐", // yen, yuan, dollar, euro, en ...
-  };
-  const groupDummyPairs = Object.entries(groupDummy);
+const GroupDetail = ({ dues, duesDate, startDate, limitMember, participants }) => {
+  const changeDate = useCallback((startDate) => {
+    const splitedDate = startDate.split("-");
+    return splitedDate[0] + "년 " + splitedDate[1] + "월 " + splitedDate[2] + "일";
+  }, []);
 
   return (
     <S.GroupDetailWrapper>
       <S.GroupDetailTitle>모임 계좌 정보</S.GroupDetailTitle>
-      {groupDummyPairs.map(([key, value]) => (
-        <S.DetailContainer key={key}>
-          <span>{key}:</span>
-          <span>{value}</span>
-        </S.DetailContainer>
-      ))}
+      <S.DetailContainer>
+        <S.DetailKey>월회비</S.DetailKey>
+        <S.DetailValue>{setMoneyRegex(dues)}원</S.DetailValue>
+      </S.DetailContainer>
+      <S.DetailContainer>
+        <S.DetailKey>이체일</S.DetailKey>
+        <S.DetailValue>매월 {duesDate}일</S.DetailValue>
+      </S.DetailContainer>
+      <S.DetailContainer>
+        <S.DetailKey>여행 예정일</S.DetailKey>
+        <S.DetailValue>{changeDate(startDate)}</S.DetailValue>
+      </S.DetailContainer>
+      <S.DetailContainer>
+        <S.DetailKey>참여인원</S.DetailKey>
+        <S.DetailValue>{limitMember}명</S.DetailValue>
+      </S.DetailContainer>
     </S.GroupDetailWrapper>
   );
 };

@@ -18,6 +18,7 @@ export const LoginText = styled.span`
 export const InputWrapper = styled(Flex)`
   flex-direction: column;
   justify-content: space-around;
+  height: 50%;
   gap: 3.5rem;
 `;
 

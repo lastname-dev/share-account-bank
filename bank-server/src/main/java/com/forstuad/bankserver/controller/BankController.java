@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
+
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -129,6 +130,7 @@ public class BankController {
 
         try {
             Account account = accountService.findByAccountId(accountNumber);
+
             // AccountResponseDto accountResponseDto = new AccountResponseDto();
             // accountResponseDto.setAccountId(account.getAccountId());
             // accountResponseDto.setBalance(account.getBalance());
@@ -139,6 +141,7 @@ public class BankController {
             List<CashFlowHistory> cashFlowList = accountService.getCashFlowList(accountNumber);
 
             response.put("accountNumber",accountNumber);
+
             response.put("balance",account.getBalance());
             response.put("historyList",cashFlowList);
 
@@ -154,17 +157,20 @@ public class BankController {
     public ResponseEntity<?> assignGroupAccount(@PathVariable String accountNumber,@RequestBody Long groupId){
         accountService.assignGroupAccount(accountNumber,groupId);
 
+
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
     //그룹계좌 해제
     @DeleteMapping("/group/{accountNumber}")
     public ResponseEntity<Map<String,Object>> disableGroup(
             @PathVariable String accountNumber
+
     ){
         Map<String,Object> response = new HashMap<>();
 
         try {
             accountService.disableGroupAccount(accountNumber);
+
             response.put("message","group disabled success");
             return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
         }catch (Exception e){
@@ -203,6 +209,7 @@ public class BankController {
             }
             response.put("groupAccounts",groupAccountResponseDtoList);
             return new ResponseEntity<>(response, HttpStatus.OK);
+
         }catch (Exception e){
             response.put("status", "failed");
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -273,5 +280,6 @@ public class BankController {
             response.put("status", "failed");
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
     }
 }

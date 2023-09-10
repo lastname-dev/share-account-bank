@@ -3,6 +3,9 @@ import LabelInput from "components/@common/LabelInput/LabelInput";
 import useForm from "hooks/useForm";
 import * as S from "./GroupCreateForm.style";
 import { Form } from "components/@common/Form/Form";
+import { moneyName } from "constants/money";
+import { MdAirplanemodeActive } from "react-icons/md";
+import { replaceComma, setMoneyRegex } from "utils/regex";
 
 const GroupCreateForm = ({ accountList, setGroupMutation, openModal }) => {
   const intitialValue = {
@@ -17,30 +20,24 @@ const GroupCreateForm = ({ accountList, setGroupMutation, openModal }) => {
   };
 
   const [currentDate, setCurrentDate] = useState(new Date().toISOString().slice(0, 10));
+  const [flag, setFlag] = useState("");
   const [registForm, handleregistForm] = useForm(intitialValue);
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(registForm);
-    // setGroupMutation.mutate(registForm);
+    const requestData = { ...registForm, dues: replaceComma(registForm.dues), goal: replaceComma(registForm.goal) };
+    setGroupMutation.mutate(requestData);
   };
+
+  const handleFlag = (event) => {
+    handleregistForm(event);
+    setFlag(moneyName[event.target.value]);
+  };
+
   return (
     <S.InputWrapper>
       <Form onSubmit={handleSubmit}>
         <S.SelectAccountBox>
-          <S.CustomSelect
-            variant="standard"
-            inputProps={{
-              name: "account",
-            }}
-            onChange={handleregistForm}
-            sx={{
-              backgroundColor: "white",
-              fontSize: "1.6rem",
-              ":hover": {
-                backgroundColor: "inherit",
-              },
-            }}
-          >
+          <S.CustomSelect onChange={handleregistForm} name="account">
             <option value={""}>내 계좌</option>
             {accountList.map((account) => (
               <option key={account.accountId} value={account.accountId}>
@@ -53,26 +50,58 @@ const GroupCreateForm = ({ accountList, setGroupMutation, openModal }) => {
           </S.CreateAccountButton>
         </S.SelectAccountBox>
         <LabelInput labelTitle="모임 이름" inputType="text" inputName="groupName" handler={handleregistForm} />
-        {/* <LabelInput labelTitle="계좌" inputType="text" inputName="account" handler={handleregistForm} /> */}
 
-        <LabelInput labelTitle="목표금액" inputType="text" inputName="goal" handler={handleregistForm} />
-        <LabelInput labelTitle="회비" inputType="text" inputName="dues" handler={handleregistForm} />
+        <LabelInput
+          labelTitle="목표금액"
+          inputType="text"
+          inputName="goal"
+          handler={handleregistForm}
+          option={{
+            value: setMoneyRegex(registForm.goal),
+          }}
+        />
+        <LabelInput
+          labelTitle="회비"
+          inputType="text"
+          inputName="dues"
+          handler={handleregistForm}
+          option={{
+            value: setMoneyRegex(registForm.dues),
+          }}
+        />
         <LabelInput
           labelTitle="자동이체일"
-          inputType="date"
+          inputType="number"
           inputName="duesDate"
           handler={handleregistForm}
-          option={{ value: currentDate }}
+          option={{ min: 1, max: 28 }}
         />
         <LabelInput
           labelTitle="여행예정일"
           inputType="date"
           inputName="startDate"
           handler={handleregistForm}
-          option={{ value: currentDate, min: currentDate }}
+          option={{ min: currentDate }}
         />
         <LabelInput labelTitle="참여인원" inputType="number" inputName="limitMember" handler={handleregistForm} />
-        <LabelInput labelTitle="외화" inputType="text" inputName="money" handler={handleregistForm} />
+        <S.SelectAccountBox>
+          <S.InputLabel>외화</S.InputLabel>
+          <S.FlagContainer>
+            {!flag ? (
+              <MdAirplanemodeActive size={"2rem"} />
+            ) : (
+              <S.CountryFlagImage src={process.env.PUBLIC_URL + `/flag/${flag}.png`} />
+            )}
+            <select onChange={handleFlag} name="money">
+              <option defaultValue={null}>화폐선택</option>
+              {Object.keys(moneyName).map((money) => (
+                <option key={money} value={money}>
+                  {moneyName[money]}
+                </option>
+              ))}
+            </select>
+          </S.FlagContainer>
+        </S.SelectAccountBox>
         <S.NextButton type="submit" onClick={handleSubmit}>
           다음
         </S.NextButton>

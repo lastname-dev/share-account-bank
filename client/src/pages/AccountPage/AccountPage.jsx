@@ -1,12 +1,15 @@
-import GroupDetail from "components/group/GroupDetail/GroupDetail";
+import { useParams } from "react-router-dom";
+import { useAccountQuery } from "hooks/apiHook/useAccountQuery";
 import * as S from "./AccountPage.style";
-import AccountDetail from "components/account/AccountDetail/AccountDetail";
+import Receipt from "components/@common/Receipt/Receipt";
 
 const AccountPage = () => {
+  const { accountNumber } = useParams();
+  const { accountData } = useAccountQuery(accountNumber);
+  console.log(accountData);
   return (
     <S.AccountPageWrapper>
-      <AccountDetail />
-      <GroupDetail />
+      <Receipt accountData={accountData?.data} />
     </S.AccountPageWrapper>
   );
 };

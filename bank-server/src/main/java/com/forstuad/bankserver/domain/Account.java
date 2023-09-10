@@ -33,6 +33,7 @@ public class Account {
 
     private String groupName;//그룹이름
 
+
     private int dues;
 
     private int duesDate;
