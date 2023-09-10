@@ -16,6 +16,7 @@ import TravelInfoPage from "pages/TravelInfoPage/TravelInfoPage";
 import GroupJoinPage from "pages/GroupJoinPage/GroupJoinPage";
 import ExchangeMoneyPage from "pages/ExchangeMoneyPage/ExchangeMoneyPage";
 import ExchangeMoneyStorePage from "pages/ExchangeMoneyStorePage/ExchangeMoneyStorePage";
+import MemoryPage from "pages/MemoryPage/MemoryPage";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import TripResultPage from "pages/TripResultPage/TripResultPage";
 
@@ -69,6 +70,10 @@ const AppRouter = () => {
         {
           path: PATH.TRIPRESULT_PAGE(":groupId"),
           element: <TripResultPage />,
+        },
+        {
+          path: PATH.MEMORY_PAGE(),
+          element: <MemoryPage />,
         },
       ],
     },
