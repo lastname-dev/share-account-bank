@@ -242,9 +242,11 @@ public class BankController {
         try {
             //이름을 토대로 각각의 대표 계좌 가져오기
             //대표 Account들 N빵하기
+            log.info("유저이름 : {}",groupIdRequestDto.getUserName());
             List<String> accountNames = groupIdRequestDto.getUserName();
             List<Account> representationAccounts = accountService.findRepresentationAccountsByUserNames(accountNames);
             //그룹 계좌의 대표 계좌
+            log.info("대표계좌 : {}", representationAccounts);
             Account representAccount = accountService.findRepresentAccount(groupId);
             int balance = representAccount.getBalance();
             accountService.caculateAccountByN(representAccount,representationAccounts,balance);
