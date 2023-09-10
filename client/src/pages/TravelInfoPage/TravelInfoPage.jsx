@@ -1,9 +1,15 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import * as S from "./TravelInfoPage.style";
+import { PATH } from "constants/path";
 
 const TravelInfoPage = () => {
   const { state } = useLocation();
+  const navigate = useNavigate();
   const group = state?.group;
+
+  const handleNavigate = () => {
+    navigate(PATH.GROUP_PAGE(group.groupId));
+  };
 
   return (
     <S.TravelInfoPageWrapper>
@@ -14,7 +20,7 @@ const TravelInfoPage = () => {
         <S.TravelInfoMessage>목표 금액 {(group.balance / group.goal) * 100}% 달성!</S.TravelInfoMessage>
         <S.TravelInfoText>설레는 여행이 다가와요!</S.TravelInfoText>
       </S.MessageWrapper>
-      <S.TravelInfoButton>모임통장 관리하기</S.TravelInfoButton>
+      <S.TravelInfoButton onClick={handleNavigate}>모임통장 관리하기</S.TravelInfoButton>
     </S.TravelInfoPageWrapper>
   );
 };
