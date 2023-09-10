@@ -19,6 +19,7 @@ const GroupPage = () => {
           money={groupData.data.money}
         />
         <GroupDetail
+          goal={groupData.data.goal}
           dues={groupData.data.dues}
           duesDate={groupData.data.duesDate}
           startDate={groupData.data.startDate}

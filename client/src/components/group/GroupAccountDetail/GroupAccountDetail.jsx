@@ -17,7 +17,10 @@ const GroupAccountDetail = ({ groupName, account, goal, balance, money }) => {
   return (
     <S.GroupAccountDetailWrapper>
       <S.InfoContainer>
-        <S.Name>{groupName}</S.Name>
+        <S.Name>
+          <S.LogoImg src={process.env.PUBLIC_URL + "/image/shinhanlogo.png"} alt="Shinhan Logo" />
+          {groupName}
+        </S.Name>
         <S.Number>{account}</S.Number>
       </S.InfoContainer>
       <S.MoneyContainer>
@@ -30,10 +33,8 @@ const GroupAccountDetail = ({ groupName, account, goal, balance, money }) => {
       </S.MoneyContainer>
       <ProgressBar goalMoney={goal} currentMoney={balance} />
       <S.GroupAccountButtonContainer>
-        <S.GroupAccountButton onClick={handelStartTravel}>여행가기</S.GroupAccountButton>
-        <S.GroupAccountButton onClick={() => navigate(PATH.EXCHANGE_PAGE(groupId))}>
-          환전 우대율 조회
-        </S.GroupAccountButton>
+        <S.GroupAccountButton onClick={handelStartTravel}>여행 출발</S.GroupAccountButton>
+        <S.GroupAccountButton onClick={() => navigate(PATH.EXCHANGE_PAGE(groupId))}>환율 조회</S.GroupAccountButton>
       </S.GroupAccountButtonContainer>
     </S.GroupAccountDetailWrapper>
   );

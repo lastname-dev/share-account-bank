@@ -7,7 +7,7 @@ export const GroupDetailWrapper = styled(Flex)`
   min-height: 20rem;
   padding: 2rem;
   border-radius: 10px;
-  background-color: ${({ theme }) => theme.color.offwhite};
+  background-color: #d7e8ff;
   justify-content: space-around;
   gap: 1rem;
 `;

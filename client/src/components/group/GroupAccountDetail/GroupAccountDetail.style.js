@@ -8,19 +8,23 @@ export const GroupAccountDetailWrapper = styled(Flex)`
   min-height: 20rem;
   padding: 2rem;
   border-radius: 10px;
-  background-color: ${({ theme }) => theme.color.offwhite};
+  background-color: #d7e8ff;
   justify-content: space-around;
   gap: 2rem;
 `;
 
 export const InfoContainer = styled(Flex)`
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
+  gap: 0.3rem;
 `;
 
 export const Name = styled.span`
-  font-size: ${({ theme }) => theme.fontSize.m};
+  font-size: ${({ theme }) => theme.fontSize.s};
+  color: ${({ theme }) => theme.color.darkgray};
   font-weight: bold;
+  display: flex;
+  align-items: center;
 `;
 export const Number = styled.span`
   font-size: ${({ theme }) => theme.fontSize.s};
@@ -29,11 +33,11 @@ export const Number = styled.span`
 
 export const MoneyContainer = styled(Flex)`
   justify-content: space-between;
-  padding: 0 4rem;
 `;
 
 export const Money = styled.span`
-  font-size: ${({ theme }) => theme.fontSize.s};
+  font-size: ${({ theme }) => theme.fontSize.m};
+  font-weight: bold;
   color: ${({ theme }) => theme.color.darkgray};
 `;
 export const GroupAccountButtonContainer = styled(Flex)`
@@ -41,9 +45,14 @@ export const GroupAccountButtonContainer = styled(Flex)`
 `;
 
 export const GroupAccountButton = styled(Button)`
-  color: ${({ theme }) => theme.color.darkgray};
-  background-color: ${({ theme }) => theme.color.lightgray};
+  // color: ${({ theme }) => theme.color.black};
+  background-color: #c0dcff;
   font-size: ${({ theme }) => theme.fontSize.s};
   padding: 1rem 2rem;
   /* font-weight: bold; */
+`;
+export const LogoImg = styled.img`
+  width: 1.7rem;
+  height: 1.7rem;
+  margin-right: 0.5rem;
 `;
