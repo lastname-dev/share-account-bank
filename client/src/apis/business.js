@@ -31,6 +31,6 @@ const businessAPI = {
 
   finishTravel: (groupId) => axiosInstance.get(`/groups/${groupId}/travel`),
 
-  postTravelComment: (groupId, comment) => axiosInstance.post(`/groups/${groupId}/comment`, { comment }),
+  postTravelComment: (groupId, formData, config) => axiosInstance.post(`/groups/${groupId}/comment`, formData, config),
 };
 export default businessAPI;
