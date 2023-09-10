@@ -1,30 +1,37 @@
 package com.bank.shareaccount.account.controller;
 
+import com.bank.shareaccount.account.dto.request.*;
 import com.bank.shareaccount.account.service.AccountServiceImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
+@Slf4j
 public class AccountController {
 
     private final AccountServiceImpl accountService;
 
     @PostMapping("/accounts")
-    public ResponseEntity<?> accountOpening() {
+    public ResponseEntity<?> accountOpening(@AuthenticationPrincipal UserDetails userDetails) {
+
         // 계좌 생성
-        return new ResponseEntity<>(accountService.accountOpening(), HttpStatus.ACCEPTED);
+        CreateAccountRequestDto createAccountRequestDto = new CreateAccountRequestDto(userDetails.getUsername());
+        return accountService.accountOpening(createAccountRequestDto);
     }
 
     @PostMapping("/accounts/deposit")
-    public ResponseEntity<?> deposit() {
+    public ResponseEntity<?> deposit(@RequestBody DepositAccountRequestDto depositAccountRequestDto,@AuthenticationPrincipal UserDetails userDetails) {
+        depositAccountRequestDto.setUserName(userDetails.getUsername());
         // 계좌 입금
-        return new ResponseEntity<>(accountService.deposit(), HttpStatus.ACCEPTED);
+        return accountService.deposit(depositAccountRequestDto);
     }
 
     @PostMapping("/accounts/verification")
@@ -34,28 +41,25 @@ public class AccountController {
     }
 
     @PostMapping("/accounts/transactions")
-    public ResponseEntity<?> transactions() {
+    public ResponseEntity<?> transactions(@RequestBody TransferAccountRequestDto transferAccountRequestDto,@AuthenticationPrincipal UserDetails userDetails) {
         // 계좌 이체
-        return new ResponseEntity<>(accountService.transactions(), HttpStatus.ACCEPTED);
+        return accountService.transactions(transferAccountRequestDto,userDetails.getUsername());
     }
 
     @GetMapping("/accounts")
-    public ResponseEntity<?> getAccounts() {
-        // 전체 계좌 조회
-        return new ResponseEntity<>(accountService.getAccounts(), HttpStatus.ACCEPTED);
+    public ResponseEntity<?> getAccounts(@AuthenticationPrincipal UserDetails userDetails) {
+        // 내 계좌 조회
+        AllAccountRequestDto allAccountRequestDto = new AllAccountRequestDto(userDetails.getUsername());
+        log.info(userDetails.getUsername());
+        return accountService.getAccounts(allAccountRequestDto);
     }
 
     @GetMapping("/accounts/{accountNumber}")
     public ResponseEntity<?> getDetailAccount(@PathVariable String accountNumber) {
         // 계좌 상세정보 조회
-        return new ResponseEntity<>(accountService.getDetail(accountNumber), HttpStatus.ACCEPTED);
+        return accountService.getDetail(accountNumber);
     }
 
-    @GetMapping("/accounts/{accountNumber}/group")
-    public ResponseEntity<?> getDetailGroupAccount(@PathVariable String accountNumber){
-        // 그룹계좌 상세정보 조회
-        return new ResponseEntity<>(accountService.getDetailGroupAccount(accountNumber), HttpStatus.ACCEPTED);
-    }
 
     @PostMapping("/accounts/{accountNumber}")
     public ResponseEntity<?> cancellation(@PathVariable String accountNumber) {
@@ -63,15 +67,45 @@ public class AccountController {
         return null;
     }
 
-    @PostMapping("/accounts/group")
-    public ResponseEntity<?> appointAccount() {
-        // 계좌 지정
-        return null;
-    }
+//    @PostMapping("/accounts/{accountNumber}/group")
+//    public ResponseEntity<?> appointAccount(@PathVariable String accountNumber, @RequestBody long groupId) {
+//        // 그룹계좌 지정
+//        return accountService.assignGroupAccount(groupId, accountNumber);
+//    }
 
     @GetMapping("/exchangeRate")
     public ResponseEntity<?> getExchangeRate() {
         // 환율 우대율 조회
         return null;
+    }
+    @GetMapping("/groups")
+    public ResponseEntity<?> getGroupAccounts(@AuthenticationPrincipal UserDetails userDetails){
+        //그룹 계좌 목록 조회
+        return accountService.getGroupAccounts(userDetails.getUsername());
+    }
+    @GetMapping("/groups/{groupId}")
+    public ResponseEntity<?> getGroupInfo(@PathVariable Long groupId){
+        //그룹 정보 보기
+        return accountService.getGroupInfo(groupId);
+    }
+    @PostMapping("/groups/{groupId}/calculation")
+    public ResponseEntity<Map<String, Object>> caclulateMoney(@PathVariable Long groupId){
+        return accountService.calcualteMoney(groupId);
+    }
+
+    @PostMapping("/accounts/main")
+    public ResponseEntity<Map<String, Object>> assignMainAccount(@RequestBody AccountIdRequestDto accountIdRequestDto, @AuthenticationPrincipal UserDetails userDetails){
+        log.info("accountId : {}",accountIdRequestDto.getAccountId());
+        MainAccountRequestDto mainAccountRequestDto = new MainAccountRequestDto(userDetails.getUsername(), accountIdRequestDto.getAccountId());
+        return accountService.assignMainAccount(mainAccountRequestDto);
+    }
+    @GetMapping("/groups/{groupId}/travel")
+    public ResponseEntity<?> endTravel(@PathVariable long groupId){
+        return new ResponseEntity<>(accountService.endTravel(groupId),HttpStatus.ACCEPTED);
+    }
+    //// 신한은행 API
+    @PostMapping("/exchange")
+    public Object getExchangeMoney(@RequestBody ExchangeRequest request){
+        return accountService.getExchangeMoney(request);
     }
 }

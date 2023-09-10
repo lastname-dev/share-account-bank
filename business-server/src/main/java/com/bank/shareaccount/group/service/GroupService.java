@@ -5,12 +5,15 @@ import com.bank.shareaccount.group.dto.request.GroupUpdateDto;
 import com.bank.shareaccount.group.dto.response.GroupInfoDto;
 import com.bank.shareaccount.group.dto.response.GroupJoinLinkDto;
 import com.bank.shareaccount.group.entity.Group;
+import com.bank.shareaccount.user.entity.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
 public interface GroupService {
-    void make(GroupMakeDto groupMakeDto, UserDetails userDetails);
+    Long make(GroupMakeDto groupMakeDto, UserDetails userDetails);
 
     void exit(String groupName);
 
@@ -35,5 +38,7 @@ public interface GroupService {
     GroupJoinLinkDto link(String linkId);
 
     Boolean isLinkValid(String url, String groupName);
+    List<User> getMembers(Long groupId);
+    void startTravel(Long groupId);
    
 }

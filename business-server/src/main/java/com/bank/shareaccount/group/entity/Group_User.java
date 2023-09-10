@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Builder
 @AllArgsConstructor
+
 public class Group_User {
 
     @Id
@@ -25,6 +26,8 @@ public class Group_User {
     @JoinColumn(name = "user_id")
     private User user;
 
+    private boolean isPaid;
+
     public void setGroup(Group group) {
         this.group = group;
     }
@@ -32,4 +35,5 @@ public class Group_User {
     public void setUser(User user) {
         this.user = user;
     }
+    public void pay(){this.isPaid = true;}
 }

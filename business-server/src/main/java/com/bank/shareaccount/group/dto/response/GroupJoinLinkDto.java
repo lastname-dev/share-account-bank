@@ -7,5 +7,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class GroupJoinLinkDto {
     private String groupName;
+    private Long groupId;
     private boolean isUsed;
 }
