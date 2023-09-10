@@ -2,6 +2,7 @@ package com.bank.shareaccount.group.entity;
 
 import com.bank.shareaccount.group.Money;
 import com.bank.shareaccount.group.dto.request.GroupUpdateDto;
+import com.bank.shareaccount.travel.entity.Travel;
 import com.bank.shareaccount.user.entity.User;
 import lombok.*;
 
@@ -17,6 +18,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @Table(name = "GroupTable")
+@Setter
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,6 +52,12 @@ public class Group {
     private Money money; // 가고자 하는 나라의 화폐 단위
 
     private String link;
+
+    @OneToOne
+    @JoinColumn(name = "travel_id")
+    private Travel travel;
+
+    private LocalDate endDate;
 
     public void setLeader(User user) {
         this.leader = user;
