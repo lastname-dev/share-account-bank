@@ -10,19 +10,19 @@ export const GroupJoinPageWrapper = styled(Flex)`
   align-items: center;
   background-image: url(/image/airplane_window.jpg);
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 170%;
   background-position: center;
 `;
 
 export const GroupJoinMessage = styled.span`
-  color: ${({ theme }) => theme.color.darkgray};
+  color: ${({ theme }) => theme.color.white};
   font-size: ${({ theme }) => theme.fontSize.m};
   font-weight: bold;
 `;
 
 export const GroupJoinImageContainer = styled(Flex)`
   margin: 0 auto;
-  width: 60%;
+  width: 50%;
 `;
 
 export const GroupJoinImage = styled.img`
@@ -52,8 +52,7 @@ export const ModalOverlay = styled.div`
   height: 100%;
   background: rgba(0, 0, 0, 0.5); /* 반투명한 배경을 만듭니다. */
   z-index: 1000; /* 모달보다 위에 위치하도록 설정합니다. */
-  display: ${(props) =>
-    props.$show ? "block" : "none"}; /* 모달을 표시/숨깁니다. */
+  display: ${(props) => (props.$show ? "block" : "none")}; /* 모달을 표시/숨깁니다. */
 `;
 
 export const ModalContainer = styled.div`
@@ -68,6 +67,5 @@ export const ModalContainer = styled.div`
   width: 300px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 1001; /* 모달보다 위에 위치하도록 설정합니다. */
-  display: ${(props) =>
-    props.$show ? "block" : "none"}; /* 모달을 표시/숨깁니다. */
+  display: ${(props) => (props.$show ? "block" : "none")}; /* 모달을 표시/숨깁니다. */
 `;

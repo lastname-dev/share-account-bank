@@ -7,3 +7,4 @@ public class DepositAccountRequestDto {
     private String accountId;
     private int amount;
 }
+
