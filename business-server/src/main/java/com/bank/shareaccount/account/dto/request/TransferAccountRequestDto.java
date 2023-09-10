@@ -1,5 +1,6 @@
 package com.bank.shareaccount.account.dto.request;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data

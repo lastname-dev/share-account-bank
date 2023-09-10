@@ -1,7 +1,8 @@
 jwt:
   secretKey: "669629e79bec9fdc11391e28bb7232c80660499499add816f4ae3ff1a5c10a1aa4fffa0b725957934271e1c54a061e2f2956ebba3727aa7aa7a3fee8c6480a97" # Base64? ???? ?? ?, HS512? ??? ??? ???, 64??? ??? ??? ?
   access:
-    expiration: 1800000 # 30 ?
+#    expiration: 1800000 # 30 ?
+    expiration : 1209600000
     header: Authorization
   refresh:
     expiration: 1209600000 #  2?
@@ -15,6 +16,9 @@ logging:
         type:
           descriptor:
             sql: trace # TRACE Log? ?? ???? ??
+
+uri:
+  permits: "/login, /signup, /test* , /email, /email/verification"
 
 spring:
   config:
@@ -39,5 +43,4 @@ spring:
         format_sql: true
         use_sql_comments: true
 
-uri:
-  permits: "/login, /signup, /test*, /accounts/*, /accounts**"
+

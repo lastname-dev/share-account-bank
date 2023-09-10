@@ -1,23 +1,21 @@
 package com.bank.shareaccount.user.controller;
 
-import com.bank.shareaccount.user.dto.request.UserChangePasswordDto;
-import com.bank.shareaccount.user.dto.request.UserLoginDto;
-import com.bank.shareaccount.user.dto.request.UserSignUpDto;
-import com.bank.shareaccount.user.dto.request.UserUpdateDto;
+import com.bank.shareaccount.email.service.EmailService;
+import com.bank.shareaccount.email.service.EmailServiceImpl;
+import com.bank.shareaccount.user.dto.request.*;
 import com.bank.shareaccount.user.dto.response.UserTokenResponseDto;
-import com.bank.shareaccount.user.service.UserService;
 import com.bank.shareaccount.user.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -26,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 public class UserController {
 
     private final UserServiceImpl userService;
+    private final EmailService emailService;
 
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@RequestBody UserSignUpDto userSignUpDto) {
@@ -60,6 +59,18 @@ public class UserController {
     @PutMapping("/password")
     public ResponseEntity<?> changePassword(@RequestBody UserChangePasswordDto userChangePasswordDto) {
         return null;
+    }
+
+    @PostMapping("/email")
+    public ResponseEntity<?> mailConfirm(@RequestBody UserEmailDto userEmailDto) throws Exception {
+        String code =emailService.sendSimpleMessage(userEmailDto.getEmail());
+        log.info("인증코드 : " + code);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+    @PostMapping("/email/verification")
+    public ResponseEntity<?> emailVerify(@RequestBody UserCodeDto userCodeDto) throws ChangeSetPersister.NotFoundException {
+        emailService.verifyEmail(userCodeDto.getCode());
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }
 

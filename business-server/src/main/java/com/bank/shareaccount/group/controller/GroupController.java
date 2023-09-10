@@ -1,5 +1,6 @@
 package com.bank.shareaccount.group.controller;
 
+import com.bank.shareaccount.account.service.AccountServiceImpl;
 import com.bank.shareaccount.global.jwt.JwtService;
 import com.bank.shareaccount.group.dto.request.GroupMakeDto;
 import com.bank.shareaccount.group.dto.request.GroupUpdateDto;
@@ -25,10 +26,12 @@ import java.util.Map;
 @Slf4j
 public class GroupController {
     private final GroupServiceImpl groupService;
+    private final AccountServiceImpl accountService;
     private final JwtService jwtService;
     @PostMapping("/groups")
     public ResponseEntity<?> make(@RequestBody GroupMakeDto groupMakeDto, @AuthenticationPrincipal UserDetails userDetails) {
-        groupService.make(groupMakeDto, userDetails);
+        Long groupId = groupService.make(groupMakeDto, userDetails);
+        accountService.assignGroupAccount(groupId,groupMakeDto.getAccount());
         return null;
     }
 
@@ -52,11 +55,11 @@ public class GroupController {
         return null;
     }
 
-    @GetMapping("/groups/{groupName}")
-    public ResponseEntity<?> getInfo(@PathVariable String groupName) {
-        GroupInfoDto info = groupService.getInfo(groupName);
-        return new ResponseEntity<>(info, HttpStatus.ACCEPTED);
-    }
+//    @GetMapping("/groups/{groupName}")
+//    public ResponseEntity<?> getInfo(@PathVariable String groupName) {
+//        GroupInfoDto info = groupService.getInfo(groupName);
+//        return new ResponseEntity<>(info, HttpStatus.ACCEPTED);
+//    }
 
     @PutMapping("/groups/{groupName}")
     public ResponseEntity<?> update(@RequestBody GroupUpdateDto groupUpdateDto, @PathVariable String groupName) {
@@ -74,11 +77,11 @@ public class GroupController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/groups/{groupName}/approval/join")
-    public ResponseEntity<?> admitJoin(@PathVariable String groupName, @RequestBody Map<String, String> senderName) {
-        groupService.admitJoin(groupName, senderName.get("id"));
-        return null;
-    }
+    // @PostMapping("/groups/{groupName}/approval/join")
+    // public ResponseEntity<?> admitJoin(@PathVariable String groupName, @RequestBody Map<String, String> senderName) {
+    //     groupService.admitJoin(groupName, senderName.get("id"));
+    //     return null;
+    // }
 
     @PostMapping("/groups/{groupName}/link")
     public ResponseEntity<String> createJoinLink(@PathVariable String groupName) {
@@ -90,5 +93,10 @@ public class GroupController {
         GroupJoinLinkDto link = groupService.link(linkUri);
         return new ResponseEntity<>(link, HttpStatus.ACCEPTED);
 
+    }
+    @PostMapping("/groups/{groupId}/travel")
+    public ResponseEntity<?> startTravel(@PathVariable long groupId){
+        groupService.startTravel(groupId);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 }
