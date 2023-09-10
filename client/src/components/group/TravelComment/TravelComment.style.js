@@ -27,10 +27,25 @@ export const TravelCommentInput = styled.input`
   font-size: 1.4rem;
 `;
 
+export const PhotoButton = styled(Button)`
+  width: 100%;
+  background-color: aliceblue;
+  color: ${({ theme }) => theme.color.primary};
+  border-radius: 10px;
+  font-size: 1.4rem;
+  font-weight: bold;
+`;
+
 export const TravelCommentButton = styled(Button)`
   width: 100%;
   padding: 1rem 2rem;
   background-color: ${({ theme }) => theme.color.primary};
   color: ${({ theme }) => theme.color.white};
+  border-radius: 10px;
+`;
+
+export const ImagePreview = styled.img`
+  width: 100%;
+  border: 1px solid gray;
   border-radius: 10px;
 `;
