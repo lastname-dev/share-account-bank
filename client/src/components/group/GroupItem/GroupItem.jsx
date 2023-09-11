@@ -5,7 +5,6 @@ import { PATH } from "constants/path";
 import { setMoneyRegex } from "utils/regex";
 
 const GroupItem = ({ group }) => {
-  console.log(group);
   const navigate = useNavigate();
 
   const handleNavigation = () => {
