@@ -2,7 +2,6 @@ import * as S from "./GroupJoinPage.style";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import businessAPI from "apis/business";
-import { colors } from "@mui/material";
 
 const GroupJoinPage = () => {
   const link = useLocation().pathname.split("/joinGroup/")[1]; // 현재 url path에서 /invite/를 빼고 groupName을 추출

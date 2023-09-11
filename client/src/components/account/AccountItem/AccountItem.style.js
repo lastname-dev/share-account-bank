@@ -5,7 +5,7 @@ import { styled } from "styled-components";
 export const AccountItemWrapper = styled(Flex)`
   flex-direction: column;
   width: 100%;
-  min-height: 6rem;
+  height: 17rem;
   padding: 2rem;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.color.offwhite};
