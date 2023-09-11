@@ -7,7 +7,6 @@ import "slick-carousel/slick/slick-theme.css";
 
 const AccountList = ({ accountList, openModal }) => {
   const [filteredAccount, setFilteredAccount] = useState();
-
   const settings = {
     dots: true,
     lazyLoad: true,
@@ -17,25 +16,17 @@ const AccountList = ({ accountList, openModal }) => {
     slidesToScroll: 1,
     initialSlide: 2,
   };
-
   useEffect(() => {
     const newData = accountList.filter((item) => !item.representedAccount);
     setFilteredAccount(newData);
   }, [accountList]);
 
   return (
-    <S.AccountListWrapper>
-      <Slider {...settings}>
-        {filteredAccount?.map((group) => (
-          <AccountItem
-            key={group.accountId}
-            accountId={group.accountId}
-            balance={group.balance}
-            openModal={openModal}
-          />
-        ))}
-      </Slider>
-    </S.AccountListWrapper>
+    <Slider {...settings}>
+      {filteredAccount?.map((group) => (
+        <AccountItem key={group.accountId} accountId={group.accountId} balance={group.balance} openModal={openModal} />
+      ))}
+    </Slider>
   );
 };
 

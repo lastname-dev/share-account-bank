@@ -15,6 +15,9 @@ import { useEffect, useState } from "react";
 import AccountItem from "components/account/AccountItem/AccountItem";
 import MainAccountModal from "components/account/MainAccountModal/MainAccountModal";
 import React, { Component } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -24,6 +27,17 @@ const MainPage = () => {
   const { openModal: openCreateAccountModal, closeModal: closeCreateAccountModal } = useModal("createMainAccount");
   const selectedMyAccount = useRecoilValue(selectedMyAccountState);
   const [mainAccount, setMainAccount] = useState({});
+  const [isAccountListVisible, setIsAccountListVisible] = useState(true);
+
+  const settings = {
+    dots: true,
+    lazyLoad: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    initialSlide: 2,
+  };
 
   const findMainAccount = (responseData) => {
     const findedData = responseData?.filter((item) => item.representedAccount);
@@ -34,10 +48,14 @@ const MainPage = () => {
     setMainAccount(findMainAccount(accountListData.data)[0]);
   }, [accountListData]);
 
+  const toggleView = () => {
+    setIsAccountListVisible(!isAccountListVisible);
+  };
+
   return (
     <>
-      <S.MainPageWrapper>
-        <S.LabelWrapper>주계좌</S.LabelWrapper>
+      <button onClick={toggleView}>Toggle View</button>
+      <Slider {...settings}>
         {mainAccount?.accountId ? (
           <AccountItem
             key={mainAccount?.accountId}
@@ -54,12 +72,25 @@ const MainPage = () => {
             </S.CreateMainAccountButtonContainer>
           </S.CreateMainAccountContainer>
         )}
-        <S.LabelWrapper>내 계좌</S.LabelWrapper>
-        <AccountList accountList={accountListData?.data} openModal={openDepositModal} />
-        <S.LabelWrapper>내 모임 계좌</S.LabelWrapper>
-        <GroupList groupList={groupListData?.data} />
-        <S.CreateGroupButton onClick={() => navigate(PATH.REGIST_GROUP_PAGE)}>+</S.CreateGroupButton>
-      </S.MainPageWrapper>
+
+        {isAccountListVisible
+          ? accountListData?.data?.map((account) => (
+              <AccountItem
+                key={account.accountId}
+                accountId={account.accountId}
+                balance={account.balance}
+                openModal={openDepositModal}
+              />
+            ))
+          : groupListData?.data?.map((group) => (
+              <GroupList
+                key={group.id}
+                groupList={groupListData?.data} /* Add any necessary props for GroupList component */
+              />
+            ))}
+        {/* <S.CreateGroupButton onClick={() => navigate(PATH.REGIST_GROUP_PAGE)}>+</S.CreateGroupButton> */}
+      </Slider>
+
       <Modal id="deposit">
         <DepositModal selectedMyAccount={selectedMyAccount} closeModal={closeDepositModal} />
       </Modal>
