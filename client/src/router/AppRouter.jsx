@@ -77,7 +77,7 @@ const AppRouter = () => {
           element: <TravelingPage />,
         },
         {
-          path: PATH.TRAVEL_LOG_PAGE,
+          path: PATH.TRAVEL_LOG_PAGE(),
           element: <TravelLogPage />,
         },
       ],

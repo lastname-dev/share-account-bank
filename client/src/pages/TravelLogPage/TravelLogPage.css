@@ -1,0 +1,8 @@
+.centered-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* 원하는 스타일링을 추가하세요 */
