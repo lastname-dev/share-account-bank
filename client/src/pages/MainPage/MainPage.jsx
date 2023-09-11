@@ -14,6 +14,7 @@ import DepositModal from "components/account/DepositModal/DepositModal";
 import { useEffect, useState } from "react";
 import AccountItem from "components/account/AccountItem/AccountItem";
 import MainAccountModal from "components/account/MainAccountModal/MainAccountModal";
+import React, { Component } from "react";
 
 const MainPage = () => {
   const navigate = useNavigate();
