@@ -37,6 +37,7 @@ const businessAPI = {
 
   sendAccountCode: (accountNumber) => axiosInstance.post("/accounts/won", accountNumber),
 
-  verifyAccountCode: (accountsNumber, code) => axiosInstance.post("/accounts/won/verification", accountsNumber, code),
+  verifyAccountCode: (accountsNumber, code) =>
+    axiosInstance.post("/accounts/won/verification", { accountsNumber, code }),
 };
 export default businessAPI;

@@ -30,6 +30,10 @@ const userAPI = {
   sendEmail: (id) => axiosInstance.post("/email", id),
 
   verifyCode: (code) => axiosInstance.post("/email/verification", code),
+
+  sendAccount: (id) => axiosInstance.post("/accounts/won", id),
+
+  verifyAccount: (accountsNumber, code) => axiosInstance.post("/accounts/won/verification", accountsNumber, code),
 };
 
 export default userAPI;

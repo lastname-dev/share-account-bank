@@ -1,14 +1,18 @@
 import { useCallback } from "react";
 import * as S from "./SignUpPage.style";
 import { useSignUpMutation } from "hooks/apiHook/useSignUpMutation";
-import { useEmailVerificationMutation, useEmailSendMutation } from "hooks/apiHook/useEmailMutation";
+import {
+  useEmailVerificationMutation,
+  useEmailSendMutation,
+  useAccountSendMutation,
+  useAccountVerificationMutation,
+} from "hooks/apiHook/useEmailMutation";
 import EmailModal from "components/user/EmailModal/EmailModal";
 import useForm from "hooks/useForm";
 import { Form } from "components/@common/Form/Form";
 import { replaceDash, setAccountRegex, setPhoneRegex } from "utils/regex";
 import Modal from "components/@common/Modal/Modal";
 import useModal from "hooks/useModal";
-import businessAPI from "apis/business";
 import AccountModal from "components/user/AccountModal";
 
 const SignUpPage = () => {
@@ -23,6 +27,8 @@ const SignUpPage = () => {
   const [signupData, handleSignupData] = useForm(initialData);
   const signUpMutation = useSignUpMutation();
   const sendMutation = useEmailSendMutation();
+  const accountMutation = useAccountSendMutation();
+  const accountVerficationMutation = useAccountVerificationMutation();
   const verificationMutation = useEmailVerificationMutation();
   const { openModal: openModal1, closeModal: closeModal1 } = useModal("1");
   const { openModal: openModal2, closeModal: closeModal2 } = useModal("2");
@@ -39,19 +45,12 @@ const SignUpPage = () => {
   };
   const sendAccountVerification = (e) => {
     e.preventDefault();
-    try {
-      businessAPI.sendAccountCode(setAccountRegex(signupData.account));
-    } catch {}
+    accountMutation.mutate({ accountNumber: signupData.account });
     openModal2();
   };
 
   const verifyAccountCode = (code) => {
-    try {
-      businessAPI.verifyAccountCode(setAccountRegex(signupData.account), code);
-      console.log("인증성공");
-    } catch (e) {
-      console.log("인증실패 ", e);
-    }
+    accountVerficationMutation.mutate({ code: code, accountsNumber: signupData.account });
   };
 
   const verifyEmailCode = (code) => {
