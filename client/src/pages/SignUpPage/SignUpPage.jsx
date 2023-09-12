@@ -8,6 +8,8 @@ import { Form } from "components/@common/Form/Form";
 import { replaceDash, setAccountRegex, setPhoneRegex } from "utils/regex";
 import Modal from "components/@common/Modal/Modal";
 import useModal from "hooks/useModal";
+import businessAPI from "apis/business";
+import AccountModal from "components/user/AccountModal";
 
 const SignUpPage = () => {
   const initialData = {
@@ -35,6 +37,22 @@ const SignUpPage = () => {
     sendMutation.mutate({ email: signupData.id });
     openModal();
   };
+  const sendAccountVerification = (e) => {
+    e.preventDefault();
+    try {
+      businessAPI.sendAccountCode(setAccountRegex(signupData.account));
+    } catch {}
+    openModal();
+  };
+
+  const verifyAccountCode = (code) => {
+    try {
+      businessAPI.verifyAccountCode(setAccountRegex(signupData.account), code);
+      console.log("인증성공");
+    } catch (e) {
+      console.log("인증실패 ", e);
+    }
+  };
 
   const verifyEmailCode = (code) => {
     verificationMutation.mutate({ code: code });
@@ -56,6 +74,23 @@ const SignUpPage = () => {
               <S.InputBox placeholder="이메일" type="email" name="id" onChange={handleSignupData} />
               <S.ValidateAccountButton onClick={sendEmailVerification}>인증</S.ValidateAccountButton>
             </S.ValidateAccountContiner>
+
+            <S.ValidateAccountContiner>
+              <S.InputBox
+                placeholder="계좌번호"
+                type="text"
+                name="account"
+                onChange={handleSignupData}
+                value={setAccountRegex(signupData.account)}
+                maxLength="14"
+              />
+              <S.ValidateAccountButton onClick={sendAccountVerification}>인증</S.ValidateAccountButton>
+            </S.ValidateAccountContiner>
+            <S.InputBox placeholder="비밀번호" type="password" name="password" onChange={handleSignupData} />
+            <S.InputBox placeholder="비밀번호 확인" type="password" name="passwordCheck" onChange={handleSignupData} />
+            {!validatePassword(signupData.password, signupData.passwordCheck) && (
+              <S.PasswordCheckText>비밀번호가 일치하지 않습니다.</S.PasswordCheckText>
+            )}
             <S.InputBox
               placeholder="전화번호"
               type="text"
@@ -64,19 +99,6 @@ const SignUpPage = () => {
               value={setPhoneRegex(signupData.phone)}
               maxLength="13"
             />
-            <S.InputBox
-              placeholder="계좌번호"
-              type="text"
-              name="account"
-              onChange={handleSignupData}
-              value={setAccountRegex(signupData.account)}
-              maxLength="14"
-            />
-            <S.InputBox placeholder="비밀번호" type="password" name="password" onChange={handleSignupData} />
-            <S.InputBox placeholder="비밀번호 확인" type="password" name="passwordCheck" onChange={handleSignupData} />
-            {!validatePassword(signupData.password, signupData.passwordCheck) && (
-              <S.PasswordCheckText>비밀번호가 일치하지 않습니다.</S.PasswordCheckText>
-            )}
           </Form>
         </S.InputWrapper>
         <S.NextButton type="submit" onClick={submitSignUp}>
@@ -88,6 +110,14 @@ const SignUpPage = () => {
           onClose={closeModal}
           onVerify={(code) => {
             verifyEmailCode(code);
+          }}
+        />
+      </Modal>
+      <Modal>
+        <AccountModal
+          onClose={closeModal}
+          onVerify={(code) => {
+            verifyAccountCode(code);
           }}
         />
       </Modal>

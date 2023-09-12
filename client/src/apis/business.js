@@ -34,5 +34,9 @@ const businessAPI = {
   postTravelComment: (groupId, formData, config) => axiosInstance.post(`/groups/${groupId}/comment`, formData, config),
 
   getTravelLogs: () => axiosInstance.get("/travels"),
+
+  sendAccountCode: (accountNumber) => axiosInstance.post("/accounts/won", accountNumber),
+
+  verifyAccountCode: (accountsNumber, code) => axiosInstance.post("/accounts/won/verification", accountsNumber, code),
 };
 export default businessAPI;
