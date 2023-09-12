@@ -24,8 +24,8 @@ const SignUpPage = () => {
   const signUpMutation = useSignUpMutation();
   const sendMutation = useEmailSendMutation();
   const verificationMutation = useEmailVerificationMutation();
-  const { openModal, closeModal } = useModal();
-
+  const { openModal: openModal1, closeModal: closeModal1 } = useModal("1");
+  const { openModal: openModal2, closeModal: closeModal2 } = useModal("2");
   const submitSignUp = (e) => {
     e.preventDefault();
     const requestData = { ...signupData, phone: replaceDash(signupData.phone) };
@@ -35,14 +35,14 @@ const SignUpPage = () => {
   const sendEmailVerification = (e) => {
     e.preventDefault();
     sendMutation.mutate({ email: signupData.id });
-    openModal();
+    openModal1();
   };
   const sendAccountVerification = (e) => {
     e.preventDefault();
     try {
       businessAPI.sendAccountCode(setAccountRegex(signupData.account));
     } catch {}
-    openModal();
+    openModal2();
   };
 
   const verifyAccountCode = (code) => {
@@ -105,17 +105,17 @@ const SignUpPage = () => {
           다음
         </S.NextButton>
       </S.SignUpPageWrapper>
-      <Modal>
+      <Modal id="1">
         <EmailModal
-          onClose={closeModal}
+          onClose={closeModal1}
           onVerify={(code) => {
             verifyEmailCode(code);
           }}
         />
       </Modal>
-      <Modal>
+      <Modal id="2">
         <AccountModal
-          onClose={closeModal}
+          onClose={closeModal2}
           onVerify={(code) => {
             verifyAccountCode(code);
           }}
