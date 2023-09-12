@@ -11,7 +11,7 @@ const EmailModal = ({ onClose, onVerify }) => {
   return (
     <S.ModalContainer>
       <h1>이메일 인증</h1>
-      <S.EmailModalSpan>3분 안에 입력해주세요.</S.EmailModalSpan>
+      <S.EmailModalSpan>이메일로 발송된 코드를 3분 안에 입력해주세요.</S.EmailModalSpan>
       <S.EmailModalInput
         type="text"
         placeholder="인증 번호 입력"

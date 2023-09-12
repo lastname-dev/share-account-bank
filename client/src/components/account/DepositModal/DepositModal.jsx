@@ -12,9 +12,10 @@ const DepositModal = ({ selectedMyAccount, closeModal }) => {
   const transactMutation = useTransactionMutation();
   const accoutnMutation = useAccountHostMutation();
   const [targetAccount, setTargetAccount, targetAccountHandler] = useInput("");
+  const [password, setPassword, passwordHandler] = useInput("");
   const [money, setMoney] = useState("");
-  const [isHostChecked, setIsHostChecked] = useState(false);
   const [host, setHost] = useState("");
+  const [step, setStep] = useState(1);
 
   const handleTranscation = () => {
     const requestData = {
@@ -37,7 +38,7 @@ const DepositModal = ({ selectedMyAccount, closeModal }) => {
     accoutnMutation.mutate(targetAccount, {
       onSuccess: ({ data }) => {
         setHost(data.userName);
-        setIsHostChecked(true);
+        setStep((step) => step + 1);
       },
     });
   };
@@ -50,37 +51,49 @@ const DepositModal = ({ selectedMyAccount, closeModal }) => {
   return (
     <S.DepositModalWrapper>
       <S.CreateAccountModalTitle>
-        {isHostChecked ? `${host}님에게 송금하시겠어요?` : `송금할 계좌를 입력하세요`}
+        {step === 1 && <span>송금할 계좌를 입력하세요</span>}
+        {step === 2 && <span>{host}님에게 송금하시겠어요?</span>}
+        {step === 3 && <span>계좌 비밀번호를 입력하세요</span>}
       </S.CreateAccountModalTitle>
-      <LabelInput
-        labelTitle="송금 계좌"
-        inputType="text"
-        handler={targetAccountHandler}
-        option={{
-          value: setAccountRegex(targetAccount),
-          maxLength: 14,
-        }}
-      />
-      <LabelInput
-        labelTitle="금액"
-        inputType="text"
-        handler={handleMoney}
-        option={{
-          min: 1,
-          value: money,
-        }}
-      />
+      {step === 1 && (
+        <LabelInput
+          labelTitle="송금 계좌"
+          inputType="text"
+          handler={targetAccountHandler}
+          option={{
+            value: setAccountRegex(targetAccount),
+            maxLength: 14,
+          }}
+        />
+      )}
+      {step === 2 && (
+        <LabelInput
+          labelTitle="금액"
+          inputType="text"
+          handler={handleMoney}
+          option={{
+            min: 1,
+            value: money,
+          }}
+        />
+      )}
+      {step === 3 && <LabelInput labelTitle="비밀번호" inputType="password" handler={passwordHandler} />}
+
       <S.ButtonContainer>
         <S.CancelButton onClick={closeModal}>취소하기</S.CancelButton>
-        {isHostChecked ? (
-          <S.CreateButton onClick={handleTranscation}>송금하기</S.CreateButton>
-        ) : (
-          <S.CreateButton onClick={handleCheckHost}>예금주 조회</S.CreateButton>
+        {step === 1 && <S.CreateButton onClick={handleCheckHost}>예금주 조회</S.CreateButton>}
+        {step === 2 && (
+          <S.CreateButton
+            onClick={() => {
+              setStep((step) => step + 1);
+            }}
+          >
+            확인
+          </S.CreateButton>
         )}
+        {step === 3 && <S.CreateButton onClick={handleTranscation}>송금하기</S.CreateButton>}
       </S.ButtonContainer>
     </S.DepositModalWrapper>
   );
 };
 export default DepositModal;
-
-// 예금주 실명 조회

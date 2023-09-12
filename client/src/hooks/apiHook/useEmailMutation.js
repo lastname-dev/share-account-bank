@@ -28,3 +28,29 @@ export const useEmailSendMutation = () => {
 
   return sendMutation;
 };
+export const useAccountVerificationMutation = () => {
+  const verificationMutation = useMutation({
+    mutationFn: userAPI.verifyAccount,
+    onSuccess: () => {
+      alert("인증 되었습니다.");
+    },
+    onError: () => {
+      alert("잘못된 코드입니다.");
+    },
+  });
+
+  return verificationMutation;
+};
+export const useAccountSendMutation = () => {
+  const sendMutation = useMutation({
+    mutationFn: userAPI.sendAccount,
+    onSuccess: () => {
+      alert("인증코드가 전송되었습니다.");
+    },
+    onError: () => {
+      alert("오류가 발생하였습니다.");
+    },
+  });
+
+  return sendMutation;
+};
