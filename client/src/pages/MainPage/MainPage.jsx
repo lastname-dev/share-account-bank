@@ -34,7 +34,7 @@ const MainPage = () => {
   };
 
   useEffect(() => {
-    const sortedArr = sortByRepresentedAccount(accountListData?.data.accountList);
+    const sortedArr = sortByRepresentedAccount(accountListData?.data.accountList).filter((item) => !item.group);
     setSortedAccountList(sortedArr);
   }, [accountListData]);
 
@@ -50,7 +50,8 @@ const MainPage = () => {
         ) : (
           <GroupList groupList={groupListData?.data} />
         )}
-        <S.CreateGroupButton onClick={() => navigate(PATH.REGIST_GROUP_PAGE)}>+</S.CreateGroupButton>
+        <S.CreateGroupButton onClick={() => navigate(PATH.REGIST_GROUP_PAGE)}>그룹 생성</S.CreateGroupButton>
+        <S.CreateGroupButton onClick={() => navigate(PATH.CREATE_ACCOUNT_PAGE)}>계좌 생성</S.CreateGroupButton>
       </S.MainPageWrapper>
       <Modal id="deposit">
         <DepositModal selectedMyAccount={selectedMyAccount} closeModal={closeDepositModal} />
