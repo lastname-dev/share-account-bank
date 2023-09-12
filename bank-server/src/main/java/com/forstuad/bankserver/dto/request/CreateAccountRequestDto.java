@@ -5,4 +5,5 @@ import lombok.Data;
 @Data
 public class CreateAccountRequestDto {
     private String userName;
+    private String password;
 }

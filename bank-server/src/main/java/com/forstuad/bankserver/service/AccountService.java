@@ -3,16 +3,22 @@ package com.forstuad.bankserver.service;
 import com.forstuad.bankserver.domain.Account;
 import com.forstuad.bankserver.domain.CashFlow;
 import com.forstuad.bankserver.dto.CashFlowHistory;
+import com.forstuad.bankserver.dto.request.AccountCheckRequestDto;
+import com.forstuad.bankserver.dto.request.CodeDto;
+import com.forstuad.bankserver.dto.request.HostDto;
+import com.forstuad.bankserver.dto.response.HostResponseDto;
 
 import javax.security.auth.login.AccountNotFoundException;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+
 public interface AccountService {
     public void saveAccount(Account account);
     public Account findByAccountId(String accountId);
     public void deposit(String accountId,int balance);
-    public Account createAccount(String userName);
+    public Account createAccount(String userName,String password);
     public void transferAccount(String sender,String receiver,int amount);
     public List<CashFlowHistory> getCashFlowList(String accountId);
     public List<Account> findAllByUserName(String userName);
@@ -29,4 +35,9 @@ public interface AccountService {
 
     public List<Account> findRepresentationAccountsByUserNames(List<String> userName);//이름을 토대로 대표계좌들 찾기
 
+    public ResponseEntity<?> oneWonSend(CodeDto request);
+
+    public HostResponseDto getHost(HostDto request);
+
+    public boolean checkPassword(AccountCheckRequestDto request);
 }

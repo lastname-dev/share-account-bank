@@ -33,7 +33,8 @@ public class BankController {
         Map<String, Object> response = new HashMap<>();
         try {
             String userName = createAccountRequestDto.getUserName();
-            Account newAccount = accountService.createAccount(userName);
+            Account newAccount = accountService.createAccount(createAccountRequestDto.getUserName(),
+                createAccountRequestDto.getPassword());
             response.put("account", newAccount);
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         } catch (Exception e) {
@@ -62,13 +63,7 @@ public class BankController {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    //계좌 인증 (미구현)
-    @PostMapping("/verification")
-    public ResponseEntity<Map<String,Object>> verification(){
-        Map<String,Object> response = new HashMap<>();
 
-        return new ResponseEntity<>(response,HttpStatus.ACCEPTED);
-    }
 
     // 계좌 이체
     @PostMapping("/transactions")
@@ -281,5 +276,21 @@ public class BankController {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+    }
+    //1원인증 입금
+    @PostMapping("/verification")
+    public ResponseEntity<?> oneWonSend(@RequestBody CodeDto request){
+        return accountService.oneWonSend(request);
+    }
+
+    @PostMapping("/host")
+    public ResponseEntity<?> getHost(@RequestBody HostDto request){
+        return new ResponseEntity<>(accountService.getHost(request),HttpStatus.ACCEPTED);
+    }
+    @PostMapping("/password")
+    public ResponseEntity<?> checkPassword(@RequestBody AccountCheckRequestDto request){
+        if(accountService.checkPassword(request))
+            return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 }

@@ -19,6 +19,7 @@ public class Account {
     @Column(name = "user_name")
     private String userName; //계좌이름
 
+    private String password;
     @Column(name = "group_id")
     private long groupId;//그룹의 아이디
 
@@ -49,12 +50,13 @@ public class Account {
     private boolean settlementStatus;//정산여부
 
     @Builder
-    public Account(String userName, long groupId, String accountId, int balance, boolean isGroup) {
+    public Account(String userName, long groupId, String accountId, int balance, boolean isGroup,String password) {
         this.userName = userName;
         this.groupId = groupId;
         this.accountId = accountId;
         this.balance = balance;
         this.isGroup = isGroup;
+        this.password = password;
     }
 }
 

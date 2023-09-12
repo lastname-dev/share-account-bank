@@ -39,13 +39,13 @@ public class QAccount extends EntityPathBase<Account> {
 
     public final BooleanPath isRepresentedAccount = createBoolean("isRepresentedAccount");
 
-
     public final NumberPath<Integer> member = createNumber("member", Integer.class);
 
     public final StringPath money = createString("money");
 
-    public final BooleanPath settlementStatus = createBoolean("settlementStatus");
+    public final StringPath password = createString("password");
 
+    public final BooleanPath settlementStatus = createBoolean("settlementStatus");
 
     public final DateTimePath<java.time.LocalDateTime> startDate = createDateTime("startDate", java.time.LocalDateTime.class);
 

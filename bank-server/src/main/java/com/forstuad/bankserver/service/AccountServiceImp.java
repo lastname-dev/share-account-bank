@@ -4,10 +4,17 @@ package com.forstuad.bankserver.service;
 import com.forstuad.bankserver.domain.Account;
 import com.forstuad.bankserver.domain.CashFlow;
 import com.forstuad.bankserver.dto.CashFlowHistory;
+import com.forstuad.bankserver.dto.request.AccountCheckRequestDto;
+import com.forstuad.bankserver.dto.request.CodeDto;
+import com.forstuad.bankserver.dto.request.HostDto;
+import com.forstuad.bankserver.dto.response.HostResponseDto;
 import com.forstuad.bankserver.repository.AccountRepository;
 import com.forstuad.bankserver.repository.CashFlowRepository;
 import com.forstuad.bankserver.util.AccountUtilService;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -41,11 +48,12 @@ public class AccountServiceImp implements AccountService{
     }
 
     @Override
-    public Account createAccount(String userName) {
+    public Account createAccount(String userName,String password) {
         Account account = Account
                 .builder()
                 .accountId(accountUtilService.createAccountId())
                 .userName(userName)
+            .password(password)
                 .build();
 
         accountRepository.save(account);
@@ -188,5 +196,32 @@ public class AccountServiceImp implements AccountService{
         return accountRepository.findAllByIsRepresentedAccountTrueAndUserNameIn(userName);
     }
 
+    @Override
+    public ResponseEntity<?> oneWonSend(CodeDto request) {
+        deposit(request.getReceiver(), 1);
+        CashFlow cashFlow = CashFlow.builder()
+            .sender("신한 "+request.getCode())
+            .receiver(request.getReceiver())
+            .amount(1)
+            .dateTime(LocalDateTime.now())
+            .build();
+        cashFlowRepository.save(cashFlow);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @Override
+    public HostResponseDto getHost(HostDto request) {
+        Account byAccountId = accountRepository.findByAccountId(request.getAccountNumber());
+        return new HostResponseDto(byAccountId.getUserName());
+    }
+
+    @Override
+    public boolean checkPassword(AccountCheckRequestDto request) {
+        Account byAccountId = accountRepository.findByAccountId(request.getAccount());
+        if(byAccountId.getPassword().equals(request.getPassword())){
+            return true;
+        }
+        return false;
+    }
 
 }
