@@ -14,6 +14,7 @@ export const AccountListContainer = styled.div`
   width: calc(100% - 4rem);
   border-radius: 10px;
   overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 `;
 
 export const StyledSlider = styled(Slider)`
@@ -30,10 +31,11 @@ export const CreateMainAccountContainer = styled(Flex)`
   height: 17rem;
   padding: 1rem;
   border-radius: 10px;
-  background-color: ${({ theme }) => theme.color.offwhite};
+  background-color: white;
   color: ${({ theme }) => theme.color.red};
   font-weight: bold;
   gap: 2rem;
+  overflow: hidden;
 `;
 
 export const CreateMainAccountButtonContainer = styled(Flex)`

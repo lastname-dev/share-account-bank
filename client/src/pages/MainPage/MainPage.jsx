@@ -12,8 +12,6 @@ import { useGroupListQuery } from "hooks/apiHook/useGroupListQuery";
 import { useAccountListQuery } from "hooks/apiHook/useAccountListQuery";
 import { selectedMyAccountState } from "recoil/atoms";
 import DepositModal from "components/account/DepositModal/DepositModal";
-import { toastError, toastSuccess } from "utils/toast";
-import { ToastContainer } from "react-toastify";
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -40,6 +38,8 @@ const MainPage = () => {
     const sortedArr = sortByRepresentedAccount(accountListData?.data.accountList).filter((item) => !item.group);
     setSortedAccountList(sortedArr);
   }, [accountListData]);
+  const navigateNewAccount = () => navigate(PATH.CREATE_ACCOUNT_PAGE);
+  const navigateNewGroup = () => navigate(PATH.REGIST_GROUP_PAGE);
 
   return (
     <>
@@ -47,18 +47,18 @@ const MainPage = () => {
         <S.LabelWrapper>
           <S.IconContainer>
             <span>{accountToggle ? "내 계좌" : "내 모임 계좌"}</span>
-            {accountToggle ? (
-              <MdAddCard onClick={() => navigate(PATH.CREATE_ACCOUNT_PAGE)} />
-            ) : (
-              <MdReduceCapacity onClick={() => navigate(PATH.REGIST_GROUP_PAGE)} />
-            )}
+            {accountToggle ? <MdAddCard /> : <MdReduceCapacity />}
           </S.IconContainer>
           <S.ChangeButton onClick={handleToggle}>{accountToggle ? "모임계좌 보기" : "내 계좌 보기"}</S.ChangeButton>
         </S.LabelWrapper>
         {accountToggle ? (
-          <AccountList accountList={sortesAccountList} openModal={openDepositModal} />
+          <AccountList
+            accountList={sortesAccountList}
+            openModal={openDepositModal}
+            navigateNewAccount={navigateNewAccount}
+          />
         ) : (
-          <GroupList groupList={groupListData?.data} />
+          <GroupList groupList={groupListData?.data} navigateNewGroup={navigateNewGroup} />
         )}
         {/* <S.CreateGroupButton onClick={() => navigate(PATH.REGIST_GROUP_PAGE)}>그룹 생성</S.CreateGroupButton> */}
         {/* <S.CreateGroupButton onClick={() => navigate(PATH.CREATE_ACCOUNT_PAGE)}>계좌 생성</S.CreateGroupButton> */}
