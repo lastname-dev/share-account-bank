@@ -1,6 +1,6 @@
 export const PATH = {
-  ROOT: "/",
-  INTRO_PAGE: "/intro",
+  ROOT: "/main",
+  INTRO_PAGE: "/",
   SIGNUP_PAGE: "/signup",
   LOGIN_PAGE: "/login",
   ACCOUNT_PAGE: (accountNumber) => `/account/${accountNumber}`,

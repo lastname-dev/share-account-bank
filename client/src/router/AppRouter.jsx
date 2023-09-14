@@ -25,7 +25,30 @@ import CreateAccountPage from "pages/CreateAccountPage/CreateAccountPage";
 const AppRouter = () => {
   const router = createBrowserRouter([
     {
-      path: PATH.ROOT,
+      path: "/",
+      element: <HeaderLessLayout />,
+      errorElement: <NotFoundPage />,
+      children: [
+        {
+          path: PATH.INTRO_PAGE,
+          element: <IntroPage />,
+        },
+        {
+          path: PATH.SIGNUP_PAGE,
+          element: <SignUpPage />,
+        },
+        {
+          path: PATH.LOGIN_PAGE,
+          element: <LoginPage />,
+        },
+        {
+          path: PATH.CALCULATION_PAGE(":groupId"),
+          element: <CalculationPage />,
+        },
+      ],
+    },
+    {
+      path: PATH.INTRO_PAGE,
       element: <Layout />,
       errorElement: <NotFoundPage />,
       children: [
@@ -84,29 +107,6 @@ const AppRouter = () => {
         {
           path: PATH.CREATE_ACCOUNT_PAGE,
           element: <CreateAccountPage />,
-        },
-      ],
-    },
-    {
-      path: "/",
-      element: <HeaderLessLayout />,
-      errorElement: <NotFoundPage />,
-      children: [
-        {
-          path: PATH.INTRO_PAGE,
-          element: <IntroPage />,
-        },
-        {
-          path: PATH.SIGNUP_PAGE,
-          element: <SignUpPage />,
-        },
-        {
-          path: PATH.LOGIN_PAGE,
-          element: <LoginPage />,
-        },
-        {
-          path: PATH.CALCULATION_PAGE(":groupId"),
-          element: <CalculationPage />,
         },
       ],
     },
