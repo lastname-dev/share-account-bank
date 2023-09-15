@@ -13,7 +13,7 @@ const InvitationPage = () => {
   const generateInvitationLink = async () => {
     try {
       const response = await businessAPI.makeJoinLink(id);
-      const link = response.data;
+      const link = "https://share-account-bank.vercel.app/joingroup/" + response.data;
       navigator.clipboard.writeText(link).then(() => toastSuccess("클립보드에 복사되었습니다."));
     } catch (error) {
       console.error("초대 링크 생성 오류:", error);

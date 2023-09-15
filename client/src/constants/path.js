@@ -13,8 +13,8 @@ export const PATH = {
   EXCHANGE_STORE_PAGE: (groupId) => `/exchange/store/${groupId}`,
   CALCULATION_PAGE: (groupId) => `/calculation/${groupId}`,
   TRIPRESULT_PAGE: (groupId) => `/trip/${groupId}`,
-  JOINGROUP_PAGE: (link) => `/joinGroup/${link}`,
+  JOINGROUP_PAGE: (link) => `/joingroup/${link}`,
   TRAVELING_PAGE: (groupId) => `/traveling/${groupId}`,
-  TRAVEL_LOG_PAGE: "travel-log",
-  CREATE_ACCOUNT_PAGE: "create-account",
+  TRAVEL_LOG_PAGE: "/travel-log",
+  CREATE_ACCOUNT_PAGE: "/create-account",
 };
