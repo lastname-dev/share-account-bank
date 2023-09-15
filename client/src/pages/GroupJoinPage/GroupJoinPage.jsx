@@ -4,18 +4,18 @@ import { useLocation } from "react-router-dom";
 import businessAPI from "apis/business";
 import InviteTicket from "components/invite/InviteTicket";
 const GroupJoinPage = () => {
-  const link = useLocation().pathname.split("/joinGroup/")[1]; // 현재 url path에서 /invite/를 빼고 groupName을 추출
-  console.log(link);
+  const location = useLocation();
+  const link = location.pathname.split("/joingroup/")[1];
+
   const [groupName, setGroupName] = useState("");
   const [GroupId, setGroupId] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [group, setGroup] = useState();
-
   useEffect(() => {
     const groupName = async () => {
       try {
+        console.log(link);
         const response = await businessAPI.enterJoinLink(link);
-        console.log(response.data);
         setGroupName(response.data.groupName);
         setGroupId(response.data.groupId);
         setGroup(response.data);
@@ -23,8 +23,10 @@ const GroupJoinPage = () => {
         console.error("초대장 출처 확인 :", error);
       }
     };
-    groupName();
-  }, []);
+    if (link.length > 1) {
+      groupName();
+    }
+  }, [link]);
 
   const joinGroup = async () => {
     try {
