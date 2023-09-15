@@ -73,8 +73,8 @@ public class AccountServiceImp implements AccountService{
         receiverAccount.setBalance(receiverAccount.getBalance() + amount);
 
         CashFlow cashFlow = CashFlow.builder()
-                .sender(sender)
-                .receiver(receiver)
+                .sender(senderAccount.getUserName())
+                .receiver(receiverAccount.getUserName())
                 .amount(amount)
                 .dateTime(LocalDateTime.now())
                 .build();
