@@ -87,7 +87,11 @@ const ExchangeMoneyStorePage = () => {
     <>
       <S.MoneyStroeWrapper>
         <SearchBar value={where} onChange={handleLocationChange} onSearch={handleSearchIconClick}></SearchBar>
-        {location ? <StoreList stores={stores} onListItemClick={handleListItemClick} /> : <h1>loading..</h1>}
+        {location ? (
+          <StoreList stores={stores} onListItemClick={handleListItemClick} />
+        ) : (
+          <h2>지점 정보 불러오는 중..</h2>
+        )}
       </S.MoneyStroeWrapper>
       <Modal>
         <StoreMap x={info?.x} y={info?.y} text={info?.place_name} onClose={closeModal} />

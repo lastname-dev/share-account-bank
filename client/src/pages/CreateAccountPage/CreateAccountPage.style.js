@@ -6,7 +6,6 @@ export const CreateAccountPageWrapper = styled(Flex)`
   flex-direction: column;
   justify-content: space-between;
   height: calc(100vh - 6rem);
-  padding: 7rem 5rem;
 `;
 
 export const CreateAccountHeaderContainer = styled(Flex)`

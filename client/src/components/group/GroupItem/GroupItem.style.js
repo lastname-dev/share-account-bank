@@ -81,9 +81,10 @@ export const GroupInfo = styled(Flex)`
   padding: 1rem;
   flex-direction: column;
   align-items: start;
+  justify-content: start;
   color: ${({ theme }) => theme.color.darkgray};
   font-weight: bold;
-  gap: 1.5rem;
+  gap: 0.8rem;
   white-space: nowrap;
 `;
 
@@ -92,6 +93,6 @@ export const GroupInfoKey = styled.span`
   color: ${({ theme }) => theme.color.gray};
 `;
 export const GroupInfoValue = styled(GroupInfoKey)`
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   color: ${({ theme }) => theme.color.darkgray};
 `;

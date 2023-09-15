@@ -22,6 +22,9 @@ export const StoreItem = styled(Flex)`
 export const InfoContainer = styled(Flex)`
   flex-direction: column;
   align-items: end;
+  text-align: end;
+  text-overflow: ellipsis;
+  width: 200px;
 `;
 
 export const LogoImg = styled.img`

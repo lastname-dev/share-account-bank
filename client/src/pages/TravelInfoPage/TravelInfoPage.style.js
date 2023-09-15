@@ -6,7 +6,7 @@ export const TravelInfoPageWrapper = styled(Flex)`
   flex-direction: column;
   justify-content: space-around;
   height: calc(100vh - 6rem);
-  padding: 9rem 0;
+  /* padding: 9rem 0; */
 `;
 
 export const MessageWrapper = styled(Flex)`

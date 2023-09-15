@@ -5,7 +5,7 @@ import { styled } from "styled-components";
 export const MainPageWrapper = styled(Flex)`
   flex-direction: column;
   justify-content: center;
-  padding: 4rem 3rem;
+  /* padding: 1.5rem; */
   gap: 3rem;
 `;
 
