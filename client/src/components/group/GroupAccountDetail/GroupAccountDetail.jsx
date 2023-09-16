@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { buildStyles, CircularProgressbarWithChildren } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { MdAirplanemodeActive } from "react-icons/md";
 import * as S from "./GroupAccountDetail.style";
 import { setMoneyRegex } from "utils/regex";
 import { useStratTravelMutation } from "hooks/apiHook/useStratTravelMutation";
@@ -73,27 +72,30 @@ const GroupAccountDetail = ({ groupName, account, goal, balance }) => {
       <S.ProgressBarContainer>
         <CircularProgressbarWithChildren value={percentage} styles={progressStyle}>
           <h1>{percentage}%</h1>
+          <S.BalanceText>{setMoneyRegex(balance)}원</S.BalanceText>
         </CircularProgressbarWithChildren>
       </S.ProgressBarContainer>
       <S.MoneyContainer>
-        {flag === "KOW" ? (
-          <S.Money>{setMoneyRegex(balance)}원</S.Money>
-        ) : (
-          <S.Money>{setMoneyRegex(resultAmount)}</S.Money>
-        )}
-        <select onChange={handleFlag} name="money">
-          <option value="KOW">KOW</option>
-          {Object.keys(moneyName).map((money) => (
-            <option key={money} value={money}>
-              {moneyName[money]}
-            </option>
-          ))}
-        </select>
-        {/* <select name="국가">
-          <option value="KOW">KOW</option>
-          <option value="USD">USD</option>
-          <option value="JPY">JPY</option>
-        </select> */}
+        <S.ExchangeContainer>
+          {flag === "KOW" ? (
+            <S.Money>{setMoneyRegex(balance)}원</S.Money>
+          ) : (
+            <>
+              <span>예상 환전 금액: </span>
+              <S.Money>{`${setMoneyRegex(resultAmount)}`}</S.Money>
+            </>
+          )}
+        </S.ExchangeContainer>
+        <S.CountryContainer>
+          <S.CountryFlagImage src={process.env.PUBLIC_URL + `/flag/${flag}.png`} />
+          <select onChange={handleFlag} name="money">
+            {Object.keys(moneyName).map((money) => (
+              <option key={money} value={money}>
+                {moneyName[money]}
+              </option>
+            ))}
+          </select>
+        </S.CountryContainer>
       </S.MoneyContainer>
       <S.GroupAccountButtonContainer>
         <S.GroupAccountButton onClick={handelStartTravel}>여행가기</S.GroupAccountButton>

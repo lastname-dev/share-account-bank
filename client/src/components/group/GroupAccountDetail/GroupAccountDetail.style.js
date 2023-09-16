@@ -19,6 +19,13 @@ export const InfoContainer = styled(Flex)`
 
 export const ProgressBarContainer = styled(Flex)`
   width: 60%;
+  color: ${({ theme }) => theme.color.green};
+  font-weight: bold;
+`;
+
+export const BalanceText = styled.span`
+  margin-top: 1rem;
+  color: ${({ theme }) => theme.color.gray};
 `;
 
 export const Name = styled.span`
@@ -34,6 +41,7 @@ export const Number = styled.span`
 `;
 
 export const MoneyContainer = styled(Flex)`
+  width: 100%;
   justify-content: space-between;
 `;
 
@@ -49,8 +57,8 @@ export const GroupAccountButtonContainer = styled(Flex)`
 
 export const GroupAccountButton = styled(Button)`
   width: 50%;
-  color: ${({ theme }) => theme.color.darkgray};
-  background-color: ${({ theme }) => theme.color.lightgray};
+  color: ${({ theme }) => theme.color.white};
+  background-color: ${({ theme }) => theme.color.primary};
   font-size: ${({ theme }) => theme.fontSize.s};
   padding: 1rem 2rem;
   font-weight: bold;
@@ -60,6 +68,18 @@ export const LogoImg = styled.img`
   height: 1.7rem;
   margin-right: 0.5rem;
 `;
+
+export const ExchangeContainer = styled(Flex)`
+  width: 50%;
+  justify-content: start;
+`;
+
+export const CountryContainer = styled(Flex)`
+  gap: 0.5rem;
+  width: 50%;
+  justify-content: end;
+`;
+
 export const CountryFlagImage = styled.img`
   width: 2rem;
 `;
