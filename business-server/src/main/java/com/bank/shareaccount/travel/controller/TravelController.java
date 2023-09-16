@@ -9,6 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @CrossOrigin
@@ -19,8 +22,9 @@ public class TravelController {
     private final TravelService travelService;
 
     @PostMapping("/groups/{groupId}/comment")
-    public ResponseEntity<?> createMemo(@RequestBody TravelMemoDto travelMemoDto, @PathVariable long groupId){
-        travelService.createMemo(travelMemoDto,groupId);
+    public ResponseEntity<?> createMemo(@RequestPart("photo")MultipartFile file ,@RequestPart("comment")String comment,@PathVariable long groupId) throws IOException {
+        log.info("createMemo, : {}",comment);
+        travelService.createMemo(comment,file,groupId);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @GetMapping("/travels")

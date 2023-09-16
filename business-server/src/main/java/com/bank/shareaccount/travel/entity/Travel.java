@@ -20,6 +20,7 @@ public class Travel {
     private Group group;
 
     private String memo;
+    private String url;
 
     public void setMemo(String memo){
         this.memo = memo;
