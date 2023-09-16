@@ -16,5 +16,6 @@ export const PATH = {
   JOINGROUP_PAGE: (link) => `/joingroup/${link}`,
   TRAVELING_PAGE: (groupId) => `/traveling/${groupId}`,
   TRAVEL_LOG_PAGE: "/travel-log",
+  TRAVEL_LOG_DETAIL_PAGE: (groupId) => `/travel-log/${groupId}`,
   CREATE_ACCOUNT_PAGE: "/create-account",
 };

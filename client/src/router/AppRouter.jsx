@@ -21,6 +21,7 @@ import TripResultPage from "pages/TripResultPage/TripResultPage";
 import TravelingPage from "pages/TravelingPage/TravelingPage";
 import TravelLogPage from "pages/TravelLogPage/TravelLogPage";
 import CreateAccountPage from "pages/CreateAccountPage/CreateAccountPage";
+import TravelLogDetailPage from "pages/TravelLogDetailPage/TravelLogDetailPage";
 
 const AppRouter = () => {
   const router = createBrowserRouter([
@@ -107,6 +108,10 @@ const AppRouter = () => {
         {
           path: PATH.CALCULATION_PAGE(":groupId"),
           element: <CalculationPage />,
+        },
+        {
+          path: PATH.TRAVEL_LOG_DETAIL_PAGE(":groupId"),
+          element: <TravelLogDetailPage />,
         },
       ],
     },
