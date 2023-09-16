@@ -1,0 +1,17 @@
+package com.fourstuad.springbatchserver.repository;
+
+import com.fourstuad.springbatchserver.domain.Account;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import java.util.List;
+
+@Repository
+public interface AccountRepository extends JpaRepository<Account,Long> {
+    Account findByAccountId(String accountId);
+    List<Account> findAllByUserName(String userName);
+    List<Account> findByGroupIdIn(List<Long> groupIds);
+    List<Account> findAllByGroupId(Long groupId);
+    List<Account> findAllByIsRepresentedAccountTrueAndUserNameIn(List<String> userNames);
+    List<Account> findByGroupIdAndIsRepresentedAccountTrue(Long groupId);
+
+}
