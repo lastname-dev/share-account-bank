@@ -91,6 +91,9 @@ public class AccountServiceImpl {
         }
         GetGroupAccountsRequestDto dto = new GetGroupAccountsRequestDto(groupIds);
         log.info("groupIds : {}",groupIds );
+        if(groupIds.size()==0){
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        }
         ArrayList groupAccounts = (ArrayList)(bankServerFeign.getGroupAccounts(dto).getBody().get("groupAccounts"));
         for(int i=0;i<groupAccounts.size();i++){
             LinkedHashMap o = (LinkedHashMap)groupAccounts.get(i);
