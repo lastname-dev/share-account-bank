@@ -68,7 +68,7 @@ const GroupAccountDetail = ({ groupName, account, goal, balance }) => {
       <S.GroupAccountDetailWrapper>
         <S.InfoContainer>
           <S.Name>
-            <S.LogoImg src={process.env.PUBLIC_URL + "/image/shinhanlogo.png"} alt="Shinhan Logo" />
+            <S.LogoImg src={process.env.PUBLIC_URL + "/image/sol_logo.png"} alt="Shinhan Logo" />
             {groupName}
           </S.Name>
           <S.Number>{account}</S.Number>

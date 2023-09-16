@@ -40,7 +40,7 @@ const AccountList = ({ accountList, openModal }) => {
         <SamplePrevArrow onClick={previous} />
         <S.AccountListContainer>
           <S.StyledSlider {...sliderSetting} ref={slickRef}>
-            {!havaMainAccount && (
+            {/* {!havaMainAccount && (
               <>
                 <S.CreateMainAccountContainer>
                   <h3>주계좌가 없습니다.</h3>
@@ -50,7 +50,7 @@ const AccountList = ({ accountList, openModal }) => {
                   </S.CreateMainAccountButtonContainer>
                 </S.CreateMainAccountContainer>
               </>
-            )}
+            )} */}
             {accountList?.map((group) => (
               <AccountItem
                 key={group.accountId}

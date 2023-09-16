@@ -14,6 +14,7 @@ const GroupList = ({ groupList }) => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+  console.log(groupList);
 
   const previous = useCallback(() => slickRef.current.slickPrev(), []);
   const next = useCallback(() => slickRef.current.slickNext(), []);
@@ -23,7 +24,7 @@ const GroupList = ({ groupList }) => {
       <SamplePrevArrow onClick={previous} />
       <S.GroupListContainer>
         <S.StyledSlider {...sliderSetting} ref={slickRef}>
-          {groupList.map((group) => (
+          {groupList?.map((group) => (
             <GroupItem key={group.account} group={group} />
           ))}
         </S.StyledSlider>
