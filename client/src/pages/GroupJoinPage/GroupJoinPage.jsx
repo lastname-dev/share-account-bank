@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import businessAPI from "apis/business";
 import InviteTicket from "components/invite/InviteTicket";
+import { toastSuccess, toastError } from "utils/toast";
 const GroupJoinPage = () => {
   const location = useLocation();
   const link = location.pathname.split("/joingroup/")[1];
@@ -31,13 +32,19 @@ const GroupJoinPage = () => {
   const joinGroup = async () => {
     try {
       const response = await businessAPI.joinGroup(groupName, link);
+      toastSuccess("그룹 가입이 완료 되었습니다.");
     } catch (error) {
+      toastError("그룹 가입에 실패 하였습니다.");
       console.error("가입 오류:", error);
     }
   };
+  const handleJoinButtonClick = async () => {
+    // joinGroup 함수 호출
+    joinGroup();
+  };
 
   return (
-    <>{group && <InviteTicket group={group} />}</>
+    <>{group && <InviteTicket group={group} onJoinClick={handleJoinButtonClick} />}</>
     // <S.GroupJoinPageWrapper>
     // //   <S.GroupJoinMessage>
     // //     <br /> <h3>{GroupName} 초대장</h3>

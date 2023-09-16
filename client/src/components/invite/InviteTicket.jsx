@@ -2,7 +2,7 @@ import React from "react";
 import "./InviteTicket.scss";
 import { setMoneyRegex } from "utils/regex";
 
-const InviteTicket = ({ group }) => {
+const InviteTicket = ({ group, onJoinClick }) => {
   return (
     <>
       <div class="boarding-pass">
@@ -86,7 +86,7 @@ const InviteTicket = ({ group }) => {
             </div>
           </div>
 
-          <div class="qrcode">
+          <div class="qrcode" onClick={onJoinClick}>
             <img src={process.env.PUBLIC_URL + "/image/check.jpeg"} height="100px" width="150px" />
           </div>
         </section>
