@@ -1,6 +1,6 @@
+import { useCallback, useEffect, useState } from "react";
 import { useTravelLogsQuery } from "hooks/apiHook/useTravelLogsQuery";
 import * as S from "pages/TravelLogPage/TravelLogPage.style";
-import { useCallback } from "react";
 
 const TravelLogPage = () => {
   const travelLogsQuery = useTravelLogsQuery();
@@ -11,41 +11,22 @@ const TravelLogPage = () => {
     return String(dateArr[0]) + "년 " + String(parseInt(dateArr[1])) + "월의 추억";
   }, []);
 
-  const dummy = [
-    {
-      photo: "photo",
-      travelId: 1,
-      groupName: "groupName",
-      startDate: "startDate",
-      endDate: "endDate",
-    },
-    {
-      photo: "photo",
-      travelId: 2,
-      groupName: "groupName",
-      startDate: "startDate",
-      endDate: "endDate",
-    },
-    {
-      photo: "photo",
-      travelId: 3,
-      groupName: "groupName",
-      startDate: "startDate",
-      endDate: "endDate",
-    },
-  ];
   return (
     <S.TravelLogPageWrapper>
-      <S.TravelGrid>
-        {logList?.map((item) => (
+      <S.TravelLogTitle>추억을 되돌아 볼까요? </S.TravelLogTitle>
+      <S.TravelLogList>
+        {logList?.map((item, idx) => (
           <S.TravelCard key={item.travelId}>
             <S.ImageContainer>
               <S.TravelImage src={item.photo} />
+              <S.TravelCardInfoContiner>
+                <S.TravelTitle>{item.groupName}</S.TravelTitle>
+                <S.TravelContent>{convertDateToText(item.startDate)}</S.TravelContent>
+              </S.TravelCardInfoContiner>
             </S.ImageContainer>
-            <S.TravelCardButton>{convertDateToText(item.startDate)}</S.TravelCardButton>
           </S.TravelCard>
         ))}
-      </S.TravelGrid>
+      </S.TravelLogList>
     </S.TravelLogPageWrapper>
   );
 };
