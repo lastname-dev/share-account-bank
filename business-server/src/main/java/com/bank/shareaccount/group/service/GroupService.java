@@ -33,9 +33,9 @@ public interface GroupService {
 
     void addGroup(String groupName, String userId);
 
-    String createJoinLink(String groupName);
+    String createJoinLink(long groupId);
 
-    GroupJoinLinkDto link(String linkId);
+    GroupJoinLinkDto link(String linkUri,String userName);
 
     Boolean isLinkValid(String url, String groupName);
     List<User> getMembers(Long groupId);

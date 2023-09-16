@@ -131,12 +131,6 @@ public class BankController {
         try {
             Account account = accountService.findByAccountId(accountNumber);
 
-            // AccountResponseDto accountResponseDto = new AccountResponseDto();
-            // accountResponseDto.setAccountId(account.getAccountId());
-            // accountResponseDto.setBalance(account.getBalance());
-            // accountResponseDto.setGroupId(accountResponseDto.getGroupId());
-            // accountResponseDto.setGroup(accountResponseDto.isGroup());
-
             //계좌 입출금 내역
             List<CashFlowHistory> cashFlowList = accountService.getCashFlowList(accountNumber);
 

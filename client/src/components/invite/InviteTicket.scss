@@ -221,12 +221,8 @@
         top: -5px;
       }
     }
-    // .qrcode {
-    //   position: absolute;
-    //   top: 20px;
-    //   right: 20px;
-    //   width: 80px;
-    //   height: 80px;
-    // }
+    .qrcode {
+      cursor: pointer;
+    }
   }
 }
