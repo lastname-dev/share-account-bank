@@ -4,6 +4,8 @@ import com.bank.shareaccount.account.dto.request.*;
 import com.bank.shareaccount.account.service.AccountServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,10 +22,11 @@ public class AccountController {
     private final AccountServiceImpl accountService;
 
     @PostMapping("/accounts")
-    public ResponseEntity<?> accountOpening(@AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<?> accountOpening(@RequestBody PasswordRequestDto passwordRequestDto, @AuthenticationPrincipal UserDetails userDetails) {
 
         // 계좌 생성
-        CreateAccountRequestDto createAccountRequestDto = new CreateAccountRequestDto(userDetails.getUsername());
+        CreateAccountRequestDto createAccountRequestDto = new CreateAccountRequestDto(userDetails.getUsername(),
+            passwordRequestDto.getPassword());
         return accountService.accountOpening(createAccountRequestDto);
     }
 
@@ -51,6 +54,8 @@ public class AccountController {
         // 내 계좌 조회
         AllAccountRequestDto allAccountRequestDto = new AllAccountRequestDto(userDetails.getUsername());
         log.info(userDetails.getUsername());
+        ResponseEntity<?> accounts = accountService.getAccounts(allAccountRequestDto);
+        log.info("accounts : {}",accounts.getBody());
         return accountService.getAccounts(allAccountRequestDto);
     }
 
@@ -67,11 +72,11 @@ public class AccountController {
         return null;
     }
 
-//    @PostMapping("/accounts/{accountNumber}/group")
-//    public ResponseEntity<?> appointAccount(@PathVariable String accountNumber, @RequestBody long groupId) {
-//        // 그룹계좌 지정
-//        return accountService.assignGroupAccount(groupId, accountNumber);
-//    }
+    @PostMapping("/accounts/{accountNumber}/group")
+    public ResponseEntity<?> appointAccount(@PathVariable String accountNumber, @RequestBody long groupId) {
+        // 그룹계좌 지정
+        return accountService.assignGroupAccount(groupId, accountNumber);
+    }
 
     @GetMapping("/exchangeRate")
     public ResponseEntity<?> getExchangeRate() {
@@ -107,5 +112,25 @@ public class AccountController {
     @PostMapping("/exchange")
     public Object getExchangeMoney(@RequestBody ExchangeRequest request){
         return accountService.getExchangeMoney(request);
+    }
+
+    //소유주 찾기
+    @PostMapping("/accounts/host")
+    public ResponseEntity<?> getHost(@RequestBody AccountHostDto request){
+        return accountService.getHost(request.getAccountsNumber());
+    }
+
+    @PostMapping("/accounts/password/verification")
+    public ResponseEntity<?> checkPassword(@RequestBody PasswordCheckDto request){
+        return accountService.checkPassword(request);
+    }
+    @PostMapping("/accounts/won")
+    public ResponseEntity<?> send1Won(@RequestBody AccountNumberDto request){
+        return accountService.send1Won(request);
+    }
+    @PostMapping("/accounts/won/verification")
+    public ResponseEntity<?> checkAccounts(@RequestBody CheckAccountDto request) throws
+        ChangeSetPersister.NotFoundException {
+        return accountService.checkCode(request);
     }
 }

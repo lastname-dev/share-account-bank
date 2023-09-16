@@ -14,4 +14,5 @@ public class TravelListDto {
     String groupName;
     LocalDate startDate;
     LocalDate endDate;
+    String photo;
 }

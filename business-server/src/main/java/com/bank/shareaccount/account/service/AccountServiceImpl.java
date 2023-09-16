@@ -1,6 +1,19 @@
 package com.bank.shareaccount.account.service;
 
 import com.bank.shareaccount.account.dto.request.*;
+import static com.bank.shareaccount.email.service.EmailServiceImpl.*;
+
+import com.bank.shareaccount.account.dto.request.AccountCodeDto;
+import com.bank.shareaccount.account.dto.request.AccountNumberDto;
+import com.bank.shareaccount.account.dto.request.AllAccountRequestDto;
+import com.bank.shareaccount.account.dto.request.CheckAccountDto;
+import com.bank.shareaccount.account.dto.request.CreateAccountRequestDto;
+import com.bank.shareaccount.account.dto.request.DepositAccountRequestDto;
+import com.bank.shareaccount.account.dto.request.ExchangeRequest;
+import com.bank.shareaccount.account.dto.request.GetGroupAccountsRequestDto;
+import com.bank.shareaccount.account.dto.request.PasswordCheckDto;
+import com.bank.shareaccount.account.dto.request.TransferAccountRequestDto;
+import com.bank.shareaccount.account.dto.response.AccountHostResponseDto;
 import com.bank.shareaccount.account.dto.response.GroupAccountInfoDto;
 import com.bank.shareaccount.account.dto.response.GroupAccountsDto;
 import com.bank.shareaccount.account.dto.response.GroupMemberDto;
@@ -13,6 +26,9 @@ import com.bank.shareaccount.user.entity.User;
 import com.bank.shareaccount.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -30,7 +46,7 @@ public class AccountServiceImpl {
     private final UserRepository userRepository;
     private final GroupRepository groupRepository;
     private final GroupService groupService;
-
+    private final RedisTemplate redisTemplate;
     public ResponseEntity<Map<String, Object>> accountOpening(CreateAccountRequestDto createAccountRequestDto) {
         log.info("accountOpening");
         return bankServerFeign.create(createAccountRequestDto);
@@ -157,4 +173,27 @@ public class AccountServiceImpl {
         map1.put("group",dto);
         return new ResponseEntity<>(map1,HttpStatus.ACCEPTED);
     }
+
+    public ResponseEntity<?> getHost(String accountsNumber) {
+        return bankServerFeign.checkHost(new AccountNumberDto(accountsNumber));
+    }
+
+    public ResponseEntity<?> checkPassword(PasswordCheckDto request) {
+        return bankServerFeign.checkPassword(request);
+    }
+
+    public ResponseEntity<?> send1Won(AccountNumberDto request) {
+        String ePw = createKey();
+        redisTemplate.opsForValue().set(ePw,request.getAccountNumber(),120*1L);
+        return bankServerFeign.accountVerificationSend(new AccountCodeDto(ePw,request.getAccountNumber()));
+    }
+
+    public ResponseEntity<?> checkCode(CheckAccountDto request) throws ChangeSetPersister.NotFoundException {
+        String check = (String) redisTemplate.opsForValue().get(request.getCode());
+        if(check==null){
+            throw new ChangeSetPersister.NotFoundException();
+        }
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
 }

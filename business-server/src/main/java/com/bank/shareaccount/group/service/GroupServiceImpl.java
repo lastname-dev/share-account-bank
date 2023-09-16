@@ -162,8 +162,8 @@ public class GroupServiceImpl implements GroupService {
         group_userRepository.save(group_user);
     }
 
-    public String createJoinLink(String groupId) {
-        Group group = groupRepository.findByName(groupId).orElseThrow(IllegalAccessError::new);
+    public String createJoinLink(long groupId) {
+        Group group = groupRepository.findById(groupId).orElseThrow(IllegalAccessError::new);
         String url = UUID.randomUUID().toString();
         Link link = Link.builder()
                 .group(group)
@@ -174,9 +174,10 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public GroupJoinLinkDto link(String linkUri) {
+    public GroupJoinLinkDto link(String linkUri,String userName) {
         Link link = linkRepository.findByUrl(linkUri).orElseThrow(IllegalAccessError::new);
-        GroupJoinLinkDto groupJoinLinkDto = new GroupJoinLinkDto(link.getGroup().getName(),link.getGroup().getGroupId(), link.isUsed());
+        Group group = link.getGroup();
+        GroupJoinLinkDto groupJoinLinkDto = new GroupJoinLinkDto(group.getName(),group.getGroupId(),group.getLeader().getName(),link.isUsed(),group.getGoal(),group.getDuesDate(),group.getDues(),userName);
     
         return groupJoinLinkDto;
     }

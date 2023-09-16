@@ -1,9 +1,13 @@
 package com.bank.shareaccount.account.service;
 
+import com.bank.shareaccount.account.dto.request.AccountCodeDto;
+import com.bank.shareaccount.account.dto.request.AccountNumberDto;
 import com.bank.shareaccount.account.dto.request.AllAccountRequestDto;
 import com.bank.shareaccount.account.dto.request.CreateAccountRequestDto;
 import com.bank.shareaccount.account.dto.request.DepositAccountRequestDto;
 import com.bank.shareaccount.account.dto.request.GetGroupAccountsRequestDto;
+import com.bank.shareaccount.account.dto.request.PasswordCheckDto;
+import com.bank.shareaccount.account.dto.request.PasswordRequestDto;
 import com.bank.shareaccount.account.dto.request.TransferAccountRequestDto;
 import com.bank.shareaccount.account.dto.request.*;
 import com.bank.shareaccount.global.config.FeignConfig;
@@ -53,4 +57,12 @@ public interface BankServerFeign {
 
     @PostMapping("/accounts/main")
     ResponseEntity<Map<String,Object>> assignMainAccount(@RequestBody MainAccountRequestDto mainAccountRequestDto);
+    @PostMapping("/accounts/verification")
+    ResponseEntity<?> accountVerificationSend(@RequestBody AccountCodeDto accountCodeDto);
+
+    @PostMapping("/accounts/host")
+    ResponseEntity<?> checkHost(@RequestBody AccountNumberDto accountNumberDto);
+
+    @PostMapping("/accounts/password")
+    ResponseEntity<?> checkPassword(@RequestBody PasswordCheckDto passwordCheckDto);
 }

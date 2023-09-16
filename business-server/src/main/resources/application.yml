@@ -18,7 +18,7 @@ logging:
             sql: trace # TRACE Log? ?? ???? ??
 
 uri:
-  permits: "/login, /signup, /test* , /email, /email/verification"
+  permits: "/login, /signup, /test* , /email, /email/verification, /accounts/won, /accounts/won/verification"
 
 spring:
   config:

@@ -83,14 +83,14 @@ public class GroupController {
     //     return null;
     // }
 
-    @PostMapping("/groups/{groupName}/link")
-    public ResponseEntity<String> createJoinLink(@PathVariable String groupName) {
-        return new ResponseEntity<>(groupService.createJoinLink(groupName), HttpStatus.ACCEPTED);
+    @PostMapping("/groups/{groupId}/link")
+    public ResponseEntity<String> createJoinLink(@PathVariable long groupId) {
+        return new ResponseEntity<>(groupService.createJoinLink(groupId), HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/link/{linkUri}")
-    public ResponseEntity<GroupJoinLinkDto> link(@PathVariable String linkUri) {
-        GroupJoinLinkDto link = groupService.link(linkUri);
+    public ResponseEntity<GroupJoinLinkDto> link(@PathVariable String linkUri,@AuthenticationPrincipal UserDetails userDetails) {
+        GroupJoinLinkDto link = groupService.link(linkUri,userDetails.getUsername());
         return new ResponseEntity<>(link, HttpStatus.ACCEPTED);
 
     }
