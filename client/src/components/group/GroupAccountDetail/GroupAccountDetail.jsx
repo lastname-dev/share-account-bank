@@ -23,15 +23,18 @@ const GroupAccountDetail = ({ groupName, account, goal, balance }) => {
   const [resultAmount, setResultAmount] = useState("");
   const [flag, setFlag] = useState("KOW");
 
+  const progressStyle = buildStyles({
+    strokeLinecap: "round",
+    pathTransitionDuration: 1,
+    pathColor: `${theme.color.green}`,
+  });
+
   const handelStartTravel = () => {
     stratTravelMutation.mutate();
   };
   const handleFlag = (event) => {
-    if (event.target.value === "KOW") {
-      setFlag("KOW");
-      return;
-    }
     setFlag(moneyName[event.target.value]);
+    if (event.target.value === "KOW") return;
     exchangeMoney(moneyName[event.target.value]);
   };
 
@@ -58,12 +61,6 @@ const GroupAccountDetail = ({ groupName, account, goal, balance }) => {
   useEffect(() => {
     setPercentage((balance / goal) * 100);
   }, [goal, balance]);
-
-  const progressStyle = buildStyles({
-    strokeLinecap: "round",
-    pathTransitionDuration: 1,
-    pathColor: `${theme.color.green}`,
-  });
 
   return (
     <>
