@@ -69,3 +69,17 @@ export const TravelContent = styled.span`
   font-size: ${({ theme }) => theme.fontSize.s};
   color: ${({ theme }) => theme.color.offwhite};
 `;
+
+//
+
+export const TravelImageModalContainer = styled(Flex)`
+  /* width: 35rem; */
+  height: 100%;
+  padding: 2rem;
+  flex-direction: column;
+`;
+
+export const TravelImageDetail = styled.img`
+  width: 100%;
+  border-radius: 10px;
+`;
