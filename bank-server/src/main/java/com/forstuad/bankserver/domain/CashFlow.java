@@ -24,6 +24,8 @@ public class CashFlow {
 
     private int amount;
 
+    private String userName;
+
     private LocalDateTime dateTime;
 
     @Builder

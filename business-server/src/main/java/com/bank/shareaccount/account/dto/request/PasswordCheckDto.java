@@ -1,12 +1,13 @@
 package com.bank.shareaccount.account.dto.request;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Data
+@NoArgsConstructor
 @AllArgsConstructor
-public class CreateAccountRequestDto {
-    private String userName;
-    private String password;
+@Data
+public class PasswordCheckDto {
+	String account;
+	String password;
 }
