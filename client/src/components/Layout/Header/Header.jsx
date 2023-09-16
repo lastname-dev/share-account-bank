@@ -1,4 +1,4 @@
-import { MdArrowBackIosNew, MdOutlineNotifications } from "react-icons/md";
+import { MdArrowBackIosNew, MdAssistantPhoto } from "react-icons/md";
 import { useLocation, useNavigate } from "react-router-dom";
 import * as S from "./Header.style";
 import { theme } from "styles/theme";
@@ -11,7 +11,7 @@ const Header = () => {
   if (pathname === PATH.ROOT)
     return (
       <S.HeaderWrapper $isMain={pathname === PATH.ROOT}>
-        <MdOutlineNotifications size={"3rem"} color={theme.color.darkgray} />
+        <MdAssistantPhoto size={"3rem"} color={theme.color.darkgray} onClick={() => navigate(PATH.TRAVEL_LOG_PAGE)} />
       </S.HeaderWrapper>
     );
 
