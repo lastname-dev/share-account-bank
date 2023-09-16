@@ -7,7 +7,7 @@ const IntroPage = () => {
   return (
     <S.IntroPageWrapper>
       <S.LogoContainer>
-        <S.LogoImage src={process.env.PUBLIC_URL + "/image/logo.png"} alt="logo" />
+        <S.LogoImage src={process.env.PUBLIC_URL + "/image/sol_logo.png"} alt="logo" />
       </S.LogoContainer>
       <S.ButtonWrapper>
         <S.LoginButton onClick={() => navigate(PATH.LOGIN_PAGE)}>로그인</S.LoginButton>

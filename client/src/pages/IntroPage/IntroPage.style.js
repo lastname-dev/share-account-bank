@@ -16,8 +16,7 @@ export const IntroPageWrapper = styled(Flex)`
   justify-content: space-around;
   height: 100vh;
   padding: 9rem 0;
-  /* background-color: #bfe4ff; */
-  background: linear-gradient(#b2ccff, aliceblue);
+  background-color: ${({ theme }) => theme.color.white};
   background-image: img;
 `;
 
@@ -28,8 +27,7 @@ export const LogoContainer = styled(Flex)`
 
 export const LogoImage = styled.img`
   width: 80%;
-  animation: ${rotate} 3s linear infinite;
-  border-radius: 50%;
+  /* animation: ${rotate} 3s linear infinite; */
 `;
 
 export const ButtonWrapper = styled(Flex)`
@@ -42,10 +40,10 @@ export const LoginButton = styled(Button)`
   width: 60%;
   height: 40%;
   background-color: ${({ theme }) => theme.color.primary};
-  /* background-color: #f1f1f1; */
   color: ${({ theme }) => theme.color.white};
   font-size: ${({ theme }) => theme.fontSize.m};
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  font-weight: bold;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
 export const SigninButton = styled(LoginButton)``;
