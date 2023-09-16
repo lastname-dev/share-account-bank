@@ -2,10 +2,11 @@ import Button from "components/@common/Button/Button";
 import Flex from "components/@common/Flex/Flex";
 import styled from "styled-components";
 
-export const ConfirmModal = ({ message, closeModal, onConfirm }) => {
+export const ConfirmModal = ({ message, subMessage, closeModal, onConfirm }) => {
   return (
     <ConfirmModalWrapper>
       <ConfirmMessage>{message}</ConfirmMessage>
+      <SubMessage>{subMessage}</SubMessage>
       <ButtonContainer>
         <CancelButton onClick={closeModal}>취소</CancelButton>
         <ConfirmButton onClick={onConfirm}>확인</ConfirmButton>
@@ -29,6 +30,11 @@ const ConfirmMessage = styled.span`
   color: ${({ theme }) => theme.color.darkgray};
 `;
 
+const SubMessage = styled(ConfirmMessage)`
+  font-size: ${({ theme }) => theme.fontSize.s};
+  color: ${({ theme }) => theme.color.darkgray};
+`;
+
 const ButtonContainer = styled(Flex)`
   width: 100%;
   justify-content: space-between;
@@ -37,8 +43,8 @@ const ButtonContainer = styled(Flex)`
 
 const CancelButton = styled(Button)`
   padding: 1rem 3rem;
-  background-color: ${({ theme }) => theme.color.red};
-  color: ${({ theme }) => theme.color.white};
+  background-color: ${({ theme }) => theme.color.offwhite};
+  color: ${({ theme }) => theme.color.primary};
   font-size: ${({ theme }) => theme.fontSize.s};
   font-weight: bold;
   width: 50%;
@@ -46,4 +52,5 @@ const CancelButton = styled(Button)`
 
 const ConfirmButton = styled(CancelButton)`
   background-color: ${({ theme }) => theme.color.primary};
+  color: ${({ theme }) => theme.color.white};
 `;

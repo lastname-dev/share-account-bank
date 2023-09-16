@@ -1,13 +1,13 @@
 import Button from "components/@common/Button/Button";
 import Flex from "components/@common/Flex/Flex";
-import { slideUp } from "constants/animation";
+import { float, slideUp } from "constants/animation";
 import { styled } from "styled-components";
 
 export const TravelingPageWrapper = styled(Flex)`
   flex-direction: column;
   justify-content: space-between;
   height: calc(100vh - 6rem);
-  padding: 2rem 0;
+  padding: 4rem 0;
 `;
 
 export const MessageWrapper = styled(Flex)`
@@ -37,6 +37,7 @@ export const TravelingImageContainer = styled(Flex)`
 
 export const TravelingImage = styled.img`
   width: 100%;
+  animation: ${float} 3s ease-in-out infinite;
 `;
 
 export const TravelingButton = styled(Button)`
@@ -58,11 +59,13 @@ export const ConfirmModalWrapper = styled(Flex)`
 export const ConfirmModalText = styled.span`
   font-size: 1.6rem;
   font-weight: bold;
+  color: ${({ theme }) => theme.color.darkgray};
   padding: 2rem;
 `;
 
 export const InfoMessage = styled.span`
-  font-size: 1.1rem;
+  font-size: 1.4rem;
+  color: ${({ theme }) => theme.color.darkgray};
   padding-bottom: 2rem;
 `;
 
@@ -75,10 +78,14 @@ export const ButtonContainer = styled(Flex)`
 export const CancelButton = styled(Button)`
   width: 50%;
   padding: 0.8rem 2rem;
-  color: ${({ theme }) => theme.color.white};
-  background-color: ${({ theme }) => theme.color.red};
+  color: ${({ theme }) => theme.color.primary};
+  background-color: ${({ theme }) => theme.color.offwhite};
+  font-size: ${({ theme }) => theme.fontSize.s};
+
+  font-weight: bold;
 `;
 
 export const ConfirmButton = styled(CancelButton)`
   background-color: ${({ theme }) => theme.color.primary};
+  color: ${({ theme }) => theme.color.white};
 `;

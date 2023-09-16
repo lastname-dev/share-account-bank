@@ -7,9 +7,8 @@ export const CalculationPageWrapper = styled(Flex)`
   flex-direction: column;
   justify-content: space-between;
   height: calc(100vh - 6rem);
-  padding: 2rem 0;
+  padding: 4rem 0;
 `;
-
 export const CalculationMessage = styled.span`
   color: ${({ theme }) => theme.color.darkgray};
   font-size: ${({ theme }) => theme.fontSize.l};

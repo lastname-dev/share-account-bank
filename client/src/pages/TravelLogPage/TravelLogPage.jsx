@@ -1,52 +1,50 @@
+import { useCallback, useState } from "react";
 import { useTravelLogsQuery } from "hooks/apiHook/useTravelLogsQuery";
 import * as S from "pages/TravelLogPage/TravelLogPage.style";
-import { useCallback } from "react";
+import useModal from "hooks/useModal";
+import Modal from "components/@common/Modal/Modal";
 
 const TravelLogPage = () => {
+  const [selectedLog, setSelectedLog] = useState({});
   const travelLogsQuery = useTravelLogsQuery();
   const logList = travelLogsQuery?.travelLogsData?.data;
+  const { openModal } = useModal();
 
   const convertDateToText = useCallback((date) => {
     const dateArr = date.split("-");
     return String(dateArr[0]) + "년 " + String(parseInt(dateArr[1])) + "월의 추억";
   }, []);
 
-  const dummy = [
-    {
-      photo: "photo",
-      travelId: 1,
-      groupName: "groupName",
-      startDate: "startDate",
-      endDate: "endDate",
-    },
-    {
-      photo: "photo",
-      travelId: 2,
-      groupName: "groupName",
-      startDate: "startDate",
-      endDate: "endDate",
-    },
-    {
-      photo: "photo",
-      travelId: 3,
-      groupName: "groupName",
-      startDate: "startDate",
-      endDate: "endDate",
-    },
-  ];
+  const handleSelect = (item) => {
+    setSelectedLog(item);
+    openModal();
+  };
+  console.log(selectedLog);
+
   return (
-    <S.TravelLogPageWrapper>
-      <S.TravelGrid>
-        {logList?.map((item) => (
-          <S.TravelCard key={item.travelId}>
-            <S.ImageContainer>
-              <S.TravelImage src={item.photo} />
-            </S.ImageContainer>
-            <S.TravelCardButton>{convertDateToText(item.startDate)}</S.TravelCardButton>
-          </S.TravelCard>
-        ))}
-      </S.TravelGrid>
-    </S.TravelLogPageWrapper>
+    <>
+      <S.TravelLogPageWrapper>
+        <S.TravelLogTitle>추억을 되돌아 볼까요? </S.TravelLogTitle>
+        <S.TravelLogList>
+          {logList?.map((item, idx) => (
+            <S.TravelCard key={item.travelId} onClick={() => handleSelect(item)}>
+              <S.ImageContainer>
+                <S.TravelImage src={item.photo} />
+                <S.TravelCardInfoContiner>
+                  <S.TravelTitle>{item.groupName}</S.TravelTitle>
+                  <S.TravelContent>{convertDateToText(item.startDate)}</S.TravelContent>
+                </S.TravelCardInfoContiner>
+              </S.ImageContainer>
+            </S.TravelCard>
+          ))}
+        </S.TravelLogList>
+      </S.TravelLogPageWrapper>
+      <Modal>
+        <S.TravelImageModalContainer>
+          <S.TravelImageDetail src={selectedLog?.photo} />
+        </S.TravelImageModalContainer>
+      </Modal>
+    </>
   );
 };
 

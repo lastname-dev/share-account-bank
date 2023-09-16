@@ -1,9 +1,14 @@
+import { useState } from "react";
+import Lottie from "lottie-react";
 import { PATH } from "constants/path";
 import { useCreateAccountMutation } from "hooks/apiHook/useCreateAccountMutation";
 import useInput from "hooks/useInput";
 import * as S from "pages/CreateAccountPage/CreateAccountPage.style";
-import { useState } from "react";
 import { toastError } from "utils/toast";
+import card from "lotties/card";
+import useCompleteEffect from "hooks/useCompleteEffect";
+import CompleteEffect from "components/@common/CompleteEffect/CompleteEffect";
+import money from "lotties/money";
 
 const CreateAccountPage = () => {
   const [password, setPassword, passwordHandeler] = useInput();
@@ -27,7 +32,7 @@ const CreateAccountPage = () => {
     }
     if (step === 3) handleCreateAccount();
     if (step === 4) {
-      window.location.replace(PATH.ROOT);
+      // window.location.replace(PATH.ROOT);
       return;
     }
     setStep((step) => step + 1);
@@ -52,7 +57,14 @@ const InfoCreateAccount1 = () => {
       <S.CreateAccountHeaderContainer>
         <S.CreateAccountHeader>새로운 계좌를 만드시겠어요?</S.CreateAccountHeader>
       </S.CreateAccountHeaderContainer>
-      <S.CreateAccountBody></S.CreateAccountBody>
+      <S.CreateAccountBody>
+        <Lottie
+          animationData={card}
+          style={{
+            height: "100%",
+          }}
+        />
+      </S.CreateAccountBody>
     </>
   );
 };
@@ -81,6 +93,9 @@ const InfoCreateAccount3 = ({ passwordCheckHandeler }) => {
   );
 };
 const InfoCreateAccount4 = ({ newAccount }) => {
+  const { openEffect } = useCompleteEffect();
+  openEffect();
+
   return (
     <>
       <S.CreateAccountHeaderContainer>
@@ -90,6 +105,11 @@ const InfoCreateAccount4 = ({ newAccount }) => {
         <S.CreateAccountHeader style={{ color: "gray" }}>새로운 계좌번호!</S.CreateAccountHeader>
         <S.CreateAccountHeader>{newAccount}</S.CreateAccountHeader>
       </S.CreateAccountBody>
+      <CompleteEffect
+        lottie={money}
+        message={"새로운 계좌가 생성되었어요!"}
+        callback={() => window.location.replace(PATH.ROOT)}
+      />
     </>
   );
 };

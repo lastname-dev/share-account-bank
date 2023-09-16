@@ -1,19 +1,28 @@
 import Button from "components/@common/Button/Button";
 import Flex from "components/@common/Flex/Flex";
+import { slideUp } from "constants/animation";
 import { styled } from "styled-components";
 
 export const SignUpPageWrapper = styled(Flex)`
   flex-direction: column;
   justify-content: space-between;
   height: calc(100vh - 6rem);
-  padding: 2rem 0;
+  padding: 4rem 0;
   position: relative;
 `;
 
+export const MessageContainer = styled(Flex)`
+  width: 60%;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: start;
+`;
+
 export const SignUpText = styled.span`
-  font-size: ${({ theme }) => theme.fontSize.l};
+  font-size: ${({ theme }) => theme.fontSize.m};
   color: ${({ theme }) => theme.color.darkgray};
   font-weight: bold;
+  animation: ${slideUp} 1s ease-in-out;
 `;
 
 export const InputWrapper = styled(Flex)`

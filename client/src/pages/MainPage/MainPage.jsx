@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { MdAddCard, MdReduceCapacity } from "react-icons/md";
+import { MdAddCard, MdOutlineAirplaneTicket } from "react-icons/md";
 import * as S from "./MainPage.style";
 import GroupList from "components/group/GroupList/GroupList";
 import AccountList from "components/account/AccountList/AccountList";
@@ -20,7 +20,6 @@ const MainPage = () => {
   const { openModal: openDepositModal, closeModal: closeDepositModal } = useModal("deposit");
   const selectedMyAccount = useRecoilValue(selectedMyAccountState);
   const [sortesAccountList, setSortedAccountList] = useState([]);
-  const [accountToggle, setAccountToggle] = useState(true);
 
   const sortByRepresentedAccount = (arr) => {
     return arr.sort((a, b) => {
@@ -28,10 +27,6 @@ const MainPage = () => {
       else if (!a.represented && b.represented) return 1;
       else return 0;
     });
-  };
-
-  const handleToggle = () => {
-    setAccountToggle(!accountToggle);
   };
 
   useEffect(() => {
@@ -44,25 +39,28 @@ const MainPage = () => {
   return (
     <>
       <S.MainPageWrapper>
-        <S.LabelWrapper>
-          <S.IconContainer>
-            <span>{accountToggle ? "내 계좌" : "내 모임 계좌"}</span>
-            {accountToggle ? <MdAddCard /> : <MdReduceCapacity />}
-          </S.IconContainer>
-          <S.ChangeButton onClick={handleToggle}>{accountToggle ? "모임계좌 보기" : "내 계좌 보기"}</S.ChangeButton>
-        </S.LabelWrapper>
-        {accountToggle ? (
-          <AccountList
-            accountList={sortesAccountList}
-            openModal={openDepositModal}
-            navigateNewAccount={navigateNewAccount}
-          />
-        ) : (
-          <GroupList groupList={groupListData?.data} navigateNewGroup={navigateNewGroup} />
-        )}
-        {/* <S.CreateGroupButton onClick={() => navigate(PATH.REGIST_GROUP_PAGE)}>그룹 생성</S.CreateGroupButton> */}
-        {/* <S.CreateGroupButton onClick={() => navigate(PATH.CREATE_ACCOUNT_PAGE)}>계좌 생성</S.CreateGroupButton> */}
+        <S.AccountInfoContainer>
+          <S.LabelWrapper>
+            <S.IconContainer>
+              <MdAddCard />
+              <span>내 계좌</span>
+            </S.IconContainer>
+            <S.ChangeButton onClick={() => navigate(PATH.CREATE_ACCOUNT_PAGE)}>계좌 개설</S.ChangeButton>
+          </S.LabelWrapper>
+          <AccountList accountList={sortesAccountList} openModal={openDepositModal} />
+        </S.AccountInfoContainer>
+        <S.AccountInfoContainer>
+          <S.LabelWrapper>
+            <S.IconContainer>
+              <MdOutlineAirplaneTicket />
+              <span>내 모임 계좌</span>
+            </S.IconContainer>
+            <S.ChangeButton onClick={() => navigate(PATH.REGIST_GROUP_PAGE)}>모임 생성</S.ChangeButton>
+          </S.LabelWrapper>
+          <GroupList groupList={groupListData?.data} />
+        </S.AccountInfoContainer>
       </S.MainPageWrapper>
+
       <Modal id="deposit">
         <DepositModal selectedMyAccount={selectedMyAccount} closeModal={closeDepositModal} />
       </Modal>

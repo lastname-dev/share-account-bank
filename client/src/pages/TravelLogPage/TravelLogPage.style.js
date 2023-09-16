@@ -1,43 +1,85 @@
 import Flex from "components/@common/Flex/Flex";
+import { slideUp } from "constants/animation";
 import { styled } from "styled-components";
 
 export const TravelLogPageWrapper = styled(Flex)`
   width: 100%;
-  padding: 4rem 3rem;
-`;
-
-export const TravelGrid = styled.div`
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-`;
-
-export const TravelCard = styled(Flex)`
-  height: 30rem;
+  padding: 3rem 0;
   flex-direction: column;
-  justify-content: start;
   align-items: start;
-  gap: 1rem;
+`;
+
+export const TravelLogTitle = styled.h3`
+  padding-bottom: 2rem;
+  color: ${({ theme }) => theme.color.darkgray};
+`;
+
+export const TravelLogList = styled(Flex)`
+  width: 100%;
+  flex-direction: column;
+  gap: 2rem;
+`;
+
+export const TravelCard = styled.div`
+  width: 100%;
+  height: 15rem;
   border-radius: 10px;
   overflow: hidden;
   background-color: ${({ theme }) => theme.color.offwhite};
   cursor: pointer;
-  box-shadow: 0px 0px 2px 2px ${({ theme }) => theme.color.offwhite};
+  box-shadow: 0px 0px 1px 1px ${({ theme }) => theme.color.lightgray};
   font-weight: bold;
   font-size: ${({ theme }) => theme.fontSize.s};
+  animation: ${slideUp} 1s ease-in-out;
+
+  &:hover {
+    transform: scale(1.01);
+  }
 `;
 export const ImageContainer = styled(Flex)`
+  position: relative;
   width: 100%;
-  height: 20rem;
-  justify-content: start;
+  height: 15rem;
+  background-color: ${({ theme }) => theme.color.offwhite};
 `;
 export const TravelImage = styled.img`
   width: 100%;
-  height: 100%;
+  height: 15rem;
   object-fit: cover;
 `;
-export const TravelCardButton = styled(Flex)`
+export const TravelCardInfoContiner = styled(Flex)`
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 2rem;
+  position: absolute;
+  justify-content: start;
+  align-items: start;
+  height: 15rem;
   width: 100%;
-  height: calc(100% - 20rem);
+  background-color: rgba(45, 45, 45, 0.5);
+`;
+
+export const TravelTitle = styled.h4`
+  font-size: ${({ theme }) => theme.fontSize.m};
+  font-weight: bold;
+  color: ${({ theme }) => theme.color.offwhite};
+`;
+
+export const TravelContent = styled.span`
+  font-size: ${({ theme }) => theme.fontSize.s};
+  color: ${({ theme }) => theme.color.offwhite};
+`;
+
+//
+
+export const TravelImageModalContainer = styled(Flex)`
+  /* width: 35rem; */
+  height: 100%;
+  padding: 2rem;
+  flex-direction: column;
+`;
+
+export const TravelImageDetail = styled.img`
+  width: 100%;
+  border-radius: 10px;
 `;
